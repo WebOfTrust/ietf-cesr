@@ -2,7 +2,7 @@
 
 title: "Composable Event Streaming Representation (CESR)"
 abbrev: "CESR"
-docname: draft-todo-yourname-protocol-latest
+docname: draft-ssmith-cesr-latest
 category: info
 
 ipr: trust200902
