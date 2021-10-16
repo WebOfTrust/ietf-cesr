@@ -23,7 +23,17 @@ author:
 normative:
 
 informative:
+  KERI:
+    target: https://arxiv.org/abs/1907.02143
+    title: Key Event Receipt Infrastructure (KERI)
+    author:
+        ins: S. Smith
+        name: Samuel M. Smith
+        org: ProSapien LLC
+    date: 2021
 
+
+tags: IETF, SAID, ACDC
 
 --- abstract
 
@@ -153,7 +163,7 @@ indexed signature primitives. The following example details how this complex gro
 
 The example has only one group. The example is annotated with comments, spaces and line feeds for clarity.
 
-```
+~~~
 -FAB     # Trans Indexed Sig Groups counter code 1 following group
 E_T2_p83_gRSuAYvGhqV3S0JzYEF2dIa-OCPLbIhBO7Y    # trans prefix of signer for sigs
 -EAB0AAAAAAAAAAAAAAAAAAAAAAB    # sequence number of est event of signer's public keys for sigs
@@ -163,7 +173,7 @@ AA5267UlFg1jHee4Dauht77SzGl8WUC_0oimYG5If3SdIOSzWM8Qs9SFajAilQcozXJVnbkY5stG_K4N
 ABBgeqntZW3Gu4HL0h3odYz6LaZ_SMfmITL-Btoq_7OZFe3L16jmOe49Ur108wH7mnBaq2E_0U0N0c5vgrJtDpAQ    # sig 1
 ACTD7NDX93ZGTkZBBuSeSGsAQ7u0hngpNTZTK_Um7rUZGnLRNJvo5oOnnC1J2iBQHuxoq8PyjdT3BHS2LiPrs2Cg  # sig 2
 
-```
+~~~
 
 Given this comples attachment group we no longer need to embed an Event Seal in messages to indicate the
 establishment event for of a transferable signer as is the case for the `vrc` receipt message and as was
@@ -194,4 +204,4 @@ This document has no IANA actions.
 # Acknowledgments
 {:numbered="false"}
 
-TODO acknowledge.
+The keripy development team, the KERI community and the ToIP ACDC working group.
