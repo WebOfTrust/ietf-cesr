@@ -156,8 +156,8 @@ There is a dual representation of the table in the binary domain. A Base64 primi
 
 The table includes one complex group that is composed of two groups. This is the counter attachment group 
 with code`-F##` where ``##`` is replaced by the two character Base64 count of the number of complex groups.  
-This is known as the TransIndexedSigGroups counter.  Within the complex group are one more more attached
-groups where each group consists of a triple pre+snu+dig
+This is known as the TransIndexedSigGroups counter.  Within the complex group there are one or more attached
+groups, where each group consists of a triple pre+snu+dig
 followed by a ControllerIdxSigs group that in turn consists of a counter code `-A##` followed by one or more
 indexed signature primitives. The following example details how this complex group may appear.
 
@@ -175,9 +175,9 @@ ACTD7NDX93ZGTkZBBuSeSGsAQ7u0hngpNTZTK_Um7rUZGnLRNJvo5oOnnC1J2iBQHuxoq8PyjdT3BHS2
 
 ~~~
 
-Given this comples attachment group we no longer need to embed an Event Seal in messages to indicate the
-establishment event for of a transferable signer as is the case for the `vrc` receipt message and as was
-origianlly proposed for the `ksn` message. The seal equivalent is provided in the pre+snu+dig or (i,s,d) 
+Given this complex attachment group, we no longer need to embed an Event Seal in messages to indicate the
+establishment event for a transferable signer, as is the case for the `vrc` receipt message and as was
+originally proposed for the `ksn` message. The seal equivalent is provided in the pre+snu+dig or (i,s,d) 
 triple in the front of the new complex attachment group.
 
 
