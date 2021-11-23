@@ -349,7 +349,8 @@ This provides an extremely compact and elegant stream parsing formula that gener
 Modern crypto fixed raw binary lengths. Fixed minimum crytographic streangth fixes minimum length more is just wasting size and computation. So only need one size for each operation (digest key derivation signature) for a given crypto suit
 such as Ed25519. Most popular
 Just so happens that 32 byte is the sweet spot for popularity.
-
+compact tables 
+64 byte most popular for signatures
 
 Twelve code tables enough for the foreseeable future.
 
