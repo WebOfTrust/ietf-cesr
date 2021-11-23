@@ -94,7 +94,8 @@ R->B(R)->B->T(B)->T->R(T)->R
 
 ### Concatenation Composability Property
 
-Let `+` represent concatenation. Concatenation is associative and may be applied to any two primitives or any two groups or sets of concatenated primitives. For example: 
+Let `+` represent concatenation. Concatenation is associative and may be applied to any two primitives or any two groups or sets of concatenated primitives. For example:   
+
 ~~~
 t[0] + t[1] + t[2] + t[3] = (t[0] + t[1]) + (t[2] + t[3])
 ~~~
@@ -107,22 +108,26 @@ Let `B(cat(b=t[k]))` denote the concrete transformation of a given concatenated 
 
 The concatentation composability property between *T* and *B* is expressed as follows:
 
-Given a set of primitives `b[k]` and `t[k]` and transformations `T(B)` and `B(T)` such that `t[k] = T(b[k])` and `b[k] = B(t[k])` for all `k`, then `T(B)` and `B(T)` are jointly concatenation composable if and only if, 
+Given a set of primitives `b[k]` and `t[k]` and transformations `T(B)` and `B(T)` such that `t[k] = T(b[k])` and `b[k] = B(t[k])` for all `k`, then `T(B)` and `B(T)` are jointly concatenation composable if and only if,   
+
 ~~~
 T(cat(b[k]))=cat(T(b[k])) and B(cat(t[k]))=cat(B(t[k])) for all k
 ~~~
 
 Basically composability (over concatenation) means that the transformation of a set (as a whole) of concatenated primitives is equal to the concatentation of the set of individually transformed primitives. 
 
-For example, suppose we have two primitives in the text domain, namely, `t[0]` and `t[1]` that each respectively transform to primitives in the binary domain, namely, `b[0]` and `b[1]`. The transformation duals `B(T)` and `T(B)` are composable if and only if,
+For example, suppose we have two primitives in the text domain, namely, `t[0]` and `t[1]` that each respectively transform to primitives in the binary domain, namely, `b[0]` and `b[1]`. The transformation duals `B(T)` and `T(B)` are composable if and only if,  
+
 ~~~
 B(t[0] + t[1]) = B(t[0]) + B(t[1]) = b[0] + b[1]
-~~~
-and
+~~~  
+
+and  
+
 ~~~
 T(b[0] + b[1]) = T(b[0]) + T(b[1]) = t[0] + t[1]
 ~~~
-
+ 
 The composability property allows us to create arbitrary compositions of primitives via concatenation in either the *T* or *B* domain and then convert the composition en masse to the other domain and then de-concatenate the result without loss. The self-framing property of the primitives enables de-concatenation. 
 
 The composability property is an essential building block for streaming in either domain. The use of framing primitives that count other primitives enables multiplexing and demultiplexing of arbitrary groups of primitives for pipelining and/or on or off loading of streams. The text domain provides usability and the binary domain provides compactness. Composability allows efficient conversion of composed (concatenated) groups of primitives without having to individually parse each primitive.
@@ -138,20 +143,22 @@ Suppose for example we wanted to use naive Base64 characters in the text domain 
 
 In the following diagrams we denote each byte in a naive binary primitive with zero based most significant bit first indicies.  For example, `b1` is bit one `b0` is bit zero and `B0` for byte zero, `B1` for byte 1, etc.
 
-The byte and bit level diagram for `x` is shown below where we use `X` to denote its bytes:
+The byte and bit level diagram for `x` is shown below where we use `X` to denote its bytes:  
 
 ~~~
 |           X0          |
 |b7:b6:b5:b4:b3:b2:b1:b0|
 ~~~
 
-Likewise for `y` below:
+Likewise for `y` below:  
+
 ~~~
 |           Y0          |           Y1          |
 |b7:b6:b5:b4:b3:b2:b1:b0|b7:b6:b5:b4:b3:b2:b1:b0|
 ~~~
 
-And finally for `z` below:
+And finally for `z` below:  
+
 ~~~
 |           Z0          |           Z1          |           Z2          |
 |b7:b6:b5:b4:b3:b2:b1:b0|b7:b6:b5:b4:b3:b2:b1:b0|b7:b6:b5:b4:b3:b2:b1:b0|
@@ -159,7 +166,7 @@ And finally for `z` below:
 
 When doing a naive Base64 conversion of a naive binary primitive, one Base64 character represents only six bits from a given byte. In the following diagrams each character of a Base64 conversion is denoted with zero based most significant character first indicies. 
 
-Therefore to encode `x` in Base64, for example, requires at least two Base64 characters because the zeroth character only captures the six bits from the first byte and another character is needed to capture the other two bits. The convention in Base64 is use a Base64 character where the non-coding bits are zeros. This is diagrammed as follows:
+Therefore to encode `x` in Base64, for example, requires at least two Base64 characters because the zeroth character only captures the six bits from the first byte and another character is needed to capture the other two bits. The convention in Base64 is use a Base64 character where the non-coding bits are zeros. This is diagrammed as follows:  
 
 ~~~
 |           X0          |
