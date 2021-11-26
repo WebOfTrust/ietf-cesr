@@ -15,22 +15,64 @@ smart_quotes: no
 pi: [toc, sortrefs, symrefs]
 
 author:
- -
+  -
     name: S. Smith
     organization: ProSapien LLC
     email: sam@prosapien.com
 
 normative:
+  RFC4648:
+    target: https://datatracker.ietf.org/doc/rfc4648/
+    title: The Base16, Base32, and Base64 Data Encodings
+    author:
+      ins: S. Josefsson
+      name: Simon Josefsson
+    date: 2020-01-21
 
 informative:
   KERI:
     target: https://arxiv.org/abs/1907.02143
     title: Key Event Receipt Infrastructure (KERI)
     author:
-        ins: S. Smith
-        name: Samuel M. Smith
-        org: ProSapien LLC
+      ins: S. Smith
+      name: Samuel M. Smith
+      org: ProSapien LLC
     date: 2021
+    
+  JSON:
+    target: https://www.json.org/json-en.html
+    title: JavaScript Object Notation Delimeters
+  
+  CBOR:
+    target: https://en.wikipedia.org/wiki/CBOR
+    title: CBOR Mapping Object Codes
+    
+  RFC8949:
+    target: https://datatracker.ietf.org/doc/rfc8949/
+    title: Concise Binary Object Representation (CBOR)
+    author:
+      -
+        ins: C. Bormann
+        name: Carsten Bormann
+      -
+        ins: P. Hoffman
+        name: Paul Hoffman
+    
+    date: 2020-12-04
+    
+  MGPK:
+    target: https://github.com/msgpack/msgpack/blob/master/spec.md
+    title: Msgpack Mapping Object Codes
+  
+  BOM:
+    target: https://en.wikipedia.org/wiki/Byte_order_mark
+    title: UTF Byte Order Mark
+
+
+  
+
+
+
 
 
 tags: IETF, CESR, SAID, KERI, ACDC
@@ -46,7 +88,7 @@ TODO Abstract
 
 One way to better secure Internet communications is to use cryptographically verifiable primitives and data structures in communication. These provide essential building blocks for zero trust computing and networking architectures. Traditionally cryptographic primitives that include but are not limited to digests, salts, seeds (private keys), public keys, and digital signatures have been largely represented in some type of binary encoding. This limits their usability in domains or protocols that are human centric or equivalently that only support text-printable characters. These domains include source code, JSON, system logs, audit logs, Ricardian contracts, and human readable text documents of many types. 
 
-Generic binary-to-text or simply textual encodings such as Base64 do not provide any information about the type or size of the underlying cryptographic primitive. Base64 only provides value information. More recently Base58Check was developed as a fit for purpose textual encoding of cryptographic primitives  for shared distributed ledger applications that in addition to value may include information about the type and in some cases the size of the underlying cryptographic primitive. But each application may use a non-interoperable encoding of type and optionally size. Interestingly because a binary encoding may include as a subset some codes that are in the text-printable compatible subset of ASCII (Latin-1,UTF-8)one may serendipoudously find, for a given cryptographic primitive, a text-printable type code from a binary code table like Multihash for example. Indeed some Base58Check applications take advantage of binary Multihash but serindipidous text compatible type codes. Serindipoudous text encodings in binary code tables, however do not work in general for size. So the approach is not universally applicable and is no substitute for a true textual encoding protocol fro cryptographic primitives.
+Generic binary-to-text or simply textual encodings such as Base64, [RFC4648], do not provide any information about the type or size of the underlying cryptographic primitive. Base64 only provides value information. More recently Base58Check was developed as a fit for purpose textual encoding of cryptographic primitives  for shared distributed ledger applications that in addition to value may include information about the type and in some cases the size of the underlying cryptographic primitive. But each application may use a non-interoperable encoding of type and optionally size. Interestingly because a binary encoding may include as a subset some codes that are in the text-printable compatible subset of ASCII (Latin-1,UTF-8)one may serendipoudously find, for a given cryptographic primitive, a text-printable type code from a binary code table like Multihash for example. Indeed some Base58Check applications take advantage of binary Multihash but serindipidous text compatible type codes. Serindipoudous text encodings in binary code tables, however do not work in general for size. So the approach is not universally applicable and is no substitute for a true textual encoding protocol fro cryptographic primitives.
 
 In general there is no standard text based encoding protocol that provides universal type, size, and value encoding for cryptographic primitives. Providing this capability is the primary motivation for the encoding protocol defined herein.
 
@@ -104,7 +146,7 @@ If we let `cat(x[k])` denote the concatenation of all elements of a set of index
 
 Let `T(cat(b[k]))` denote the concrete transformation of a given concatenated set of primitives, `cat(b[k])` from the *B* domain to the *T* domain.
 
-Let `B(cat(b=t[k]))` denote the concrete transformation of a given concatenated set of primitives, `cat(t[k])` from the *T* domain to the *B* domain.
+Let `B(cat(t[k]))` denote the concrete transformation of a given concatenated set of primitives, `cat(t[k])` from the *T* domain to the *B* domain.
 
 The concatentation composability property between *T* and *B* is expressed as follows:
 
@@ -134,9 +176,9 @@ The composability property is an essential building block for streaming in eithe
 
 ## Concrete Domain Representations
 
-Text, *T*, domain representations in CESR use only the characters from the the URL and filename safe variant of the IETF RFC-4648 Base64 standard. Unless otherwise indicated all references to Base64 (RFC-4648) in this document imply the URL and filename safe variant. The URL and filename safe variant of Base64 uses in order the 64 characters `A` through `Z`, `a` through `z`, `-`, and `_` to encode 6 bits of information. In addition Base64 uses the `=` character for padding but CESR does not use the `=` character for any purpose.
+Text, *T*, domain representations in CESR use only the characters from the the URL and filename safe variant of the IETF RFC-4648 Base64 standard, [RFC4648]. Unless otherwise indicated all references to Base64 (RFC-4648) in this document imply the URL and filename safe variant. The URL and filename safe variant of Base64 uses in order the 64 characters `A` through `Z`, `a` through `z`, `-`, and `_` to encode 6 bits of information. In addition Base64 uses the `=` character for padding but CESR does not use the `=` character for any purpose.
 
-Base64 by itself does not satisfy the composability property. 
+Base64, [RFC4648], by itself does not satisfy the composability property. 
 In CESR, both *T* and *B* domain representations include a prepended framing code prefix that is structured in such a way as to ensure composability. 
 
 Suppose for example we wanted to use naive Base64 characters in the text domain and naive binary bytes in the binary domain. For the sake of the example we will call these naive text and naive binary encodings and domains. Recall that a byte encodes 8 bits of information and a Base64 character encodes 6 bits information. Furthermore suppose that we have three primitives denoted `x`, `y`, and `z` in the naive binary domain with lengths of 1, 2, and 3 bytes respectively.
@@ -313,21 +355,6 @@ This is summaraized in the following table:
 |0b111|CESR *B* Domain||
 
 
-JSON Mapping Object Delimeters  
-
-https://www.json.org/json-en.html  
-
-CBOR Mapping Object Codes  
-
-https://en.wikipedia.org/wiki/CBOR  
-
-MsgPack Mapping Object Codes  
-
-https://github.com/msgpack/msgpack/blob/master/spec.md  
-
-UTF Byte Order Mark (BOM)  
-
-https://en.wikipedia.org/wiki/Byte_order_mark  
 
 
 
