@@ -28,6 +28,11 @@ normative:
       ins: S. Josefsson
       name: Simon Josefsson
     date: 2020-01-21
+    
+  RFC20:
+    target: https://datatracker.ietf.org/doc/rfc20/
+    title: ASCII format for network interchange
+    date: 2020-07-29
 
 informative:
   KERI:
@@ -42,6 +47,10 @@ informative:
   JSON:
     target: https://www.json.org/json-en.html
     title: JavaScript Object Notation Delimeters
+    
+  RFC4627:
+    target: https://datatracker.ietf.org/doc/rfc4627/
+    title: The application/json Media Type for JavaScript Object Notation (JSON)
   
   CBOR:
     target: https://en.wikipedia.org/wiki/CBOR
@@ -67,38 +76,88 @@ informative:
   BOM:
     target: https://en.wikipedia.org/wiki/Byte_order_mark
     title: UTF Byte Order Mark
+    
+  DLog:
+    target: https://en.wikipedia.org/wiki/Discrete_logarithm
+    title: Discrete Logarithm Problem
 
-
+  NaCL:
+    target: https://nacl.cr.yp.to
+    title: NaCl Networking and Cryptography library
   
+  MultiCodec:
+    target: https://github.com/multiformats/multicodec
+    title: MultiCodec Multiformats Codecs
+    
+  MCTable:
+    target: https://github.com/multiformats/multicodec/blob/master/table.csv
+    title: MultiCodec Table
+    
+  IPFS:
+    target: https://richardschneider.github.io/net-ipfs-core/api/Ipfs.Registry.HashingAlgorithm.html
+    title: IPFS MultiFormats
 
+  Base58Check:
+    target: https://en.bitcoin.it/wiki/Base58Check_encoding
+    title: Base58Check Encoding
+    
+  WIF:
+    target: https://en.bitcoin.it/wiki/Wallet_import_format
+    title: Wallet Import Format ECDSA Base58Check 
 
+  Bin2Txt:
+    target: https://en.wikipedia.org/wiki/Binary-to-text_encoding
+    title: Binary to Text Encoding
+    
+  ASCII:
+    target: https://en.wikipedia.org/wiki/ASCII
+    title: Text Printable ASCII Characters
+    
+  UTF8:
+    target: https://en.wikipedia.org/wiki/UTF-8 
+    title: UTF-8 Unicode
+    
+  Latin1:
+    target: https://en.wikipedia.org/wiki/ISO/IEC_8859-1
+    title: Latin-1 ISO 8859-1
 
+  STOMP:
+    target: https://stomp.github.io
+    title: Simple Text Oriented Messaging Protocol
+
+  RAET:
+    target: https://github.com/RaetProtocol/raet
+    title: Reliable Asynchronous Event Transport
+
+  Affinity:
+    target: https://crd.lbl.gov/assets/Uploads/Nathan-NDM14.pdf
+    title: Analysis of the Effect of Core Affinity on High-Throughput Flows
+    date: 2014-11-16
 
 
 tags: IETF, CESR, SAID, KERI, ACDC
 
 --- abstract
-
-TODO Abstract
+The Composable Event Streaming Representation (CESR) is dual text-binary encoding format that has the unique property of text-binary concatenation composability. This composability property enables the round trip conversion en-masse of concatenated primitives between the text domain and binary domain while maintaining separability of individual primtives. This enables convenient usability in the text domain and compact transmission in the binary domain. CESR primitives are self-framing. CESR supports self-framing group codes that enable stream processing and pipelining in both the text and binary domains. CESR supports composable text-binary encodings for general data types as well as suites of cryptographic material. Popular cryptographic material suites have compact encodings for efficiency while less compact encodings provide sufficient extensibility to support all foreseeable types. CESR streams also support interleaved JSON, CBOR, and MGPK serializations. CESR is a universal encoding that uniquely provides dual text and binary domain representations via composable conversion.
 
 
 --- middle
 
 # Introduction
 
-One way to better secure Internet communications is to use cryptographically verifiable primitives and data structures in communication. These provide essential building blocks for zero trust computing and networking architectures. Traditionally cryptographic primitives that include but are not limited to digests, salts, seeds (private keys), public keys, and digital signatures have been largely represented in some type of binary encoding. This limits their usability in domains or protocols that are human centric or equivalently that only support text-printable characters. These domains include source code, JSON, system logs, audit logs, Ricardian contracts, and human readable text documents of many types. 
+One way to better secure Internet communications is to use cryptographically verifiable primitives and data structures in communication. These provide essential building blocks for zero trust computing and networking architectures. Traditionally cryptographic primitives that include but are not limited to digests, salts, seeds (private keys), public keys, and digital signatures have been largely represented in some type of binary encoding. This limits their usability in domains or protocols that are human centric or equivalently that only support text-printable characters [RFC20][ASCII]. These domains include source code, JSON [JSON][RFC4627], system logs, audit logs, Ricardian contracts, and human readable text documents of many types. 
 
-Generic binary-to-text or simply textual encodings such as Base64, [RFC4648], do not provide any information about the type or size of the underlying cryptographic primitive. Base64 only provides value information. More recently Base58Check was developed as a fit for purpose textual encoding of cryptographic primitives  for shared distributed ledger applications that in addition to value may include information about the type and in some cases the size of the underlying cryptographic primitive. But each application may use a non-interoperable encoding of type and optionally size. Interestingly because a binary encoding may include as a subset some codes that are in the text-printable compatible subset of ASCII (Latin-1,UTF-8)one may serendipoudously find, for a given cryptographic primitive, a text-printable type code from a binary code table like Multihash for example. Indeed some Base58Check applications take advantage of binary Multihash but serindipidous text compatible type codes. Serindipoudous text encodings in binary code tables, however do not work in general for size. So the approach is not universally applicable and is no substitute for a true textual encoding protocol fro cryptographic primitives.
+Generic binary-to-text [Bin2Txt] or simply textual encodings such as Base64 [RFC4648], do not provide any information about the type or size of the underlying cryptographic primitive. Base64 only provides value information. More recently Base58Check [Base58Check][WIF] was developed as a fit for purpose textual encoding of cryptographic primitives  for shared distributed ledger applications that in addition to value may include information about the type and in some cases the size of the underlying cryptographic primitive. But each application may use a non-interoperable encoding of type and optionally size. Interestingly because a binary encoding may include as a subset some codes that are in the text-printable compatible subset of ASCII [RFC20][ASCII] such as Latin-1 [Latin1] or UTF-8 [UTF8] one may serendipitously find, for a given cryptographic primitive, a text-printable type code from a binary code table like IPFS MultiCodec [IPFS][MultiCodec][MCTable] for example. Indeed some Base58Check applications take advantage of the binary MultiCodec tables but only used serendipitous text compatible type codes . Serindipoudous text encodings in binary code tables, however do not work in general for any size or type. So the approach is not universally applicable and is no substitute for a true textual encoding protocol for cryptographic primitives.
 
 In general there is no standard text based encoding protocol that provides universal type, size, and value encoding for cryptographic primitives. Providing this capability is the primary motivation for the encoding protocol defined herein.
 
-Importantly, a textual encoding that includes type, size, and value is self-framing. A self-framing text primitive may be parsed without needing any additional delimiting characters. Thus a stream of concatenated primitives may be individually parsed without the need to encapsulate the primitives inside textual delimiters or envelopes. Thus a textual self-framing encoding provides the core capability for a streaming text protocol. Although textual encoding of cryptographic primitives is the primary motivation for the protocol defined herein, this protocol is sufficiently flexible and extensible to support other useful data types, such as, integers of various sizes, floating point numbers, date-times as well as generic text. Thus this protocol is generally useful to encode in text data data structures of all types not merely those that contain cryptographic primitives.
+Importantly, a textual encoding that includes type, size, and value is self-framing. A self-framing text primitive may be parsed without needing any additional delimiting characters. Thus a stream of concatenated primitives may be individually parsed without the need to encapsulate the primitives inside textual delimiters or envelopes. Thus a textual self-framing encoding provides the core capability for a streaming text protocol [STOMP][RAET]. Although textual encoding of cryptographic primitives is the primary motivation for the protocol defined herein, this protocol is sufficiently flexible and extensible to support other useful data types, such as, integers of various sizes, floating point numbers, date-times as well as generic text. Thus this protocol is generally useful to encode in text data data structures of all types not merely those that contain cryptographic primitives.
 
 Textual encodings have numerous usability advantages over binary encodings. The one advantage, however, a binary encoding has over text is compactness. An encoding protocol that has the property we call *text-binary concatentation composability* or more succinctly *composability*, enables both the usability of text and the compactness of binary. Composability may be the most uniquely innovative and useful feature of the encoding protocol defined herein.
 
 ## Composability
 
-Composability as defined here  is short for text-binary concatenation composability. An encoding has text-binary concatenation composability when any set of self-framing concatenated primitives expressed in either the text domain or binary domain may be converted as a group to the other domain and back again without loss. Essentially composability provides round-trippable lossless conversion between text and binary representations of any set of concatenated primitives. The property enables a stream processor to safely convert en-masse a a stream of text primitives to binary for compact transmission that the stream processor at the other end may safely convert back to text for further processing or archival storage as text. With the addition of group framing codes as composable primitives, such a composable encoding protocol enables pipelining (multi-plexing and de-multiplexing) of streams in either text or compact binary. This allows management at scale for high-bandwidth applications that benefit from core affinity off-loading of streams.  
+*Composability* as defined here is short for *text-binary concatenation composability*. An encoding has *composability* when any set of self-framing concatenated primitives expressed in either the text domain or binary domain may be converted as a group to the other domain and back again without loss. Essentially *composability* provides round-trippable lossless conversion between text and binary representations of any set of concatenated primitives when converted as a set not merely individually. The property enables a stream processor to safely convert en-masse a a stream of text primitives to binary for compact transmission that the stream processor at the other end may safely convert back to text en-masse for further processing or archival storage as text. With the addition of group framing codes as composable primitives, such a composable encoding protocol enables pipelining (multi-plexing and de-multiplexing) of streams in either text or compact binary. This allows management at scale for high-bandwidth applications that benefit from core affinity off-loading of streams [affinity].  
 
 ## Abstract Domain Representations
 
@@ -174,7 +233,7 @@ The composability property allows us to create arbitrary compositions of primiti
 
 The composability property is an essential building block for streaming in either domain. The use of framing primitives that count other primitives enables multiplexing and demultiplexing of arbitrary groups of primitives for pipelining and/or on or off loading of streams. The text domain provides usability and the binary domain provides compactness. Composability allows efficient conversion of composed (concatenated) groups of primitives without having to individually parse each primitive.
 
-## Concrete Domain Representations
+# Concrete Domain Representations
 
 Text, *T*, domain representations in CESR use only the characters from the the URL and filename safe variant of the IETF RFC-4648 Base64 standard, [RFC4648]. Unless otherwise indicated all references to Base64 (RFC-4648) in this document imply the URL and filename safe variant. The URL and filename safe variant of Base64 uses in order the 64 characters `A` through `Z`, `a` through `z`, `-`, and `_` to encode 6 bits of information. In addition Base64 uses the `=` character for padding but CESR does not use the `=` character for any purpose.
 
@@ -275,19 +334,31 @@ Indeed the composability property is only satisfied if each primitive in the *T*
 To elaborate, when converting streams made up of concatenated primitives back and forth between the *T* and *B* domains, the converted results will not align on byte or character boundaries at the end of each primitive unless the primitives themselves are integer multiples of twenty-four bits of information. In other words all primitives must be aligned on twenty-four bit boundaries to satisfy the composibility property. This means that the minimum length of any primitive in the B domain is three bytes and the minimum length of any primitive in the T domain is four Base64 characters.
 
 
-### Stable Text Type Codes
+## Stable Text Type Codes
 
 There are many coding schemes that could satisfy the composability constraint of alignment on 24 bit boundaries. The main reason for using a *T* domain centric encoding is higher usability or human friendliness. Indeed a primary design goal of CESR is to select an encoding approach that provides such high usability or human friendliness in the *T* domain. This type of usability goal is simpley not realizable in the *B* domain. The B domain's purpose is merely to provide convenient compactness at scale. We believe usability in the *T* domain is maximized when the type portion of the prepended framing code is *stable* or *invariant*. Stable type coding makes it much easier to recognize primitives of a given type  when debugging source, reading messages, or documents in the *T* domain that include encoded primitives. This is true even when those primitives have different lengths or values. For primitive types that have fixed lengths, i.e. all primitives of that type have the same length, stable type coding aids not only visual type but visual size recognition.
 
 Usability of stable type coding is maximized when the type portion appears first in the framing code. Stability also requires that for a given type, the type coding portion must consume a fixed integer number of characters in the *T* domain. To clarify, as used here, stable type coding in the *T* domain never shares information bits with either length or value coding in any given framing code character and appears first in the framing code. Stable type coding in the *T* domain translates to stable type coding in the *B* domain except that the type coding portion of the framing code may not respect byte boundaries. This is an acceptable tradeoff because binary domain parsing tools easily accommodate bit fields and bit shifts while text domain parsing tools no not. By in large text domain parsing tools only process whole characters. This is another reason to impose a stability constraint on the *T* domain type coding instead of the *B* domain.
 
-### Multiple Code Table Approach
+## Code Characters and Ante Bytes
 
-Our design goals for framing codes include minimizing the framing code size for the most frequently used (most popular) codes while also supporting a sufficiently comprehensive set of codes for all foreseeable current and future applications. This requires a high degree of both flexibility and extensibility. We believe this is best achieved with multiple code tables each with a different coding scheme that is optimized for a different set of features instead of a single one-size-fits-all scheme. A specification that supports multiple coding schemes may appear on the surface to be much more complex to implement but careful design of the coding schemes can reduce implementation complexity by using a relatively simple single integrated parse and conversion table. Parsing in any given domain given stable type codes may then be implemented with a single function that simply reads the appropriate type selector in the table to know how to parse and convert the rest of primitive.
+There are two ways to provide the required alignment on 24 bit boundaries to satisfy the composability property. One is to increase the size of text code to ensure that the *T* domain primitive has a total size (length) that is an integer multiple of 4. The other is to increase the size of the raw binary value by pre-pending pad bytes of zeros to the raw binary value before conversion to Base64 to ensure the total size of the raw binary value with pre-pended bytes is an integer multiple of 3 bytes. This ensures that size in characters of the Base64 conversion of the pre-padded raw binary is an integer multiple of 4 characters. In this case the length of the pre-pended type code MUST also therefore be an integer multiple of 4 characters so that the total length of the *T* domain primitive with code is an integer multiple of 4 characters. 
 
-## Text Coding Scheme Design
+The first way may be more compact in some cases. The second way may be easier to compute in some cases. In order to avoid confusion with the use of the term `pad character`, when pre-padding with bytes we use the term `ante bytes`. The term pad may be confusing not merely because both ways use a type of padding but it is also true that the the number of pad characters when padding post-conversion equals the number of ante bytes when padding pre-conversion.  
 
-### Text Code Size
+Suppose for example the raw binary value is 32 bytes in length. The next higher integer multiple of 3 is 33 bytes. Thus 1 additional ante byte is needed to make the size (length in byte) of raw binary an integer multiple of 3. The 1 ante byte makes that combination a total of 33 bytes in length. The resultant Base64 converted value will be 44 characters in length, which is an integer multiple of 4 characters. In contrast, recall that when  we convert a 32 byte raw binary value to Base64 the converted value will have 1 pad character which may be replaced with a text code character. In both cases the resultant length in Base64 is 44 characters. 
+
+Similarly, a 64 byte sized raw binary needs 2 ante bytes to make the combination 66 bytes in length where 66 is the next integer multiple of 3 greater than 64. When converted the result is 88 characters in length. The number of pad characters added on the result of the Base64 conversion of a 64 byte raw binary is also 2. 
+
+In summary we can use pre-conversion ante bytes or post-conversion pad characters in our coding scheme to ensure composable 24 bit alignment.
+
+## Multiple Code Table Approach
+
+The design goals for CESR framing codes include minimizing the framing code size for the most frequently used (most popular) codes while also supporting a sufficiently comprehensive set of codes for all foreseeable current and future applications. This requires a high degree of both flexibility and extensibility. We believe this is best achieved with multiple code tables each with a different coding scheme that is optimized for a different set of features instead of a single one-size-fits-all scheme. A specification that supports multiple coding schemes may appear on the surface to be much more complex to implement but careful design of the coding schemes can reduce implementation complexity by using a relatively simple single integrated parse and conversion table. Parsing in any given domain given stable type codes may then be implemented with a single function that simply reads the appropriate type selector in the table to know how to parse and convert the rest of primitive.
+
+# Text Coding Scheme Design
+
+## Text Code Size
 Recall from above, the R domain representation is a pair`(text code, raw binary)`. The text code is stable and begins with one or more Base64 characters that provide the primitive type may also include one or more additional characters that provide the length. The actual usable cryptographic material is provided by the *raw binary* element. The corresponding *T* domain representation of this pair is created by first converting the *raw binary* element to Base64, then stripping off any Base64 pad characters then finally prepending the text code element to the result of the conversion. 
 
 When the length of a given naive binary string is not an integer multiple of three bytes, standard Base64 conversion software appends one or two pad characters to the resultant Base64 conversion. 
@@ -312,13 +383,13 @@ This pad size computation is also useful for computing the size of the text code
 The minimum code sizes are 1, 2, and 4 characters for pad sizes of 1, 2, and 0 characters with *M* equal 0, 0, and 1 respectively. By increasing *M* we can have larger code sizes for a given pad size.
 
 
-### Count, Group, or Frame Codes
+## Count, Group, or Framing Codes
 As mentioned above one of the primary advantages of a composable encoding is that special framing codes can be specified to support groups of primitivies. Grouping enables pipelining. Other suitable terms for these special framing codes are *group codes* or *count codes*. These are suitable because they can be used to count characters, primitives in a group, or count groups of primitives in a larger group. We can also use count codes as separators to organize a stream of primitives or to interleave non-native serializations. A count code is its own primitive. But it is a primitive that does not include a raw binary value, only the text code. Because a count code's raw binary element is empty, its pad size is always 0. Thus a count code's size is always an integer multiple of 4 characters i.e. 4, 8, etc. 
 
-### Interleaved Non-CESR Serializations
-One extremely useful property of CESR is that special count codes enable CESR to be interleaved with other serializations. For example, Many applications use JSON, CBOR, or MsgPack (MGPK) to serialize flexible self-describing data structures based on hash maps, also know as dictionaries. With respect to hash map serializations, CESR primitives may appear in two different contexts. The first context is as a delimited text primitive inside of a hash map serialization. The delimited text may be either the key or value of a (key, value) pair. The second context is as a standalone serialization that is interleaved with hash map serializations in a stream. Special CESR count codes enable support for the second context of interleaving standalone CESR with other serializations.
+## Interleaved Non-CESR Serializations
+One extremely useful property of CESR is that special count codes enable CESR to be interleaved with other serializations. For example, Many applications use JSON [JSON][RFC4627], CBOR [CBOR][RFC8949], or MsgPack (MGPK) [MGPK] to serialize flexible self-describing data structures based on hash maps, also know as dictionaries. With respect to hash map serializations, CESR primitives may appear in two different contexts. The first context is as a delimited text primitive inside of a hash map serialization. The delimited text may be either the key or value of a (key, value) pair. The second context is as a standalone serialization that is interleaved with hash map serializations in a stream. Special CESR count codes enable support for the second context of interleaving standalone CESR with other serializations.
 
-### Cold Start Stream Parsing Problem
+## Cold Start Stream Parsing Problem
 
 After a cold start a stream processor looks for framing information to know how to parse groups of elements in the stream. If that framing information is ambiguous then the parser may become confused and require yet another cold start. While processing a given stream a parser may become confused especially if a portion of the stream is malformed in some way. This usually requires flushing the stream and forcing a cold start to resynchronize the parser to subsequent stream elements. Better yet is a re-synchronization mechanism that does not require flushing the in-transit buffers but merely skipping to the next well defined stream element boundary in order to execute  cold start. Good cold start  re-synchronization is essential to robust performant stream processing.
 
@@ -327,11 +398,11 @@ For example, in TCP a cold start usually means closing and then reopening the TC
 Special CESR count codes support re-synchronization at each boundary between interleaved CESR and other serializations like JSON, CBOR, or MGPK 
 
 
-#### Performant Resynchronization with Unique Start Bits
+### Performant Resynchronization with Unique Start Bits
 
 Given the popularity of three specific serializations, namely, JSON, CBOR, and MGPK, more fine grained serialization boundary detection for interleaving CESR may be highly beneficial both from a performation and robustness perspective. One way to provide this is by selecting the count code start bits such that there is always a unique (mutually distinct) set of start bits at each interleaved boundary between CESR, JSON, CBOR, and MGPK. 
 
-Furthermore, it may also be highly beneficial to support in-stride switching between interleaved CESR text domain streams and CESR binary domain streams. In other words the start bits for count (framing) codes in both the *T* domain (Base64) and the *B* domain should be unique. This would provide the analogous equivalent of a UTF Byte Order Mark (BOM). A BOM enables a parser of UTF encoded documents to determine if the UTF codes are big endian or little endian [[19]]. In the CESR case this feature would enable a stream parser to know if a count code along with its associated counted or framed group of primitives are expressed in the *T* or *B* domain. Toghether these impose the constraint that the boundary start bits for interleaved text CESR, binary CESR, JSON, CBOR, and MGPK be mutually distinct.
+Furthermore, it may also be highly beneficial to support in-stride switching between interleaved CESR text domain streams and CESR binary domain streams. In other words the start bits for count (framing) codes in both the *T* domain (Base64) and the *B* domain should be unique. This would provide the analogous equivalent of a UTF Byte Order Mark (BOM) [BOM]. A BOM enables a parser of UTF encoded documents to determine if the UTF codes are big endian or little endian [[19]]. In the CESR case this feature would enable a stream parser to know if a count code along with its associated counted or framed group of primitives are expressed in the *T* or *B* domain. Toghether these impose the constraint that the boundary start bits for interleaved text CESR, binary CESR, JSON, CBOR, and MGPK be mutually distinct.
 
 
 Amongst the codes for map objects in the JSON, CBOR, and MGPK only the first three bits are fixed and not dependent on mapping size. In JSON a serialized mapping object always starts with `{`. This is encoded as `0x7b`. the first three bits are `0b011`. In CBOR the first three bits of the major type of the serialized mapping object are `0b101`. In MGPK (MsgPack) there are three different mapping object codes. The *FixMap* code starts with `0b100`. Both the *Map16* code and *Map32* code start with `0b110`.
@@ -346,8 +417,8 @@ This is summaraized in the following table:
 |   Starting Tritet   |  Serialization  | Character |
 |:------------:|:------------:|:------------:|
 |0b000|||
-|0b001|CESR *T* Domain|`-`|
-|0b010|CESR *T* Domain|`_`|
+|0b001|CESR *T* Domain Count (Group) Code|`-`|
+|0b010|CESR *T* Domain Op Code|`_`|
 |0b011|JSON|`{`|
 |0b100|MGPK||
 |0b101|CBOR||
@@ -355,151 +426,248 @@ This is summaraized in the following table:
 |0b111|CESR *B* Domain||
 
 
-
-
-
-#### Stream Parsing Rules
+### Stream Parsing Rules
 
 Given this set of tritets (3 bits) we can express a requirement for well formed stream start and restart.
 
 Each stream MUST start (restart) with one of five tritets:
 
-1) A framing code in CESR *T* domain
-2) A framing code in CESR *B* Domain.
+1) A framing count (group) code in CESR *T* domain
+2) A framing count (group) code in CESR *B* Domain.
 3) A JSON encoded mapping.
 4) A CBOR encoded Mapping.
 5) A MGPK encoded mapping. 
 
 
-A parser merely needs to examine the first tritet (3 bits) of the first byte of the stream start to determine which one of the five it is. When the first tritet is a framing code then, the remainder of framing code itself will include the remaining information needed to parse the attached group. When the first tritet indicates its JSON, CBOR, or MGPK, then the mapping's first field must be a version string that provides the remaining information needed to fully parse the associated encoded serialization. 
+A parser merely needs to examine the first tritet (3 bits) of the first byte of the stream start to determine which one of the five it is. When the first tritet is a framing code then, the remainder of framing code itself will include the additional information needed to parse the attached group. When the first tritet indicates its JSON, CBOR, or MGPK, then the mapping's first field must be a version string that provides the additional information needed to fully parse the associated encoded serialization. 
 
 The stream MUST resume with a starting byte that starts with one of the 5 tritets, either another framing code expressed in the *T* or *B* domain or a new JSON, CBOR, or MGPK encoded mapping.
 
-This provides an extremely compact and elegant stream parsing formula that generalizes not only supports CESR composabilty but also supports interleaving CESR with the most popular hash map serializations. 
+This provides an extremely compact and elegant stream parsing formula that generalizes not only support for CESR composabilty but also support for interleaved CESR with three of the most popular hash map serializations. 
 
 
-### Compact Fixed Size Codes
+## Compact Fixed Size Codes
 
-Modern crypto fixed raw binary lengths. Fixed minimum crytographic streangth fixes minimum length more is just wasting size and computation. So only need one size for each operation (digest key derivation signature) for a given crypto suit
-such as Ed25519. Most popular
-Just so happens that 32 byte is the sweet spot for popularity.
-compact tables 
-64 byte most popular for signatures
+As mentioned above, CESR uses a multiple code table design that enables both size optimized text codes for the most popular primitive types and extensible universal support for all other primitive types. Modern cryptographic suites support limited sets of raw binary primitives with fixed (not variable) sizes. The design aesthetic is based on the understanding that there is a minimally sufficient cryptographic strength and more cryptographic strength is just wasting computation and bandwidth. Cryptographic strength is measured in bits of entropy which also corresponds to the number trials that must be attempted to succeed in a brute force attack. The accepted minimum for cryptographic strength is 128 bits of entropy or equivalently `2**128` (2 raised to the 128th power) brute force trials. The size in bytes of a given raw binary primitive for a given modern cryptographic suite is usually directly related to this minimum strength of 128 bits (16 bytes). 
+For example the raw binary primitives from the well known [NaCL] ECC (Elliptic Curve Cryptography) library all satisfy this 128 bit strength goal. In particular the digital signing public key raw binary primitives for EdDSA are 256 bits (32 bytes) in length because well known algorithms can reduce the number of trials to brute force invert an ECC public key to get the private key by the square root of the number of scalar multiplications which is also related to the size of both the private key and public key coordinates (discrete logarithm problem [DLog]). Thus  256 bit (32 byte) ECC keys are needed to achieve 128 bits of cryptographic strength. In general the size of a given raw binary primitive is typically some multiple of 128 bits of cryptographic strength. This is also true for the associated EdDSA raw binary signatures which 512 bits (64 bytes) in length. 
 
-Twelve code tables enough for the foreseeable future.
+Similar scale factors exist for cryptographic digests. A standard default Blake3 digest is 256 bits (32 bytes) in length in order to get 128 bits of cryptographic strength. This is also true of SHA3-256. Indeed the sweet spots for modern cryptographic raw primitive lengths are 32 bytes for many digests as well as EdDSA public keys and 64 bytes for EdDSA and ECDSA-secp256k1 signatures and 64 byte variants of the most popular digests. Therefore optimized text code tables for these two sweet spots (32 and 64 bytes) would be highly advantageous.
 
-Any binary item whose length mod 3 is 1 will need 2 pad characters to makes its converted length a multiple of four characters. Any binary item whose length mod 3 is 2 will need 1 pad characters to makes its converted length a multiple of four characters. Consequently the most compact encoding is to replace pad characters with derivation codes (only prepended not appended). This gives either 1 or 2 character codes. When there are no pad characters then the code length is 3 characters. As a result the CESR code table consists primarily of 1, 2, and 4 character codes. Longer codes may be used as long as they satisfy the padding constraint. Thus for converted cryptographic material with 1 pad character, the allowed code lengths are 1, 5, 9, ... characters. For converted cryptographic material with 2 pad characters the allowed code lengths are 2, 6, 10, ... characters. For converted cryptographic material with 0 pad characters the allowed code lengths are 4, 8, 12, ... characters.
+A 32 byte raw binary value has a pad size of 1 character.
 
+~~~
+(3 - (32 mod 3)) mod 3) = 1
+~~~
 
+Therefore the minimal text code size is 1 character for 32 byte raw binary cryptographic material and all other raw binary material values whose pad size is 1 character.
 
+A 64 byte raw binary value has a pad size of 2 characters.
 
+~~~
+(3 - (64 mod 3)) mod 3) = 2
+~~~
 
-https://datatracker.ietf.org/doc/html/rfc4648
+Therefore the minimal text code size for is 2 characters for 64 byte raw binary cryptographic material and all other raw binary material values whose pad size is 1 character. For example a 16 byte raw binary value also has a pad size of 2 characters.
 
-https://multiformats.io/multihash/
+For all other cryptographic material values whose pad size is 0, then the minimium size text code is 4 characters. So the minimally sized texts code tables are 1, 2, and 4 characters respectively. 
 
-https://en.bitcoin.it/wiki/Base58Check_encoding
-https://en.bitcoin.it/wiki/Wallet_import_format
+Given that a given cryptographic primitive type has a known fixed raw binary size then we can efficiently encode that primitive type and size with just the type information. The size is given by the type.
 
-https://en.wikipedia.org/wiki/Binary-to-text_encoding
+So for example an Ed25519 (EdDSA) raw public key is always 32 bytes so knowing that the type is `Ed25519 public key` implies the size of 32 bytes and a pad size of 1 character that therefore may be encoded with a 1 character text code. Likewise an Ed25519 (EdDSA) signature is always 64 bytes so knowing that the type is  `Ed25519 signature` implies the size of 64 bytes and a pad size of 2 characters that therefore may be encoded with a 2 character text code.
 
-https://stomp.github.io
-https://assets.ctfassets.net/3prze68gbwl1/5fKNVB8OWEC1pr7h96jnO3/d1ee79e160398554893158370269839c/overview-of-realtime-streaming-protocols.pdf
+## Code Table Selectors
 
-Core affinity
-https://crd.lbl.gov/assets/Uploads/Nathan-NDM14.pdf
+In order to efficiently parse a stream of primitives with types from multiple text code tables the first character in the text code must be a code table selector character. Thus the 1 character text code table must do double duty. It must provide selectors for the different text code tables and also provide type codes for the most popular primitives that have a pad size of 1. There are 64 Base64 characters (64 values). We only need 12 tables to support all the codes and code formats needed for the foreseeable future. Therefore only 12 of those characters need be dedicated as code table selectors that leaves 52 characters that may be used for 1 character type codes. This gives a total of 13 type code tables consisting of the dual purpose 1 character selector table and 12 other tables. 
 
-Base64URL File Safe Standard RFC 4648  
+As described above the selector characters for the framing or count code tables that best support interleaved JSON, CBOR, and MGPK are `-` and `_`. We use the numerals `0` through `9` to each serve as a selector. That leaves the letters `A` through `Z` and `a` through `z` as single character selectors. This provides 52 unique type codes for fixed length primitive types with raw binary values that have a pad size of 1.
 
-https://tools.ietf.org/html/rfc4648  
+To clarify, the first character of any primitive is either a selector or a 1 character code type. The characters `0` through `9`, `-` and `_` are selectors that select a given code table and indicate the number of remaining characters in the text code.
 
-JSON data model [RFC4627].  
+## Small Fixed Raw Size Tables
 
-UTF-8 Standard  
+There are two special tables that are dedicated to the most popular fixed size raw binary cryptographic primitive types. These are the most compact so they optimize bandwidth but only provide a small number of total types. In both of these the text code size equals the number of pad characters, i.e. the pad size.
 
-https://en.wikipedia.org/wiki/UTF-8  
+### One Character Fixed Raw Size Table
+The one character type code table does not have selector character per se but uses as type codes the non-selector characters `A` - `Z` and `a` - `z`. This provides 52 unique type codes for fixed size raw binary values with pad size of 1.
 
-ASCII Standard  
+### Two Character Fixed Raw Size Table
+The two character type code table uses selector `0` as its first character. The second character is the type code. This provides 64 unique type codes for fixed size raw binary values that have a pad size of 2.
 
-https://en.wikipedia.org/wiki/ASCII  
-
-IPFS Multihash  
-
-https://richardschneider.github.io/net-ipfs-core/api/Ipfs.Registry.HashingAlgorithm.html  
-
-IPFS Multicodec Multihash Hash Algorithm Table  
-
- https://github.com/multiformats/multicodec/blob/master/table.csv  
-
-Multicodec   
-
- https://github.com/multiformats/multicodec/blob/master/README.md  
+## Large Fixed Raw Size Tables
+The three tables in this group are for large fixed raw size primitives. These three tables use 0, 1 or 2 ante bytes as appropriate for a pad size of 0, 1 or 2 for a given fixed raw binary value. The text code size for all three tables is 4 characters. The selector not only encodes the table but also implicitly encodes the number of ante bytes. With 3 characters for each unique type code, each table provides 262,144 unique type codes. This should be enough type codes to accommodate all fixed raw size primitive types for the foreseeable future. 
 
 
-JSON Mapping Object Delimeters  
+### Large Fixed Raw Size Table With 0 Ante Bytes
+This table uses `1` as its first character or selector. The remaining 3 characters provide the types codes. Only fixed size raw binaries with pad size of 0 are encoded with this table. The 3 character type code provides a total of 262,144 unique type code values (`262144 = 64**3)` for fixed size raw binary primitives with pad size of 0. 
 
-https://www.json.org/json-en.html  
+### Large Fixed Raw Size Table With 1 Ante Byte
+This table uses `2` as its first character or selector. The remaining 3 characters provide the types codes. Only fixed size raw binaries with pad size of 1 are encoded with this table. The 3 character type code provides a total of 262,144 unique type code values (`262144 = 64**3)` . Together with the 52 values from the 1 character code table above there are 262,196 type codes for fixed size raw binary primitives with pad size of 1.
 
-CBOR Mapping Object Codes  
+### Large Fixed Raw Size Table With 1 Ante Byte
+This table uses `3` as its first character or selector. The remaining 3 characters provide the types codes. Only fixed size raw binaries with pad size of 2 are encoded with this table. The 3 character type code provides a total of 262,144 unique type code values (`262144 = 64**3)` . Together with the 64 values from the 2 character code table above (selector `0`) there are 262,208 type codes for fixed size raw binary primitives with pad size of 2.
 
-https://en.wikipedia.org/wiki/CBOR  
+## Small Variable Raw Size Tables
+Although many primitives have fixed raw binary sizes especially those for modern cryptographic suites such as keys, signatures and digests, there are other primitives that benefit from variable sizing such as encrypted material. Indeed CESR is meant to support not only cryptographic material types but other basic types such as generic text strings. These benefit from variable size codes. 
 
-MsgPack Mapping Object Codes  
-
-https://github.com/msgpack/msgpack/blob/master/spec.md  
-
-UTF Byte Order Mark (BOM)  
-
-https://en.wikipedia.org/wiki/Byte_order_mark  
-
-### Background
-
-These codes are also represented in the textual domain with characters drawn from the Base64 set of characters. Namely Base64 uses characters [A-Z,a-z,-,_]. In addition the "=" character is used as a pad character to ensure lossless round tripping of concatenated binary items to Base64 and back. These 64 characters map to the values [0-63].
-
-But simply, each 8 bit long Base64 character represents only 6 bits of information. Each binary byte represents a full 8 bits of information. 
+The three tables in this group are for small variable raw size primitives. These three tables use 0, 1 or 2 ante bytes as appropriate given the pad size of 0, 1 or 2 for a given variable size raw binary value. The text code size for all three tables is 4 characters.
+The first character is the selector, the second character is the type, and the last two characters provide the size of the value as a Base64 encoded integer. The number of unique type codes is 64. A given type code is repeated in each table for the same type. What is different for each table is the number of ante bytes. The selector not only encodes the table but also implicitly encodes the number of ante bytes. The variable size is measured in quadlets of 4 characters each in the *T* domain and equivalently in triplets of 3 bytes each in the *B* domain. Thus computing the number of characters when parsing or off-loading in the *T* domain means multiplying the variable size by 4. Computing the number of bytes when parsing or off-loading in the *B* domain means multiplying the variable size by 3. The two Base64 size characters provide value lengths in quadlets/triplets from 0 to 4095 (`64**2 -1`). This corresponds to value lengths of up to 16,380 characters (`4095 • 4`) or 12,285 bytes (`4095 • 3`). 
 
 
+### Small Variable Raw Size Table With 0 Ante Bytes
+This table uses `4` as its first character or selector. The second character provides the type. The final two characters provide the size of the value in quadlets/triplets as a Base64 encoded integer. Only raw binaries with pad size of 0 are encoded with this table. The 1 character type code provides a total of 64 unique type code values. The maximum length of the value provided by the 2 size characters is 4095 quadlets of characters in the *T* domain and triplets of bytes in the *B* domain. All are raw binary primitives with pad size of 0 that each include 0 ante bytes. 
 
-CESR derivation codes serve several purposes and provide several features. One main purpose is to allow compact encoding of cryptographic material in the text domain. What we mean by text domain is any representation that is is restricted to printable/viewable ASCII text characters. Cryptographic material is largely composed of long strings of pseudo-random numbers. CESR uses the IETF RFC-3638 Base64URL standard to encode cryptographic material as strings of binary bytes into a text domain representation [[1]]. In order to process a given cryptographic material item its derivation from other cryptographic material and the cryptographic suite of operations that govern that derivation also need to be known. Typically this additional cryptographic information may be provided via some datastructure. For compactness CESR encodes the derivation information which includes the cryptographic suite into a lookup table of codes. To keep the codes short, only the essential information is encoded in the table. CESR MUST be used in context so that code and context togetherr fully characterize the cryptographic material usage and derivation. This also contributes to compactness.
+### Small Variable Raw Size Table With 1 Ante Byte
+This table uses `5` as its first character or selector. The second character provides the type. The final two characters provide the size of the value in quadlets/triplets as a Base64 encoded integer. Only raw binaries with pad size of 1 are encoded with this table. The 1 character type code provides a total of 64 unique type code values. The maximum length of the value provided by the 2 size characters is 4095 quadlets of characters in the *T* domain and triplets of bytes in the *B* domain. All are raw binary primitives with pad size of 1 that each include 1 ante byte. 
 
-These codes are also represented in the textual domain with characters drawn from the Base64 set of characters. Namely Base64 uses characters [A-Z,a-z,-,_]. In addition the "=" character is used as a pad character to ensure lossless round tripping of concatenated binary items to Base64 and back. These 64 characters map to the values [0-63]. The Base64 derivation code is prepended to a given Base64 converted cryptographic material item to produce an extremely compact text domain representation of a given cryptographic material item. When a Base64 derivation code is prepended to a Base64 encoded cryptographic material item, the resultant string of characters is called fully qualified Base64 or qualified Base64 and may be labeled "qb64" for short. We call this a fully qualified cryptographic primitive. This fully qualified compact string (a primitive) may then be used in any text domain representation, including especially name spaces. One other less obvious but important property of KERI's encoding is that all qualified cryptographic material items satisfy what we call lossless composition via concatenation, or composabilty for short. KERI is designed for high performance asynchronous data streaming and event sourcing applications. The sheer volume of cryptographic material, primarily, signatures, in a streaming application demands a streamable protocol. Many of KERI's important use cases benefit specifically from streaming in the text domain not merely the binary domain. Composability allows text domain streams of primitives or portions of streams (streamlets) to be converted as a whole to the binary domain and back again without loss. The attached KID0001 Comment document goes into some length on what composability means. 
+### Small Variable Raw Size Table With 2 Ante Bytes
+This table uses `6` as its first character or selector. The second character provides the type. The final two characters provide the size of the value in quadlets/triplets as a Base64 encoded integer. Only raw binaries with pad size of 0 are encoded with this table. The 1 character type code provides a total of 64 unique type code values. The maximum length of the value provided by the 2 size characters is 4095 quadlets of characters in the *T* domain and triplets of bytes int the *B* domain. All are raw binary primitives with pad size of 2 that each include 2 ante bytes. 
 
-But simply, each 8 bit long Base64 character represents only 6 bits of information. Each binary byte represents a full 8 bits of information. When converting streams made up of concatenated primitives back and forth between the text and binary domains, the converted results will not align on byte or character boundaries at the end of each primitive unless the primitives themselves are integer multiples of 24 bits of information. Twenty-four is the least common multiple of six and eight. It takes 3 binary bytes to represent 24 bits of information and 4 Base64 characters to represent 24 bits of information. Composability via concatenation is guaranteed if any primitive is an integer multiple of four characters in the text domain and an integer multiple of three bytes in the binary domain. KERI's derivation code table is designed to satisfy this composability constraint. In other words, fully qualified KERI cryptographic primitives are composable via concatenation in both the text (Base64)and binary domains. This provides the ability to create composable streaming protocols that use KERI's coding table that are equally at home in the text and binary domains. Without composability some other means of framing, delimiting, or enveloping cryptographic material items is needed for lossless conversion of group of cryptographic material items as a group between the text and binary domain. Mere concatenation of a group, which is the most compact, is not supported without composable primitives.
+## Large Variable Raw Size Tables
+Many legacy cryptographic libraries such as OpenSSL and GPG support any sized  variable sized primitive for keys, signatures and digests. Although this approach is often criticized for providing too much flexibility, many legacy applications depend on this degree of flexibility. Consequently these large variable raw size tables provide a sufficiently expansive set of tables with enough types and sizes to accommodate all the legacy cryptographic libraries as well as all the variable sized raw primitives for the foreseeable future. 
 
-The length of a composable Base64 derivation code is a function of the length of the converted cyptographic material. The length of the derivation code plus material must be an even multiple of four bytes. Standard Base64 conversions add pad characters to ensure composability of any converted item [[1]]. The number of pad characters is a function of the length of the item to be converted. If the item's length in bytes is a multiple of three bytes then the converted item's length will be a multiple of four base 64 characters and therefore will not need any pad characters. 
-
-
-
-CESR's approach to filling the tables is a first needed first served basis. In addition CESR's requirement that all cryptographic operations maintain at least 128 bits of cryptographic strength precludes the entry of many weak cryptographic suites into the tables, at the least in the compact tables. CESR's compact code table includes only best-of-class cryptographic operations. In 2022 it is expected that NIST will approve standardized post-quantum resistant cryptographic signatures (CESR's digests are already post quantum resistant). At which time the most appropriate siganture suites will be added. Falcon appears to be the leader with open source code already available.
-
-There are three types of codes in the code table. The context of where the material appears determines which type of code to use. The first type of code, called a basic code, is for basic primitives. The minimum code length for basic codes is 1. The second type of code, called an indexed code, is for indexed primitives. Indexed codes find application with cryptographic material that is attached to events. The seminal use case is for attached signatures. Becasue KERI operates asynchronously, attached signatures for multi-signature schemes may be collected asynchronously. The number of attached signatures may vary. The index within the code enables compact indication of the associated public key from the ordered key list in the key state that may be used to verify a given attached signature. Indexed codes may be used for other contexts where an offset or count is helpful. The minimum code length for indexed codes is two.  The third type of code, called a counter code, is for counting the number of characters, primitives or groups in a collection that follows the cod. In other words a counter code provides a count of the number of members of a group or the sum of all the characters for all the primitives in that group.  Counter codes allow framing of cryptographic material for ease of parsing a concatenated stream of primitives or groups of primitives. They are also called composition codes because they allow the composition via concatenation of primitives and groups of primitives. This enables truly powerful expressions of parsable composable streaming content in both the text and binary domain. The minimun length of a counter code is four characters. Counter codes are standalone and do not have attached cryptographic material. They are primitives in their own right. Counter codes may be stacked, i.e. multiple counter codes may appear in succession. They perform nested compositions on the following crypto material.
+The three tables in this group are for large variable raw size primitives. These three tables use 0, 1 or 2 ante bytes as appropriate for the associated pad size of 0, 1 or 2 for a given variable sized raw binary value. The text code size for all three tables is 8 characters.
+The first character is the selector, the next three characters provide the type, and the last four characters provide the size of the value as a Base64 encoded integer. With 3 characters for each unique type code, each table provides 262,144 unique type codes. This should be enough type codes to accommodate all fixed raw size primitive types for the foreseeable future.  A given type code is repeated in each table for the same type. What is different for each table is the number of ante bytes. The selector not only encodes the table but also implicitly encodes the number of ante bytes. The variable size is measured in quadlets of 4 characters each in the *T* domain and equivalently in triplets of 3 bytes each in the *B* domain. Thus computing the number of characters when parsing or off-loading in the *T* domain means multiplying the variable size by 4. Likewise computing the number of bytes when parsing or off-loading in the *B* domain means multiplying the variable size by 3. The four Base64 size characters provide value lengths in quadlets/triplets from 0 to 16,777,215 (`64**4 -1`). This corresponds to value lengths of up to 67,108,860 characters (`16777215 • 4`) or 50,331,645 bytes (`16777215 • 3`). 
 
 
+### Large Variable Raw Size Table With 0 Ante Bytes
+This table uses `7` as its first character or selector. The next three characters provide the type. The final four characters provide the size of the value in quadlets/triplets as a Base64 encoded integer. Only raw binaries with pad size of 0 are encoded with this table. The 3 character type code provides a total of 262,144 unique type code values. The maximum length of the value provided by the 4 size characters is 16,777,215 quadlets of characters in the *T* domain and triplets of bytes in the *B* domain. All are raw binary primitives with pad size of 0 that each include 0 ante bytes. 
 
-### Base64 Master Code Table
+### Large Variable Raw Size Table With 1 Ante Byte
+This table uses `8` as its first character or selector. The next three characters provide the type. The final four characters provide the size of the value in quadlets/triplets as a Base64 encoded integer. Only raw binaries with pad size of 1 are encoded with this table. The 3 character type code provides a total of 262,144 unique type code values. The maximum length of the value provided by the 4 size characters is 16,777,215 quadlets of characters in the *T* domain and triplets of bytes in the *B* domain. All are raw binary primitives with pad size of 1 that each include 1 ante bytes. 
 
+### Large Variable Raw Size Table With 2 Ante Bytes
+This table uses `9` as its first character or selector. The next three characters provide the type. The final four characters provide the size of the value in quadlets/triplets as a Base64 encoded integer. Only raw binaries with pad size of 2 are encoded with this table. The 3 character type code provides a total of 262,144 unique type code values. The maximum length of the value provided by the 4 size characters is 16,777,215 quadlets of characters in the *T* domain and triplets of bytes in the *B* domain. All are raw binary primitives with pad size of 2 that each include 2 ante bytes.  
+
+## Count (Framing) Code Tables
+There may be as many at 13 count code tables, but only two are currently specified. These two are the small count, four character table and the large count, eight character table. Because count codes only count quadlets/triplets, primitives or groups of primitives, count codes have no value component, but only type and size components. Because primitives are already guaranteed to be composable count codes do not need to account for pad size as long as the count code itself is aligned on a 24 bit boundary. The count code type indicates the type of primitive being counted and the size indicates how many of that type. Both count code tables use the first two characters as a nested set of selectors. The first selector uses`-` as the initial selector for count codes. The next character is either a selector for another count code table or is the type for the small count code table. When the  second character is numeral `0` - `9` or the letters `-` or `_` then it is a secondary cound code table selector. When the second character is a letter in the range `A` - `Z` or `a` - `z` then it is a unique count code type. This given a total of 52 single character count code types.
+
+### Small Count Code Table
+Codes in the small count code table are each four characters long. The first character is the selector `-`. The second character is the count code type. the last two characters are the count size as a Base64 encoded integer. The count code type MUST be a letter `A` - `Z` or `a` - `z`. If the second character is not a letter but is a numeral `0` - `9` or `-` or `_` then it is a selector for a different count code table. The set of letters provide 52 unique count codes. A two character size provides counts from 0 to 4095 (`64**2 - 1`).
+
+### Large Count Code Table
+Codes in the large count code table are each 8 characters long. The first two characters are the selectors `-`0. The next two characters are the count code type. the last four characters are the count size as a Base64 encoded integer. With two characters for type, there are 4096 unique large count code types. A four character size provides counts from 0 to 16,777,215 (`64**4 - 1`).
+
+## Op Code Tables
+The `_` selector is reserved for the yet to be defined op code table or tables. Op codes are meant to provide stream processing instructions that are more general and flexible than simply concatenated primitives or groups of primitives.
+
+## Selector Codes and Encoding Schemes
+
+The following table summarizes the *T* domain coding schemes for the 13 code tables defined above.
+
+
+|  Selector |  Selector | Type Chars | Value Size Chars | Code Size | Ante Bytes | Pad Size | Format |
+|:---------:|:---------:|:----:|:---:|:---:|:---:|:---:|--------------:|
+|           |           |      |     |     |     |     |               | 
+|`[A-Z,a-z]`|           |   1* |  0  |  1  |  0  |  1  |         `$&&&`| 
+|     `0`   |           |   1  |  0  |  2  |  0  |  2  |         `0$&&`|
+|     `1`   |           |   3  |  0  |  4  |  0  |  0  |     `1$$$&&&&`|
+|     `2`   |           |   3  |  0  |  4  |  1  |  1  |     `2$$$&&&&`|
+|     `3 `  |           |   3  |  0  |  4  |  2  |  2  |     `3$$$&&&&`| 
+|     `4`   |           |   1  |  2  |  4  |  0  |  0  |     `4$##&&&&`| 
+|     `5`   |           |   1  |  2  |  4  |  1  |  1  |     `5$##&&&&`| 
+|     `6`   |           |   1  |  2  |  4  |  2  |  2  |     `6$##&&&&`| 
+|     `7`   |           |   3  |  4  |  8  |  0  |  0  | `7$$$####&&&&`| 
+|     `8`   |           |   3  |  4  |  8  |  1  |  1  | `8$$$####&&&&`| 
+|     `9`   |           |   3  |  4  |  8  |  2  |  2  | `9$$$####&&&&`| 
+|     `-`   |`[A-Z,a-z]`|   1* |  0  |  4  |  0  |  0  |         `-$##`|
+|     `-`   |     `0`   |   2  |  0  |  8  |  0  |  0  |     `-0$$####`|
+|     `_`   |           |  TBD | TBD | TBD | TBD | TBD |            `_`|
+|           |           |      |     |     |     |     |               | 
+
+
+`*` selector character is also type character
+
+Character format symbol definitions:  
+`$` means type code character from  subset of Base64  [A-Z,a-z,0-9,-,_].   
+`#` means a Base64 digit as part of a base 64 integer that determines the number of following quadlets or triplets in the primitive or when part of a count code, the count of following primitives or groups of primitives.  
+`&` represents one or more Base64 value characters representing the converted raw binary value included ante bytes when applicable. The actual number of chars is determined by the prep-ended text code.  
+`TBD` means to be determined
+
+## Parse Size Table
+
+Text domain parsing can be simplified by using a parse size table. A text domain parser uses the first character selector code to look up the hard size (stable) portion of the text code. The parse then extracts hard size characters from the text stream. These characters form an index in to the parse size table which includes a set of sizes for the remainder of the primitive. Using these sizes for a given code allows a parser to extract and convert a given primitive. In the binary domian the same text parse table may be used but each size value represents a multiple of a sextet of bits instead of Base64 characters. Example entries from that table are provided below. Two of the rows may always be calculated given the other 4 rows so the table need only have 4 entries in each row. Thus all basic primitives may be parsed with one parse size table.
+
+|  selector |  hs  | 
+|:---------:|:----:|
+|           |      |   
+|       `B` |   1  |  
+|       `0` |   2  | 
+|       `5` |   2  |  
+|           |      |
+
+| hard sized index |  hs  |  ss  |  vs  |  fs  |  as  |  ps  |
+|:---------:|:----:|:----:|:----:|:----:|:----:|:----:|
+|           |      |      |      |      |      |      |    
+|       `B` |   1  |   0  |  43* |  44  |  0   |  1   |
+|      `0B` |   2  |   0  |  86* |  88  |  0   |  2*  |
+|      `5A` |   2  |   2  |  #   |   #  |  1   |  1*  |
+|           |      |      |      |      |      |      |
+
+`*` size may be calculated from other sizes.  
+`#` size may be calculated from extracted code characters given by other sizes.  
+
+*hs* means hard size in chars.  
+*ss* means soft size in chars.  
+*cs* means code size where *cs = hs + ss*.  
+*vs* means value size in chars.  
+*fs* means full size in chars where *fs = hs + ss + vs*.  
+*as* means ante size in bytes.  
+*ps* means pad size in chars.   
+*rs* means raw size in bytes of binary value.  
+*as* means ante size in bytes.  
+*bs* means binary size in bytes where *bs = as + rs*.  
+
+
+## Special Context Specific Code Tables
+The table above that provides the encoding schemes each with an associated code table that provides the type codes or  set of codes for each associated primitive type. These coding schemes constitute the basic set of code tables. This basic set may be extended with context specific code tables. The context in which a primitive occurs may provide an additional implicit selector that is not part of the actual explicit text code. This allows context specific coding schemes that would otherwise conflict with the basic code tables. Currently there is only one context specific coding scheme, that is, for indexed signatures. A common use case are thresholded multi-signature schemes. A threshold satisficing subset of signatures belonging to an ordered  or list of public keys may be provided as part of stream of primitives. One way to compactly associated each signature with its public key is to include in the text code for that signature the index into the ordered set of public keys. The typical raw binary size for signatures is 64 bytes which has a pad size of 2. This gives two code characters for a compact text code. The first character is the selector and type code. The second character is Base64 encoded integer index.  By using a similar dual selector type code character scheme as above, where the selectors are the numbers `0` -`9` and `-` and `_`. Then there are 52 type codes given by the letters `A` - `Z` and `a` - `z`. The index has 64 values which supports up to 64 members in the public key list. A selector can be used to select a large text code with more characters dedicated to larger indicies. Current only a small table is defined. 
+
+A new signature scheme based on Ed448 with 114 byte signatures signatures is also supported. These signatures have a pad size of zero so require a four charactor text code. The first characters is the selector `0`, the second characters is the type with 64 values, the last two characters provide the index as a Base64 encoded integer with 4096 different values.
+
+The associate indexed schemes are provided in the following table. 
+
+|  Selector |  Selector | Type Chars | Index Chars | Code Size | Ante Bytes | Pad Size | Format |
+|:---------:|:---------:|:----:|:---:|:---:|:---:|:---:|--------------:|
+|           |           |      |     |     |     |     |               | 
+|`[A-Z,a-z]`|           |   1* |  1  |  2  |  0  |  2  |         `$#&&`| 
+|     `0`   |           |   1  |  2  |  4  |  0  |  0  |    ` 0$##&&&&`| 
+|           |           |      |     |     |     |     |               | 
+
+`*` selector character is also type character
+
+Character format symbol definitions:  
+`$` means type code character from  subset of Base64  [A-Z,a-z,0-9,-,_].   
+`#` means a Base64 digit as part of a base 64 integer that determines the index.  
+`&` represents one or more Base64 value characters representing the converted raw binary value included ante bytes when applicable. The actual number of chars is determined by the prep-ended text code.  
+`TBD` means to be determined
+
+
+
+
+
+
+
+
+
+# Master Code Table
+
+## Filling Code Table
+The approach to filling the tables is a first needed first served basis. In addition the requirement that all cryptographic operations maintain at least 128 bits of cryptographic strength precludes the entry of many weak cryptographic suites into the compact tables. CESR's compact code table includes only best-of-class cryptographic operations. In 2022 it is expected that NIST will approve standardized post-quantum resistant cryptographic signatures at which time codes for  the most appropriate post quantume signature suites will be added. Falcon appears to be the leader with open source code already available.
+
+
+## Description
 This master table includes all three types of codes separated by headers. The table has 5 columns. These are as follows: 
 
-1) The Base64 code itself. 
+1) The Base64 stable (hard) text code itself. 
 2) A description of what is encoded or appended to the code.
 3) The length in characters of the code.
 4) the length in characters of the index or count portion of the code 
 5) The length in characters of the fully qualified primitive including code and append material or number of elements in group. 
 
-For each code type, a special character is used when the code length is longer than the minimum length. For basic codes the minimum length is one. Two characters codes start with "0". Four character codes start with "1". For indexed codes the minimum code length is two.  Four character codes start with "0". For counter codes the minimum code length is four. Counter codes all start with "-" and eight character counter codes start with "-0". 
-
-Parsing operation is as follows: Based on context, an expected code type is selected. The parser then reads the first character of the code. Based on the first character, the parser is able to determine the length of the code. The parser then extracts the full code given its length and then looks up the code in the table to confirm it is a valid code. The table includes the total length of the appended primitive, if any, which allows the parser to then extract the appended characters and perform any conversions if needed on the appended material. For indexed or count codes the table includes the number of characters in the code that are part of the index or count. Lookup in the indexed and count code tables for valid codes do not include the index characters.
-
-The counter codes are special, they enable framing of a group of crypto material primitives or groups of primitives. This can be used by a parser to perform concurrent or pipelined processing of streams of concatenated fully qualified cypto material or to determine the end of attached material after one event and the start of a new event. 
-
-There is a dual representation of the table in the binary domain. A Base64 primitive when converted as a whole from Base64 to Base2 binary is in a format called fully qualified base2 or qualified base2 or qb2 for short. Each code character in qb64 converts to a sextet (6 bits) (two octal digits) in qb2 and the appended crypto material is shifted 2 bits for each pad character equivalent. A parser needs to extract the first sextet to determine how many remaining sextets of code there are and from that look up how many bytes total to extract. A binary domain parser of qb2 format must perform some bit level extraction and shifting operations. But this is not difficult for binary domain parsers. Whereas a text domain parser need only use character level operations. This is described in more detail in the KID0001 Commentary document.  
 
 
 
-
-
-|   Code   | Description                                                                                       | Code Length | Index Length | Total Length |
-|:--------:|---------------------------------------------------------------------------------------------------|-------------|--------------|--------------|
+|   Code   | Description                                                                                       | Code Length | Count or Index Length | Total Length |
+|:--------:|:----------------------------------|:------------:|:-------------:|:------------:|
 |          |                              **Basic One Character Codes**                                     |             |              |              |
 |     A    | Random seed of Ed25519 private key of length 256 bits                                             |      1      |              |      44      |
 |     B    | Ed25519 non-transferable prefix public signing verification key. Basic derivation.                |      1      |              |      44      |
@@ -572,7 +740,7 @@ There is a dual representation of the table in the binary domain. A Base64 primi
 
 
 
-The table includes one complex group that is composed of two groups. This is the counter attachment group 
+The table includes complex groups that are composed of other groups. For example consider the counter attachment group 
 with code`-F##` where ``##`` is replaced by the two character Base64 count of the number of complex groups.  
 This is known as the TransIndexedSigGroups counter.  Within the complex group are one more more attached
 groups where each group consists of a triple pre+snu+dig
@@ -593,10 +761,6 @@ ACTD7NDX93ZGTkZBBuSeSGsAQ7u0hngpNTZTK_Um7rUZGnLRNJvo5oOnnC1J2iBQHuxoq8PyjdT3BHS2
 
 ~~~
 
-Given this comples attachment group we no longer need to embed an Event Seal in messages to indicate the
-establishment event for of a transferable signer as is the case for the `vrc` receipt message and as was
-origianlly proposed for the `ksn` message. The seal equivalent is provided in the pre+snu+dig or (i,s,d) 
-triple in the front of the new complex attachment group.
 
 
 
