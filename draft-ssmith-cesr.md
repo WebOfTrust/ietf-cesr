@@ -83,7 +83,7 @@ informative:
 
   NaCL:
     target: https://nacl.cr.yp.to
-    title: NaCl: Networking and Cryptography library
+    title: NaCl Networking and Cryptography library
   
   MultiCodec:
     target: https://github.com/multiformats/multicodec
