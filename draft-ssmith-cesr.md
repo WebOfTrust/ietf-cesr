@@ -400,18 +400,18 @@ Special CESR count codes support re-synchronization at each boundary between int
 
 ### Performant Resynchronization with Unique Start Bits
 
-Given the popularity of three specific serializations, namely, JSON, CBOR, and MGPK, more fine grained serialization boundary detection for interleaving CESR may be highly beneficial both from a performation and robustness perspective. One way to provide this is by selecting the count code start bits such that there is always a unique (mutually distinct) set of start bits at each interleaved boundary between CESR, JSON, CBOR, and MGPK. 
+Given the popularity of three specific serializations, namely, JSON, CBOR, and MGPK, more fine grained serialization boundary detection for interleaving CESR may be highly beneficial both from a performance and robustness perspective. One way to provide this is by selecting the count code start bits such that there is always a unique (mutually distinct) set of start bits at each interleaved boundary between CESR, JSON, CBOR, and MGPK. 
 
-Furthermore, it may also be highly beneficial to support in-stride switching between interleaved CESR text domain streams and CESR binary domain streams. In other words the start bits for count (framing) codes in both the *T* domain (Base64) and the *B* domain should be unique. This would provide the analogous equivalent of a UTF Byte Order Mark (BOM) [BOM]. A BOM enables a parser of UTF encoded documents to determine if the UTF codes are big endian or little endian. In the CESR case this feature would enable a stream parser to know if a count code along with its associated counted or framed group of primitives are expressed in the *T* or *B* domain. Toghether these impose the constraint that the boundary start bits for interleaved text CESR, binary CESR, JSON, CBOR, and MGPK be mutually distinct.
+Furthermore, it may also be highly beneficial to support in-stride switching between interleaved CESR text domain streams and CESR binary domain streams. In other words the start bits for count (framing) codes in both the *T* domain (Base64) and the *B* domain should be unique. This would provide the analogous equivalent of a UTF Byte Order Mark (BOM) [BOM]. A BOM enables a parser of UTF encoded documents to determine if the UTF codes are big endian or little endian. In the CESR case this feature would enable a stream parser to know if a count code along with its associated counted or framed group of primitives are expressed in the *T* or *B* domain. Together these impose the constraint that the boundary start bits for interleaved text CESR, binary CESR, JSON, CBOR, and MGPK be mutually distinct.
 
 
 Amongst the codes for map objects in the JSON, CBOR, and MGPK only the first three bits are fixed and not dependent on mapping size. In JSON a serialized mapping object always starts with `{`. This is encoded as `0x7b`. the first three bits are `0b011`. In CBOR the first three bits of the major type of the serialized mapping object are `0b101`. In MGPK (MsgPack) there are three different mapping object codes. The *FixMap* code starts with `0b100`. Both the *Map16* code and *Map32* code start with `0b110`.
 
 So we have the set of four used starting tritets (3 bits) in numeric order of `0b011`, `0b100`, `0b101`, and `0b110`. This leaves four unused tritets, namely, `0b000`, `0b001`, `0b010`, and `0b111` that may be selected as the CESR count (framing) code start bits. In Base64 there are two codes that satisfy our constraints. The first is the dash character, `-`, encoded as `0x2d`. Its first three bits are `0b001`. The second is the underscore character,`_`, encoded as `0x5f`. Its first three bits are `0b010`. Both of these are distinct from the starting tritets of any of the JSON, CBOR, and MGPK encodings above. Moreover the starting tritet of the corresponding binary encodings of `-` and `_` is `0b111` which is also distinct from the all the others. To elaborate, Base64 uses `_` in position 62 or `0x3E` (hex) and uses `_` in position 63 or `0x3F` (hex) both of which have starting tritet of `0b111` 
 
-This gives us two different Base64 characters, `-` and `_` we can use for the first character of any framing (count) code in the *T* domain. This also means we can have two different classes of framing (count) codes. This also provides a BOM like capability to determine if a framing code is expressed in the *T* or *B* domain. To clarify, if a stream  starts with the tritet `0b111` then the stream is *B* domain CESR and a stream parser would thereby know how to convert the first sextet of the stream to determine which of the two framing codes is being used, `0x3E` or `ox3F` . If on the other hand the framing code starts with either of the tritets `0b001` or `0b010` then the framing code is expressed in the *T* domain and a stream parser likewise would thereby know how to convert the first character (octet) of the framing code to determine which framing code is being used. Otherwise if a stream starts with  `0b100` then is JSON, with `0b101` then its CBOR and with either `0b011`,and `0b110` then its MGPK.
+This gives us two different Base64 characters, `-` and `_` we can use for the first character of any framing (count) code in the *T* domain. This also means we can have two different classes of framing (count) codes. This also provides a BOM like capability to determine if a framing code is expressed in the *T* or *B* domain. To clarify, if a stream  starts with the tritet `0b111` then the stream is *B* domain CESR and a stream parser would thereby know how to convert the first sextet of the stream to determine which of the two framing codes is being used, `0x3E` or `ox3F` . If on the other hand the framing code starts with either of the tritets `0b001` or `0b010` then the framing code is expressed in the *T* domain and a stream parser likewise would thereby know how to convert the first character (octet) of the framing code to determine which framing code is being used. Otherwise if a stream starts with  `0b100` its JSON, with `0b101` its CBOR and with either `0b011`,and `0b110`  its MGPK.
 
-This is summaraized in the following table:
+This is summarized in the following table:
 
 
 |   Starting Tritet   |  Serialization  | Character |
@@ -432,11 +432,11 @@ Given this set of tritets (3 bits) we can express a requirement for well formed 
 
 Each stream MUST start (restart) with one of five tritets:
 
-1) A framing count (group) code in CESR *T* domain
-2) A framing count (group) code in CESR *B* Domain.
-3) A JSON encoded mapping.
-4) A CBOR encoded Mapping.
-5) A MGPK encoded mapping. 
+1) A framing count (group) code in CESR *T* domain.  
+2) A framing count (group) code in CESR *B* Domain.  
+3) A JSON encoded mapping.  
+4) A CBOR encoded Mapping.  
+5) A MGPK encoded mapping.   
 
 
 A parser merely needs to examine the first tritet (3 bits) of the first byte of the stream start to determine which one of the five it is. When the first tritet is a framing code then, the remainder of framing code itself will include the additional information needed to parse the attached group. When the first tritet indicates its JSON, CBOR, or MGPK, then the mapping's first field must be a version string that provides the additional information needed to fully parse the associated encoded serialization. 
