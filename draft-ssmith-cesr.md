@@ -275,7 +275,7 @@ Therefore to encode `x` in Base64, for example, requires at least two Base64 cha
 |        C0       |        C1       |
 ~~~
 
-Naive Base64 encoding always pads each individual conversion of a string of bytes to an even multiple of four characters. This provides something is not true composability but does ensure that multiple distinct concatentated conversions are separable. It may be described as a sort of one-way composability. So with pad characters, denoted by replacing the spaces with `=` characters, the Base64 conversion of `x` is as follows:
+Naive Base64 encoding always pads each individual conversion of a string of bytes to an even multiple of four characters. This provides something that may be described as It may be described as a sort of one-way composability but it is not true composability because it only works for a set of distinct conversions that are concatented after conversion not a single conversion of a concatenated set.  We show the pads by replacing the spaces with `=` characters. The naive Base64 conversion of `x` is as follows:
 
 ~~~
 |           X0          |
@@ -316,7 +316,7 @@ Suppose we concatenate `x + y` into a three byte composition in the naive binary
 |        C0       |        C1       |        C2       |        C3       |
 ~~~
 
-We see that the least significant two bits of X0 are encoded into the same character, `C1` as the most significant four bits of `Y0`. Therefore, a text domain parser is unable to cleanly de-concatenate the conversion of `x + y` into separate text domain primitives. Thus naive binary to Base64 conversion does not satisfy the composability constraint.
+We see that the least significant two bits of X0 are encoded into the same character, `C1` as the most significant four bits of `Y0`. Therefore, a text domain parser is unable to cleanly de-concatenate on a character by character basis the conversion of `x + y` into separate text domain primitives. Thus naive binary to Base64 conversion does not satisfy the composability constraint.
 
 Suppose instead we start in the text domain with primitives `u` and `v` of lengths 1 and 3 characters respectively.
 If we concatenate these two primitives as `u + v` in text domain and then convert as a whole to naive binary. We have the following:
@@ -327,7 +327,7 @@ If we concatenate these two primitives as `u + v` in text domain and then conver
 |           B0          |           B1          |           B2          |
 ~~~
 
-We see that all six bits of information in `U0` is included with the least significant two bits of information in `V0` in `B0`. Therefore a binary domain parser is unable to cleanly de-concatenate the conversion of `u + v` into separate binary domain primitives. Thus naive Base64 to binary conversion does not satisfy the composability constraint. 
+We see that all six bits of information in `U0` is included with the least significant two bits of information in `V0` in `B0`. Therefore a binary domain parser is unable to cleanly de-concatenate on a byte by byte basis the conversion of `u + v` into separate binary domain primitives. Thus naive Base64 to binary conversion does not satisfy the composability constraint. 
 
 Indeed the composability property is only satisfied if each primitive in the *T* domain is an integer multiple of four Base64 characters and each primitive in the *B* domain is an integer multiple of three bytes. Each of Four Base64 characters and three bytes capture twenty-four bits of information. Twenty-four is the least common multiple of six and eight. Therefore primitive lengths that integer multiples of either four Base64 characters or three bytes in their respective domains capture integer multiples of twenty-four bits of information. Given that constraint, conversion of concatenated primitives in one domain never result in two adjacent primitives sharing the same byte or character in the converted domain. 
 
