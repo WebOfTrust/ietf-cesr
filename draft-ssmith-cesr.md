@@ -611,10 +611,10 @@ Text domain parsing can be simplified by using a parse size table. A text domain
 *cs* means code size where *cs = hs + ss*.  
 *vs* means value size in chars.  
 *fs* means full size in chars where *fs = hs + ss + vs*.  
-*ls* means lead size in bytes.  
-*ps* means pad size in chars.   
 *rs* means raw size in bytes of binary value.  
-*bs* means binary size in bytes where *bs = as + rs*.  
+*ls* means lead size in bytes.  
+*bs* means binary size in bytes where *bs = ls + rs*.  
+*ps* means pad size in chars.   
 
 
 ## Special Context Specific Code Tables
