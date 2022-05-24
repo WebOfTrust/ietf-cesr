@@ -212,7 +212,7 @@ The concatentation composability property between *T* and *B* is expressed as fo
 Given a set of primitives `b[k]` and `t[k]` and transformations `T(B)` and `B(T)` such that `t[k] = T(b[k])` and `b[k] = B(t[k])` for all `k`, then `T(B)` and `B(T)` are jointly concatenation composable if and only if,   
 
 ~~~
-T(cat(b[k]))=cat(T(b[k])) and B(cat(t[k]))=cat(B(t[k])) for all k
+T(cat(b[k]))=cat(T(b[k])) and B(cat(t[k]))=cat(B(t[k])) for all k.
 ~~~
 
 Basically, composability (over concatenation) means that the transformation of a set (as a whole) of concatenated primitives is equal to the concatenation of the set of individually transformed primitives. 
@@ -226,7 +226,7 @@ B(t[0] + t[1]) = B(t[0]) + B(t[1]) = b[0] + b[1]
 and  
 
 ~~~
-T(b[0] + b[1]) = T(b[0]) + T(b[1]) = t[0] + t[1]
+T(b[0] + b[1]) = T(b[0]) + T(b[1]) = t[0] + t[1].
 ~~~
  
 The composability property allows us to create arbitrary compositions of primitives via concatenation in either the *T* or *B* domain and then convert the composition en masse to the other domain and then de-concatenate the result without loss. The self-framing property of the primitives enables de-concatenation. 
@@ -235,9 +235,9 @@ The composability property is an essential building block for streaming in eithe
 
 # Concrete Domain Representations
 
-Text, *T*, domain representations in CESR use only the characters from the URL and filename safe variant of the IETF RFC-4648 Base64 standard {{RFC4648}}. Unless otherwise indicated all references to Base64 {{RFC4648}} in this document imply the URL and filename safe variant. The URL and filename safe variant of Base64 uses in order the 64 characters `A` to `Z`, `a` to `z`, `-`, and `_` to encode 6 bits of information. In addition, Base64 uses the `=` character for padding but CESR does not use the `=` character for any purpose.
+Text, *T*, domain representations in CESR use only the characters from the URL and filename safe variant of the IETF RFC-4648 Base64 standard {{RFC4648}}. Unless otherwise indicated all references to Base64 {{RFC4648}} in this document imply the URL and filename safe variant. The URL and filename safe variant of Base64 uses in order the 64 characters `A to Z`, `a to z`, `-`, and `_` to encode 6 bits of information. In addition, Base64 uses the `=` character for padding but CESR does not use the `=` character for any purpose.
 
-Base64, {{RFC4648}}, by itself does not satisfy the composability property. 
+Base64 {{RFC4648}} by itself does not satisfy the composability property. 
 In CESR, both *T* and *B* domain representations include a prepended framing code prefix that is structured in such a way as to ensure composability. 
 
 Suppose for example it is desirable to use naive Base64 characters in the text domain and naive binary bytes in the binary domain. For the sake of the example, we will call these respectively, naive text and naive binary encodings and domains. Recall that a byte encodes 8 bits of information and a Base64 character encodes 6 bits of information. Furthermore suppose that we have three primitives denoted `x`, `y`, and `z` in the naive binary domain with lengths of 1, 2, and 3 bytes respectively.
@@ -621,7 +621,7 @@ Sizes that may be derived from the table size entries are as follows,
 
 ## Special Context-Specific Code Tables
 
-The table above that provides the encoding schemes each with an associated code table that provides the type codes or set of codes for each associated primitive type. These coding schemes constitute the basic set of code tables. This basic set may be extended with context-specific code tables. The context in which a primitive occurs may provide an additional implicit selector that is not part of the actual explicit text code. This allows context-specific coding schemes that would otherwise conflict with the basic code tables. Currently, there is only one context-specific coding scheme, that is, for indexed signatures. A common use case is thresholded multi-signature schemes. A threshold satisficing subset of signatures belonging to an ordered or list of public keys may be provided as part of a stream of primitives. One way to compactly associated each signature with its public key is to include in the text code for that signature the index into the ordered set of public keys. The typical raw binary size for signatures is 64 bytes which has a pad size of 2. This gives two code characters for a compact text code. The first character is the selector and type code. The second character is Base64 encoded integer index.  By using a similar dual selector type code character scheme as above, where the selectors are the numbers `0` -`9` and `-` and `_`. Then there are 52 type codes given by the letters `A` - `Z` and `a` - `z`. The index has 64 values which support up to 64 members in the public key list. A selector can be used to select a large text code with more characters dedicated to larger indices. Current only a small table is defined. 
+The table above that provides the encoding schemes each with an associated code table that provides the type codes or set of codes for each associated primitive type. These coding schemes constitute the basic set of code tables. This basic set may be extended with context-specific code tables. The context in which a primitive occurs may provide an additional implicit selector that is not part of the actual explicit text code. This allows context-specific coding schemes that would otherwise conflict with the basic code tables. Currently, there is only one context-specific coding scheme, that is, for indexed signatures. A common use case is thresholded multi-signature schemes. A threshold satisficing subset of signatures belonging to an ordered or list of public keys may be provided as part of a stream of primitives. One way to compactly associated each signature with its public key is to include in the text code for that signature the index into the ordered set of public keys. The typical raw binary size for a signature is 64-bytes which has a pad size of 2. This gives two code characters for a compact text code. The first character is the selector and type code. The second character is Base64 encoded integer index.  By using a similar dual selector type code character scheme as above, where the selectors are the numbers `0-9` and `-` and `_`. Then there are 52 type codes given by the letters `A- Z` and `a-z`. The index has 64 values which support up to 64 members in the public key list. A selector can be used to select a large text code with more characters dedicated to larger indices. Current only a small table is defined. 
 
 A new signature scheme based on Ed448 with 114-byte signatures is also supported. These signatures have a pad size of zero so require a four-character text code. The first character is the selector `0`, the second character is the type with 64 values, and the last two characters provide the index as a Base64 encoded integer with 4096 different values.
 
@@ -643,21 +643,17 @@ Character format symbol definitions:
 `&` represents one or more Base64 value characters representing the converted raw binary value. The actual number of chars is determined by the prep-ended text code.  Shown is the minimum number of value characters.
 `TBD` means to be determined
 
-
 # Conventions and Definitions
 
 {::boilerplate bcp14-tagged}
-
 
 # Security Considerations
 
 TODO Security
 
-
 # IANA Considerations
 
 This document has no IANA actions.
-
 
 --- back
 
