@@ -235,7 +235,7 @@ The composability property is an essential building block for streaming in eithe
 
 # Concrete Domain Representations
 
-Text, *T*, domain representations in CESR use only the characters from the URL and filename safe variant of the IETF RFC-4648 Base64 standard {{RFC4648}}. Unless otherwise indicated all references to Base64 {{RFC-4648}} in this document imply the URL and filename safe variant. The URL and filename safe variant of Base64 uses in order the 64 characters `A` to `Z`, `a` to `z`, `-`, and `_` to encode 6 bits of information. In addition, Base64 uses the `=` character for padding but CESR does not use the `=` character for any purpose.
+Text, *T*, domain representations in CESR use only the characters from the URL and filename safe variant of the IETF RFC-4648 Base64 standard {{RFC4648}}. Unless otherwise indicated all references to Base64 {{RFC4648}} in this document imply the URL and filename safe variant. The URL and filename safe variant of Base64 uses in order the 64 characters `A` to `Z`, `a` to `z`, `-`, and `_` to encode 6 bits of information. In addition, Base64 uses the `=` character for padding but CESR does not use the `=` character for any purpose.
 
 Base64, {{RFC4648}}, by itself does not satisfy the composability property. 
 In CESR, both *T* and *B* domain representations include a prepended framing code prefix that is structured in such a way as to ensure composability. 
