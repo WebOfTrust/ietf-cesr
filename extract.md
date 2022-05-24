@@ -112,4 +112,8 @@ ACTD7NDX93ZGTkZBBuSeSGsAQ7u0hngpNTZTK_Um7rUZGnLRNJvo5oOnnC1J2iBQHuxoq8PyjdT3BHS2
 ~~~
 
 
+# Acknowledgments
+{:numbered="false"}
+
+The keripy development team, the KERI community, and the ToIP ACDC working group.
 
