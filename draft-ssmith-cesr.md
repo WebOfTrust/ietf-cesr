@@ -275,7 +275,7 @@ Therefore to encode `x` in Base64, for example, requires at least two Base64 cha
 |        C0       |        C1       |
 ~~~
 
-Naive Base64 encoding always pads each individual conversion of a string of bytes to an even multiple of four characters. This provides something is not true composability but does ensure that multiple distinct concatentated conversions are separable. It may be described as a sort of one-way composability. So with pad characters, denoted by replacing the spaces with `=` characters, the Base64 conversion of `x` is as follows:
+Naive Base64 encoding always pads each individual conversion of a string of bytes to an even multiple of four characters. This provides something that may be described as It may be described as a sort of one-way composability but it is not true composability because it only works for a set of distinct conversions that are concatented after conversion not a single conversion of a concatenated set.  We show the pads by replacing the spaces with `=` characters. The naive Base64 conversion of `x` is as follows:
 
 ~~~
 |           X0          |
@@ -316,7 +316,7 @@ Suppose we concatenate `x + y` into a three byte composition in the naive binary
 |        C0       |        C1       |        C2       |        C3       |
 ~~~
 
-We see that the least significant two bits of X0 are encoded into the same character, `C1` as the most significant four bits of `Y0`. Therefore, a text domain parser is unable to cleanly de-concatenate the conversion of `x + y` into separate text domain primitives. Thus naive binary to Base64 conversion does not satisfy the composability constraint.
+We see that the least significant two bits of X0 are encoded into the same character, `C1` as the most significant four bits of `Y0`. Therefore, a text domain parser is unable to cleanly de-concatenate on a character by character basis the conversion of `x + y` into separate text domain primitives. Thus naive binary to Base64 conversion does not satisfy the composability constraint.
 
 Suppose instead we start in the text domain with primitives `u` and `v` of lengths 1 and 3 characters respectively.
 If we concatenate these two primitives as `u + v` in text domain and then convert as a whole to naive binary. We have the following:
@@ -327,7 +327,7 @@ If we concatenate these two primitives as `u + v` in text domain and then conver
 |           B0          |           B1          |           B2          |
 ~~~
 
-We see that all six bits of information in `U0` is included with the least significant two bits of information in `V0` in `B0`. Therefore a binary domain parser is unable to cleanly de-concatenate the conversion of `u + v` into separate binary domain primitives. Thus naive Base64 to binary conversion does not satisfy the composability constraint. 
+We see that all six bits of information in `U0` is included with the least significant two bits of information in `V0` in `B0`. Therefore a binary domain parser is unable to cleanly de-concatenate on a byte by byte basis the conversion of `u + v` into separate binary domain primitives. Thus naive Base64 to binary conversion does not satisfy the composability constraint. 
 
 Indeed the composability property is only satisfied if each primitive in the *T* domain is an integer multiple of four Base64 characters and each primitive in the *B* domain is an integer multiple of three bytes. Each of Four Base64 characters and three bytes capture twenty-four bits of information. Twenty-four is the least common multiple of six and eight. Therefore primitive lengths that integer multiples of either four Base64 characters or three bytes in their respective domains capture integer multiples of twenty-four bits of information. Given that constraint, conversion of concatenated primitives in one domain never result in two adjacent primitives sharing the same byte or character in the converted domain. 
 
@@ -340,17 +340,17 @@ There are many coding schemes that could satisfy the composability constraint of
 
 Usability of stable type coding is maximized when the type portion appears first in the framing code. Stability also requires that for a given type, the type coding portion must consume a fixed integer number of characters in the *T* domain. To clarify, as used here, stable type coding in the *T* domain never shares information bits with either length or value coding in any given framing code character and appears first in the framing code. Stable type coding in the *T* domain translates to stable type coding in the *B* domain except that the type coding portion of the framing code may not respect byte boundaries. This is an acceptable tradeoff because binary domain parsing tools easily accommodate bit fields and bit shifts while text domain parsing tools no not. By in large text domain parsing tools only process whole characters. This is another reason to impose a stability constraint on the *T* domain type coding instead of the *B* domain.
 
-## Code Characters and Ante Bytes
+## Code Characters and Lead Bytes
 
-There are two ways to provide the required alignment on 24 bit boundaries to satisfy the composability property. One is to increase the size of text code to ensure that the *T* domain primitive has a total size (length) that is an integer multiple of 4. The other is to increase the size of the raw binary value by pre-pending pad bytes of zeros to the raw binary value before conversion to Base64 to ensure the total size of the raw binary value with pre-pended bytes is an integer multiple of 3 bytes. This ensures that size in characters of the Base64 conversion of the pre-padded raw binary is an integer multiple of 4 characters. In this case the length of the pre-pended type code MUST also therefore be an integer multiple of 4 characters so that the total length of the *T* domain primitive with code is an integer multiple of 4 characters. 
+There are two ways to provide the required alignment on 24 bit boundaries to satisfy the composability property. The first way is to increase the size of text code to ensure that the *T* domain primitive has a total size (length) that is an integer multiple of 4 (text code sizing). The other way is to increase the size of the raw binary value by pre-pending leader bytes of zeros to the raw binary value before conversion to Base64 to ensure the total size of the raw binary value with pre-pended leader bytes is an integer multiple of 3 bytes (pre-conversion raw binary sizing). This ensures that size in characters of the Base64 conversion of the raw binary with leader bytes is an integer multiple of 4 characters. In this later case therefore the length of the pre-pended type code MUST  be an integer multiple of 4 characters so that the total length of the *T* domain primitive with code and converted raw binary is an integer multiple of 4 characters. 
 
-The first way may be more compact in some cases. The second way may be easier to compute in some cases. In order to avoid confusion with the use of the term `pad character`, when pre-padding with bytes we use the term `ante bytes`. The term pad may be confusing not merely because both ways use a type of padding but it is also true that the the number of pad characters when padding post-conversion equals the number of ante bytes when padding pre-conversion.  
+The first way (text code sizing) may be more compact in some cases. The second way (pre-conversion raw binary sizing) may be easier to compute in some cases. In order to avoid confusion with the use of the term `pad`, we use the term `leader` or `lead bytes` when adjusting the raw binary size pre-conversion. The term pad may be confusing not merely because both ways use a type of padding but it is also true that the the number of `pad` characters when padding post-conversion equals the number of `lead` bytes when padding pre-conversion.  
 
-Suppose for example the raw binary value is 32 bytes in length. The next higher integer multiple of 3 is 33 bytes. Thus 1 additional ante byte is needed to make the size (length in byte) of raw binary an integer multiple of 3. The 1 ante byte makes that combination a total of 33 bytes in length. The resultant Base64 converted value will be 44 characters in length, which is an integer multiple of 4 characters. In contrast, recall that when  we convert a 32 byte raw binary value to Base64 the converted value will have 1 pad character which may be replaced with a text code character. In both cases the resultant length in Base64 is 44 characters. 
+Suppose for example the raw binary value is 32 bytes in length. The next higher integer multiple of 3 is 33 bytes. Thus 1 additional lead byte is needed to make the size (length in byte) of raw binary an integer multiple of 3. The 1 lead byte makes that combination a total of 33 bytes in length. The resultant Base64 converted value will be 44 characters in length, which is an integer multiple of 4 characters. In contrast, recall that when  we convert a 32 byte raw binary value to Base64 the converted value will have 1 pad character which may be replaced with a text code character. In both cases the resultant length in Base64 is 44 characters. 
 
-Similarly, a 64 byte sized raw binary needs 2 ante bytes to make the combination 66 bytes in length where 66 is the next integer multiple of 3 greater than 64. When converted the result is 88 characters in length. The number of pad characters added on the result of the Base64 conversion of a 64 byte raw binary is also 2. 
+Whereas a 64 byte sized raw binary needs 2 lead bytes to make the combination 66 bytes in length where 66 is the next integer multiple of 3 greater than 64. When converted the result is 88 characters in length. The number of pad characters added on the result of the Base64 conversion of a 64 byte raw binary is also 2. 
 
-In summary we can use pre-conversion ante bytes or post-conversion pad characters in our coding scheme to ensure composable 24 bit alignment.
+In summary we can use either pre-conversion lead byte sizing or post-conversion pad character sizing in our coding scheme to ensure composable 24 bit alignment.
 
 ## Multiple Code Table Approach
 
@@ -376,9 +376,9 @@ This pad size computation is also useful for computing the size of the text code
 
 |   Pad Size   |  Code Size  | 
 |:------------:|------------:|
-|0|4•M|
-|1|4•M + 1|
-|2|4•M + 2|
+|0|4M|
+|1|4M+1|
+|2|4M+2|
 
 The minimum code sizes are 1, 2, and 4 characters for pad sizes of 1, 2, and 0 characters with *M* equal 0, 0, and 1 respectively. By increasing *M* we can have larger code sizes for a given pad size.
 
@@ -387,7 +387,7 @@ The minimum code sizes are 1, 2, and 4 characters for pad sizes of 1, 2, and 0 c
 As mentioned above one of the primary advantages of a composable encoding is that special framing codes can be specified to support groups of primitivies. Grouping enables pipelining. Other suitable terms for these special framing codes are *group codes* or *count codes*. These are suitable because they can be used to count characters, primitives in a group, or count groups of primitives in a larger group. We can also use count codes as separators to organize a stream of primitives or to interleave non-native serializations. A count code is its own primitive. But it is a primitive that does not include a raw binary value, only the text code. Because a count code's raw binary element is empty, its pad size is always 0. Thus a count code's size is always an integer multiple of 4 characters i.e. 4, 8, etc. 
 
 ## Interleaved Non-CESR Serializations
-One extremely useful property of CESR is that special count codes enable CESR to be interleaved with other serializations. For example, Many applications use JSON [JSON][RFC4627], CBOR [CBOR][RFC8949], or MsgPack (MGPK) [MGPK] to serialize flexible self-describing data structures based on hash maps, also know as dictionaries. With respect to hash map serializations, CESR primitives may appear in two different contexts. The first context is as a delimited text primitive inside of a hash map serialization. The delimited text may be either the key or value of a (key, value) pair. The second context is as a standalone serialization that is interleaved with hash map serializations in a stream. Special CESR count codes enable support for the second context of interleaving standalone CESR with other serializations.
+One extremely useful property of CESR is that special count codes enable CESR to be interleaved with other serializations. For example, Many applications use [JSON], [RFC4627], [CBOR], [RFC8949], or MsgPack [MGPK] to serialize flexible self-describing data structures based on hash maps, also know as dictionaries. With respect to hash map serializations, CESR primitives may appear in two different contexts. The first context is as a delimited text primitive inside of a hash map serialization. The delimited text may be either the key or value of a (key, value) pair. The second context is as a standalone serialization that is interleaved with hash map serializations in a stream. Special CESR count codes enable support for the second context of interleaving standalone CESR with other serializations.
 
 ## Cold Start Stream Parsing Problem
 
@@ -400,18 +400,18 @@ Special CESR count codes support re-synchronization at each boundary between int
 
 ### Performant Resynchronization with Unique Start Bits
 
-Given the popularity of three specific serializations, namely, JSON, CBOR, and MGPK, more fine grained serialization boundary detection for interleaving CESR may be highly beneficial both from a performation and robustness perspective. One way to provide this is by selecting the count code start bits such that there is always a unique (mutually distinct) set of start bits at each interleaved boundary between CESR, JSON, CBOR, and MGPK. 
+Given the popularity of three specific serializations, namely, JSON, CBOR, and MGPK, more fine grained serialization boundary detection for interleaving CESR may be highly beneficial both from a performance and robustness perspective. One way to provide this is by selecting the count code start bits such that there is always a unique (mutually distinct) set of start bits at each interleaved boundary between CESR, JSON, CBOR, and MGPK. 
 
-Furthermore, it may also be highly beneficial to support in-stride switching between interleaved CESR text domain streams and CESR binary domain streams. In other words the start bits for count (framing) codes in both the *T* domain (Base64) and the *B* domain should be unique. This would provide the analogous equivalent of a UTF Byte Order Mark (BOM) [BOM]. A BOM enables a parser of UTF encoded documents to determine if the UTF codes are big endian or little endian [[19]]. In the CESR case this feature would enable a stream parser to know if a count code along with its associated counted or framed group of primitives are expressed in the *T* or *B* domain. Toghether these impose the constraint that the boundary start bits for interleaved text CESR, binary CESR, JSON, CBOR, and MGPK be mutually distinct.
+Furthermore, it may also be highly beneficial to support in-stride switching between interleaved CESR text domain streams and CESR binary domain streams. In other words the start bits for count (framing) codes in both the *T* domain (Base64) and the *B* domain should be unique. This would provide the analogous equivalent of a UTF Byte Order Mark (BOM) [BOM]. A BOM enables a parser of UTF encoded documents to determine if the UTF codes are big endian or little endian. In the CESR case this feature would enable a stream parser to know if a count code along with its associated counted or framed group of primitives are expressed in the *T* or *B* domain. Together these impose the constraint that the boundary start bits for interleaved text CESR, binary CESR, JSON, CBOR, and MGPK be mutually distinct.
 
 
 Amongst the codes for map objects in the JSON, CBOR, and MGPK only the first three bits are fixed and not dependent on mapping size. In JSON a serialized mapping object always starts with `{`. This is encoded as `0x7b`. the first three bits are `0b011`. In CBOR the first three bits of the major type of the serialized mapping object are `0b101`. In MGPK (MsgPack) there are three different mapping object codes. The *FixMap* code starts with `0b100`. Both the *Map16* code and *Map32* code start with `0b110`.
 
 So we have the set of four used starting tritets (3 bits) in numeric order of `0b011`, `0b100`, `0b101`, and `0b110`. This leaves four unused tritets, namely, `0b000`, `0b001`, `0b010`, and `0b111` that may be selected as the CESR count (framing) code start bits. In Base64 there are two codes that satisfy our constraints. The first is the dash character, `-`, encoded as `0x2d`. Its first three bits are `0b001`. The second is the underscore character,`_`, encoded as `0x5f`. Its first three bits are `0b010`. Both of these are distinct from the starting tritets of any of the JSON, CBOR, and MGPK encodings above. Moreover the starting tritet of the corresponding binary encodings of `-` and `_` is `0b111` which is also distinct from the all the others. To elaborate, Base64 uses `_` in position 62 or `0x3E` (hex) and uses `_` in position 63 or `0x3F` (hex) both of which have starting tritet of `0b111` 
 
-This gives us two different Base64 characters, `-` and `_` we can use for the first character of any framing (count) code in the *T* domain. This also means we can have two different classes of framing (count) codes. This also provides a BOM like capability to determine if a framing code is expressed in the *T* or *B* domain. To clarify, if a stream  starts with the tritet `0b111` then the stream is *B* domain CESR and a stream parser would thereby know how to convert the first sextet of the stream to determine which of the two framing codes is being used, `0x3E` or `ox3F` . If on the other hand the framing code starts with either of the tritets `0b001` or `0b010` then the framing code is expressed in the *T* domain and a stream parser likewise would thereby know how to convert the first character (octet) of the framing code to determine which framing code is being used. Otherwise if a stream starts with  `0b100` then is JSON, with `0b101` then its CBOR and with either `0b011`,and `0b110` then its MGPK.
+This gives us two different Base64 characters, `-` and `_` we can use for the first character of any framing (count) code in the *T* domain. This also means we can have two different classes of framing (count) codes. This also provides a BOM like capability to determine if a framing code is expressed in the *T* or *B* domain. To clarify, if a stream  starts with the tritet `0b111` then the stream is *B* domain CESR and a stream parser would thereby know how to convert the first sextet of the stream to determine which of the two framing codes is being used, `0x3E` or `ox3F` . If on the other hand the framing code starts with either of the tritets `0b001` or `0b010` then the framing code is expressed in the *T* domain and a stream parser likewise would thereby know how to convert the first character (octet) of the framing code to determine which framing code is being used. Otherwise if a stream starts with  `0b100` its JSON, with `0b101` its CBOR and with either `0b011`,and `0b110`  its MGPK.
 
-This is summaraized in the following table:
+This is summarized in the following table:
 
 
 |   Starting Tritet   |  Serialization  | Character |
@@ -432,11 +432,11 @@ Given this set of tritets (3 bits) we can express a requirement for well formed 
 
 Each stream MUST start (restart) with one of five tritets:
 
-1) A framing count (group) code in CESR *T* domain
-2) A framing count (group) code in CESR *B* Domain.
-3) A JSON encoded mapping.
-4) A CBOR encoded Mapping.
-5) A MGPK encoded mapping. 
+1) A framing count (group) code in CESR *T* domain.  
+2) A framing count (group) code in CESR *B* Domain.  
+3) A JSON encoded mapping.  
+4) A CBOR encoded Mapping.  
+5) A MGPK encoded mapping.   
 
 
 A parser merely needs to examine the first tritet (3 bits) of the first byte of the stream start to determine which one of the five it is. When the first tritet is a framing code then, the remainder of framing code itself will include the additional information needed to parse the attached group. When the first tritet indicates its JSON, CBOR, or MGPK, then the mapping's first field must be a version string that provides the additional information needed to fully parse the associated encoded serialization. 
@@ -494,49 +494,49 @@ The one character type code table does not have selector character per se but us
 The two character type code table uses selector `0` as its first character. The second character is the type code. This provides 64 unique type codes for fixed size raw binary values that have a pad size of 2.
 
 ## Large Fixed Raw Size Tables
-The three tables in this group are for large fixed raw size primitives. These three tables use 0, 1 or 2 ante bytes as appropriate for a pad size of 0, 1 or 2 for a given fixed raw binary value. The text code size for all three tables is 4 characters. The selector not only encodes the table but also implicitly encodes the number of ante bytes. With 3 characters for each unique type code, each table provides 262,144 unique type codes. This should be enough type codes to accommodate all fixed raw size primitive types for the foreseeable future. 
+The three tables in this group are for large fixed raw size primitives. These three tables use 0, 1 or 2 lead bytes as appropriate for a pad size of 0, 1 or 2 for a given fixed raw binary value. The text code size for all three tables is 4 characters. The selector not only encodes the table but also implicitly encodes the number of lead bytes. With 3 characters for each unique type code, each table provides 262,144 unique type codes. This should be enough type codes to accommodate all fixed raw size primitive types for the foreseeable future. 
 
 
-### Large Fixed Raw Size Table With 0 Ante Bytes
+### Large Fixed Raw Size Table With 0 Lead Bytes
 This table uses `1` as its first character or selector. The remaining 3 characters provide the types codes. Only fixed size raw binaries with pad size of 0 are encoded with this table. The 3 character type code provides a total of 262,144 unique type code values (`262144 = 64**3)` for fixed size raw binary primitives with pad size of 0. 
 
-### Large Fixed Raw Size Table With 1 Ante Byte
+### Large Fixed Raw Size Table With 1 Lead Byte
 This table uses `2` as its first character or selector. The remaining 3 characters provide the types codes. Only fixed size raw binaries with pad size of 1 are encoded with this table. The 3 character type code provides a total of 262,144 unique type code values (`262144 = 64**3)` . Together with the 52 values from the 1 character code table above there are 262,196 type codes for fixed size raw binary primitives with pad size of 1.
 
-### Large Fixed Raw Size Table With 1 Ante Byte
+### Large Fixed Raw Size Table With 1 Lead Byte
 This table uses `3` as its first character or selector. The remaining 3 characters provide the types codes. Only fixed size raw binaries with pad size of 2 are encoded with this table. The 3 character type code provides a total of 262,144 unique type code values (`262144 = 64**3)` . Together with the 64 values from the 2 character code table above (selector `0`) there are 262,208 type codes for fixed size raw binary primitives with pad size of 2.
 
 ## Small Variable Raw Size Tables
 Although many primitives have fixed raw binary sizes especially those for modern cryptographic suites such as keys, signatures and digests, there are other primitives that benefit from variable sizing such as encrypted material. Indeed CESR is meant to support not only cryptographic material types but other basic types such as generic text strings. These benefit from variable size codes. 
 
-The three tables in this group are for small variable raw size primitives. These three tables use 0, 1 or 2 ante bytes as appropriate given the pad size of 0, 1 or 2 for a given variable size raw binary value. The text code size for all three tables is 4 characters.
-The first character is the selector, the second character is the type, and the last two characters provide the size of the value as a Base64 encoded integer. The number of unique type codes is 64. A given type code is repeated in each table for the same type. What is different for each table is the number of ante bytes. The selector not only encodes the table but also implicitly encodes the number of ante bytes. The variable size is measured in quadlets of 4 characters each in the *T* domain and equivalently in triplets of 3 bytes each in the *B* domain. Thus computing the number of characters when parsing or off-loading in the *T* domain means multiplying the variable size by 4. Computing the number of bytes when parsing or off-loading in the *B* domain means multiplying the variable size by 3. The two Base64 size characters provide value lengths in quadlets/triplets from 0 to 4095 (`64**2 -1`). This corresponds to value lengths of up to 16,380 characters (`4095 • 4`) or 12,285 bytes (`4095 • 3`). 
+The three tables in this group are for small variable raw size primitives. These three tables use 0, 1 or 2 lead bytes as appropriate given the pad size of 0, 1 or 2 for a given variable size raw binary value. The text code size for all three tables is 4 characters.
+The first character is the selector, the second character is the type, and the last two characters provide the size of the value as a Base64 encoded integer. The number of unique type codes is 64. A given type code is repeated in each table for the same type. What is different for each table is the number of lead bytes. The selector not only encodes the table but also implicitly encodes the number of lead bytes. The variable size is measured in quadlets of 4 characters each in the *T* domain and equivalently in triplets of 3 bytes each in the *B* domain. Thus computing the number of characters when parsing or off-loading in the *T* domain means multiplying the variable size by 4. Computing the number of bytes when parsing or off-loading in the *B* domain means multiplying the variable size by 3. The two Base64 size characters provide value lengths in quadlets/triplets from 0 to 4095 (`64**2 -1`). This corresponds to value lengths of up to 16,380 characters (`4095 * 4`) or 12,285 bytes (`4095 * 3`). 
 
 
-### Small Variable Raw Size Table With 0 Ante Bytes
-This table uses `4` as its first character or selector. The second character provides the type. The final two characters provide the size of the value in quadlets/triplets as a Base64 encoded integer. Only raw binaries with pad size of 0 are encoded with this table. The 1 character type code provides a total of 64 unique type code values. The maximum length of the value provided by the 2 size characters is 4095 quadlets of characters in the *T* domain and triplets of bytes in the *B* domain. All are raw binary primitives with pad size of 0 that each include 0 ante bytes. 
+### Small Variable Raw Size Table With 0 Lead Bytes
+This table uses `4` as its first character or selector. The second character provides the type. The final two characters provide the size of the value in quadlets/triplets as a Base64 encoded integer. Only raw binaries with pad size of 0 are encoded with this table. The 1 character type code provides a total of 64 unique type code values. The maximum length of the value provided by the 2 size characters is 4095 quadlets of characters in the *T* domain and triplets of bytes in the *B* domain. All are raw binary primitives with pad size of 0 that each include 0 lead bytes. 
 
-### Small Variable Raw Size Table With 1 Ante Byte
-This table uses `5` as its first character or selector. The second character provides the type. The final two characters provide the size of the value in quadlets/triplets as a Base64 encoded integer. Only raw binaries with pad size of 1 are encoded with this table. The 1 character type code provides a total of 64 unique type code values. The maximum length of the value provided by the 2 size characters is 4095 quadlets of characters in the *T* domain and triplets of bytes in the *B* domain. All are raw binary primitives with pad size of 1 that each include 1 ante byte. 
+### Small Variable Raw Size Table With 1 Lead Byte
+This table uses `5` as its first character or selector. The second character provides the type. The final two characters provide the size of the value in quadlets/triplets as a Base64 encoded integer. Only raw binaries with pad size of 1 are encoded with this table. The 1 character type code provides a total of 64 unique type code values. The maximum length of the value provided by the 2 size characters is 4095 quadlets of characters in the *T* domain and triplets of bytes in the *B* domain. All are raw binary primitives with pad size of 1 that each include 1 lead byte. 
 
-### Small Variable Raw Size Table With 2 Ante Bytes
-This table uses `6` as its first character or selector. The second character provides the type. The final two characters provide the size of the value in quadlets/triplets as a Base64 encoded integer. Only raw binaries with pad size of 0 are encoded with this table. The 1 character type code provides a total of 64 unique type code values. The maximum length of the value provided by the 2 size characters is 4095 quadlets of characters in the *T* domain and triplets of bytes int the *B* domain. All are raw binary primitives with pad size of 2 that each include 2 ante bytes. 
+### Small Variable Raw Size Table With 2 Lead Bytes
+This table uses `6` as its first character or selector. The second character provides the type. The final two characters provide the size of the value in quadlets/triplets as a Base64 encoded integer. Only raw binaries with pad size of 0 are encoded with this table. The 1 character type code provides a total of 64 unique type code values. The maximum length of the value provided by the 2 size characters is 4095 quadlets of characters in the *T* domain and triplets of bytes int the *B* domain. All are raw binary primitives with pad size of 2 that each include 2 lead bytes. 
 
 ## Large Variable Raw Size Tables
 Many legacy cryptographic libraries such as OpenSSL and GPG support any sized  variable sized primitive for keys, signatures and digests. Although this approach is often criticized for providing too much flexibility, many legacy applications depend on this degree of flexibility. Consequently these large variable raw size tables provide a sufficiently expansive set of tables with enough types and sizes to accommodate all the legacy cryptographic libraries as well as all the variable sized raw primitives for the foreseeable future. 
 
-The three tables in this group are for large variable raw size primitives. These three tables use 0, 1 or 2 ante bytes as appropriate for the associated pad size of 0, 1 or 2 for a given variable sized raw binary value. The text code size for all three tables is 8 characters.
-The first character is the selector, the next three characters provide the type, and the last four characters provide the size of the value as a Base64 encoded integer. With 3 characters for each unique type code, each table provides 262,144 unique type codes. This should be enough type codes to accommodate all fixed raw size primitive types for the foreseeable future.  A given type code is repeated in each table for the same type. What is different for each table is the number of ante bytes. The selector not only encodes the table but also implicitly encodes the number of ante bytes. The variable size is measured in quadlets of 4 characters each in the *T* domain and equivalently in triplets of 3 bytes each in the *B* domain. Thus computing the number of characters when parsing or off-loading in the *T* domain means multiplying the variable size by 4. Likewise computing the number of bytes when parsing or off-loading in the *B* domain means multiplying the variable size by 3. The four Base64 size characters provide value lengths in quadlets/triplets from 0 to 16,777,215 (`64**4 -1`). This corresponds to value lengths of up to 67,108,860 characters (`16777215 • 4`) or 50,331,645 bytes (`16777215 • 3`). 
+The three tables in this group are for large variable raw size primitives. These three tables use 0, 1 or 2 Lead bytes as appropriate for the associated pad size of 0, 1 or 2 for a given variable sized raw binary value. The text code size for all three tables is 8 characters.
+The first character is the selector, the next three characters provide the type, and the last four characters provide the size of the value as a Base64 encoded integer. With 3 characters for each unique type code, each table provides 262,144 unique type codes. This should be enough type codes to accommodate all fixed raw size primitive types for the foreseeable future.  A given type code is repeated in each table for the same type. What is different for each table is the number of lead bytes. The selector not only encodes the table but also implicitly encodes the number of lead bytes. The variable size is measured in quadlets of 4 characters each in the *T* domain and equivalently in triplets of 3 bytes each in the *B* domain. Thus computing the number of characters when parsing or off-loading in the *T* domain means multiplying the variable size by 4. Likewise computing the number of bytes when parsing or off-loading in the *B* domain means multiplying the variable size by 3. The four Base64 size characters provide value lengths in quadlets/triplets from 0 to 16,777,215 (`64**4 -1`). This corresponds to value lengths of up to 67,108,860 characters (`16777215 * 4`) or 50,331,645 bytes (`16777215 * 3`). 
 
 
-### Large Variable Raw Size Table With 0 Ante Bytes
-This table uses `7` as its first character or selector. The next three characters provide the type. The final four characters provide the size of the value in quadlets/triplets as a Base64 encoded integer. Only raw binaries with pad size of 0 are encoded with this table. The 3 character type code provides a total of 262,144 unique type code values. The maximum length of the value provided by the 4 size characters is 16,777,215 quadlets of characters in the *T* domain and triplets of bytes in the *B* domain. All are raw binary primitives with pad size of 0 that each include 0 ante bytes. 
+### Large Variable Raw Size Table With 0 Lead Bytes
+This table uses `7` as its first character or selector. The next three characters provide the type. The final four characters provide the size of the value in quadlets/triplets as a Base64 encoded integer. Only raw binaries with pad size of 0 are encoded with this table. The 3 character type code provides a total of 262,144 unique type code values. The maximum length of the value provided by the 4 size characters is 16,777,215 quadlets of characters in the *T* domain and triplets of bytes in the *B* domain. All are raw binary primitives with pad size of 0 that each include 0 lead bytes. 
 
-### Large Variable Raw Size Table With 1 Ante Byte
-This table uses `8` as its first character or selector. The next three characters provide the type. The final four characters provide the size of the value in quadlets/triplets as a Base64 encoded integer. Only raw binaries with pad size of 1 are encoded with this table. The 3 character type code provides a total of 262,144 unique type code values. The maximum length of the value provided by the 4 size characters is 16,777,215 quadlets of characters in the *T* domain and triplets of bytes in the *B* domain. All are raw binary primitives with pad size of 1 that each include 1 ante bytes. 
+### Large Variable Raw Size Table With 1 Lead Byte
+This table uses `8` as its first character or selector. The next three characters provide the type. The final four characters provide the size of the value in quadlets/triplets as a Base64 encoded integer. Only raw binaries with pad size of 1 are encoded with this table. The 3 character type code provides a total of 262,144 unique type code values. The maximum length of the value provided by the 4 size characters is 16,777,215 quadlets of characters in the *T* domain and triplets of bytes in the *B* domain. All are raw binary primitives with pad size of 1 that each include 1 lead bytes. 
 
-### Large Variable Raw Size Table With 2 Ante Bytes
-This table uses `9` as its first character or selector. The next three characters provide the type. The final four characters provide the size of the value in quadlets/triplets as a Base64 encoded integer. Only raw binaries with pad size of 2 are encoded with this table. The 3 character type code provides a total of 262,144 unique type code values. The maximum length of the value provided by the 4 size characters is 16,777,215 quadlets of characters in the *T* domain and triplets of bytes in the *B* domain. All are raw binary primitives with pad size of 2 that each include 2 ante bytes.  
+### Large Variable Raw Size Table With 2 Lead Bytes
+This table uses `9` as its first character or selector. The next three characters provide the type. The final four characters provide the size of the value in quadlets/triplets as a Base64 encoded integer. Only raw binaries with pad size of 2 are encoded with this table. The 3 character type code provides a total of 262,144 unique type code values. The maximum length of the value provided by the 4 size characters is 16,777,215 quadlets of characters in the *T* domain and triplets of bytes in the *B* domain. All are raw binary primitives with pad size of 2 that each include 2 lead bytes.  
 
 ## Count (Framing) Code Tables
 There may be as many at 13 count code tables, but only two are currently specified. These two are the small count, four character table and the large count, eight character table. Because count codes only count quadlets/triplets, primitives or groups of primitives, count codes have no value component, but only type and size components. Because primitives are already guaranteed to be composable count codes do not need to account for pad size as long as the count code itself is aligned on a 24 bit boundary. The count code type indicates the type of primitive being counted and the size indicates how many of that type. Both count code tables use the first two characters as a nested set of selectors. The first selector uses`-` as the initial selector for count codes. The next character is either a selector for another count code table or is the type for the small count code table. When the  second character is numeral `0` - `9` or the letters `-` or `_` then it is a secondary cound code table selector. When the second character is a letter in the range `A` - `Z` or `a` - `z` then it is a unique count code type. This given a total of 52 single character count code types.
@@ -555,7 +555,7 @@ The `_` selector is reserved for the yet to be defined op code table or tables. 
 The following table summarizes the *T* domain coding schemes for the 13 code tables defined above.
 
 
-|  Selector |  Selector | Type Chars | Value Size Chars | Code Size | Ante Bytes | Pad Size | Format |
+|  Selector |  Selector | Type Chars | Value Size Chars | Code Size | Lead Bytes | Pad Size | Format |
 |:---------:|:---------:|:----:|:---:|:---:|:---:|:---:|--------------:|
 |           |           |      |     |     |     |     |               | 
 |`[A-Z,a-z]`|           |   1* |  0  |  1  |  0  |  1  |         `$&&&`| 
@@ -580,7 +580,7 @@ The following table summarizes the *T* domain coding schemes for the 13 code tab
 Character format symbol definitions:  
 `$` means type code character from  subset of Base64  [A-Z,a-z,0-9,-,_].   
 `#` means a Base64 digit as part of a base 64 integer that determines the number of following quadlets or triplets in the primitive or when part of a count code, the count of following primitives or groups of primitives.  
-`&` represents one or more Base64 value characters representing the converted raw binary value included ante bytes when applicable. The actual number of chars is determined by the prep-ended text code.  
+`&` represents one or more Base64 value characters representing the converted raw binary value included lead bytes when applicable. The actual number of chars is determined by the prep-ended text code.  
 `TBD` means to be determined
 
 ## Parse Size Table
@@ -595,7 +595,7 @@ Text domain parsing can be simplified by using a parse size table. A text domain
 |       `5` |   2  |  
 |           |      |
 
-| hard sized index |  hs  |  ss  |  vs  |  fs  |  as  |  ps  |
+| hard sized index |  hs  |  ss  |  vs  |  fs  |  ls  |  ps  |
 |:---------:|:----:|:----:|:----:|:----:|:----:|:----:|
 |           |      |      |      |      |      |      |    
 |       `B` |   1  |   0  |  43* |  44  |  0   |  1   |
@@ -611,10 +611,9 @@ Text domain parsing can be simplified by using a parse size table. A text domain
 *cs* means code size where *cs = hs + ss*.  
 *vs* means value size in chars.  
 *fs* means full size in chars where *fs = hs + ss + vs*.  
-*as* means ante size in bytes.  
+*ls* means lead size in bytes.  
 *ps* means pad size in chars.   
 *rs* means raw size in bytes of binary value.  
-*as* means ante size in bytes.  
 *bs* means binary size in bytes where *bs = as + rs*.  
 
 
@@ -625,7 +624,7 @@ A new signature scheme based on Ed448 with 114 byte signatures signatures is als
 
 The associate indexed schemes are provided in the following table. 
 
-|  Selector |  Selector | Type Chars | Index Chars | Code Size | Ante Bytes | Pad Size | Format |
+|  Selector |  Selector | Type Chars | Index Chars | Code Size | Lead Bytes | Pad Size | Format |
 |:---------:|:---------:|:----:|:---:|:---:|:---:|:---:|--------------:|
 |           |           |      |     |     |     |     |               | 
 |`[A-Z,a-z]`|           |   1* |  1  |  2  |  0  |  2  |         `$#&&`| 
@@ -637,15 +636,8 @@ The associate indexed schemes are provided in the following table.
 Character format symbol definitions:  
 `$` means type code character from  subset of Base64  [A-Z,a-z,0-9,-,_].   
 `#` means a Base64 digit as part of a base 64 integer that determines the index.  
-`&` represents one or more Base64 value characters representing the converted raw binary value included ante bytes when applicable. The actual number of chars is determined by the prep-ended text code.  
+`&` represents one or more Base64 value characters representing the converted raw binary value included lead bytes when applicable. The actual number of chars is determined by the prep-ended text code.  
 `TBD` means to be determined
-
-
-
-
-
-
-
 
 
 # Master Code Table
@@ -773,7 +765,7 @@ ACTD7NDX93ZGTkZBBuSeSGsAQ7u0hngpNTZTK_Um7rUZGnLRNJvo5oOnnC1J2iBQHuxoq8PyjdT3BHS2
 
 # Security Considerations
 
-TODO Security
+None
 
 
 # IANA Considerations
