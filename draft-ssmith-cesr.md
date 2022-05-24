@@ -597,9 +597,9 @@ Text domain parsing can be simplified by using a parse size table. A text domain
 | hard sized index |  hs  |  ss  |  vs  |  fs  |  ls  |  ps  |
 |:---------:|:----:|:----:|:----:|:----:|:----:|:----:|
 |           |      |      |      |      |      |      |    
-|       `B` |   1  |   0  |  43* |  44  |  0   |  1   |
-|      `0B` |   2  |   0  |  86* |  88  |  0   |  2*  |
-|      `5A` |   2  |   2  |  #   |   #  |  1   |  1*  |
+|       `B` |   1  |   0  |  43\* |  44  |  0   |  1   |
+|      `0B` |   2  |   0  |  86\* |  88  |  0   |  2\*  |
+|      `5A` |   2  |   2  |  \#   |   \#  |  1   |  1\*  |
 |           |      |      |      |      |      |      |
 
 `*` size may be calculated from other sizes.  
@@ -629,7 +629,7 @@ The associated indexed schemes are provided in the following table.
 |  Selector |  Selector | Type Chars | Index Chars | Code Size | Lead Bytes | Pad Size | Format |
 |:---------:|:---------:|:----:|:---:|:---:|:---:|:---:|--------------:|
 |           |           |      |     |     |     |     |               | 
-|`[A-Z,a-z]`|           |   1* |  1  |  2  |  0  |  2  |         `$#&&`| 
+|`[A-Z,a-z]`|           |   1\* |  1  |  2  |  0  |  2  |         `$#&&`| 
 |     `0`   |           |   1  |  2  |  4  |  0  |  0  |    ` 0$##&&&&`| 
 |           |           |      |     |     |     |     |               | 
 
