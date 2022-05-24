@@ -664,74 +664,74 @@ This master table includes all three types of codes separated by headers. The ta
 |   Code   | Description | Code Length | Count or Index Length | Total Length |
 |:--------:|:----------------------------------|:------------:|:-------------:|:------------:|
 |          |                    **Basic One Character Codes**                                     |             |              |              |
-|     A    | Random seed of Ed25519 private key of length 256 bits                                             |      1      |              |      44      |
-|     B    | Ed25519 non-transferable prefix public signing verification key. Basic derivation.                |      1      |              |      44      |
-|     C    | X25519 public encryption key. May be converted from Ed25519 public signing verification key.      |      1      |              |      44      |
-|     D    | Ed25519 public signing verification key. Basic derivation.                                        |      1      |              |      44      |
-|     E    | Blake3-256 Digest. Self-addressing derivation.                                                    |      1      |              |      44      |
-|     F    | Blake2b-256 Digest. Self-addressing derivation.                                                   |      1      |              |      44      |
-|     G    | Blake2s-256 Digest. Self-addressing derivation.                                                   |      1      |              |      44      |
-|     H    | SHA3-256 Digest. Self-addressing derivation.                                                      |      1      |              |      44      |
-|     I    | SHA2-256 Digest. Self-addressing derivation.                                                      |      1      |              |      44      |
-|     J    | Random seed of ECDSA secp256k1 private key of length 256 bits                                     |      1      |              |      44      |
-|     K    | Random seed of Ed448 private key of length 448 bits                                               |      1      |              |      76      |
-|     L    | X448 public encryption key. May be converted from Ed448 public signing verification key.          |      1      |              |      76      |
-|     M    | Short value of length 16 bits                                                                     |      1      |              |       4      |
+|     `A`    | Random seed of Ed25519 private key of length 256 bits                                             |      1      |              |      44      |
+|     `B`    | Ed25519 non-transferable prefix public signing verification key. Basic derivation.                |      1      |              |      44      |
+|     `C`    | X25519 public encryption key. May be converted from Ed25519 public signing verification key.      |      1      |              |      44      |
+|     `D`    | Ed25519 public signing verification key. Basic derivation.                                        |      1      |              |      44      |
+|     `E`    | Blake3-256 Digest. Self-addressing derivation.                                                    |      1      |              |      44      |
+|     `F`    | Blake2b-256 Digest. Self-addressing derivation.                                                   |      1      |              |      44      |
+|     `G`    | Blake2s-256 Digest. Self-addressing derivation.                                                   |      1      |              |      44      |
+|     `H`    | SHA3-256 Digest. Self-addressing derivation.                                                      |      1      |              |      44      |
+|     `I`    | SHA2-256 Digest. Self-addressing derivation.                                                      |      1      |              |      44      |
+|     `J`    | Random seed of ECDSA secp256k1 private key of length 256 bits                                     |      1      |              |      44      |
+|     `K`    | Random seed of Ed448 private key of length 448 bits                                               |      1      |              |      76      |
+|     `L`    | X448 public encryption key. May be converted from Ed448 public signing verification key.          |      1      |              |      76      |
+|     `M`    | Short value of length 16 bits                                                                     |      1      |              |       4      |
 |          |                **Basic Two Character Codes**                                     |             |              |              |
-|    0A    | Random salt, seed, private key, or sequence number of length 128 bits                             |      2      |              |      24      |
-|    0B    | Ed25519 signature. Self-signing derivation.                                                       |      2      |              |      88      |
-|    0C    | ECDSA secp256k1 signature. Self-signing derivation.                                               |      2      |              |      88      |
-|    0D    | Blake3-512 Digest. Self-addressing derivation.                                                    |      2      |              |      88      |
-|    0E    | Blake2b-512 Digest. Self-addressing derivation.                                                   |      2      |              |      88      |
-|    0F    | SHA3-512 Digest. Self-addressing derivation.                                                      |      2      |              |      88      |
-|    0G    | SHA2-512 Digest. Self-addressing derivation.                                                      |      2      |              |      88      |
-|    0H    | Long value of length 32 bits                                                                      |      2      |              |       8      |
+|    `0A`    | Random salt, seed, private key, or sequence number of length 128 bits                             |      2      |              |      24      |
+|    `0B`    | Ed25519 signature. Self-signing derivation.                                                       |      2      |              |      88      |
+|    `0C`    | ECDSA secp256k1 signature. Self-signing derivation.                                               |      2      |              |      88      |
+|    `0D`    | Blake3-512 Digest. Self-addressing derivation.                                                    |      2      |              |      88      |
+|    `0E`    | Blake2b-512 Digest. Self-addressing derivation.                                                   |      2      |              |      88      |
+|    `0F`    | SHA3-512 Digest. Self-addressing derivation.                                                      |      2      |              |      88      |
+|    `0G`    | SHA2-512 Digest. Self-addressing derivation.                                                      |      2      |              |      88      |
+|    `0H`    | Long value of length 32 bits                                                                      |      2      |              |       8      |
 |          |                 **Basic Four Character Codes**                                      |             |              |              |
-|   1AAA   | ECDSA secp256k1 non-transferable prefix public signing verification key. Basic derivation.        |      4      |              |      48      |
-|   1AAB   | ECDSA secp256k1 public signing verification or encryption key. Basic derivation.                  |      4      |              |      48      |
-|   1AAC   | Ed448 non-transferable prefix public signing verification key. Basic derivation.                  |      4      |              |      80      |
-|   1AAD   | Ed448 public signing verification key. Basic derivation.                                          |      4      |              |      80      |
-|   1AAE   | Ed448 signature. Self-signing derivation.                                                         |      4      |              |      156     |
-|   1AAF   | Tag Base64 4 chars or 3 byte number                                                               |      4      |              |      8       |
-|   1AAG   | DateTime Base64 custom encoded 32 char ISO-8601 DateTime                                          |      4      |              |      36      |
+|   `1AAA`   | ECDSA secp256k1 non-transferable prefix public signing verification key. Basic derivation.        |      4      |              |      48      |
+|   `1AAB`   | ECDSA secp256k1 public signing verification or encryption key. Basic derivation.                  |      4      |              |      48      |
+|   `1AAC`   | Ed448 non-transferable prefix public signing verification key. Basic derivation.                  |      4      |              |      80      |
+|   `1AAD`   | Ed448 public signing verification key. Basic derivation.                                          |      4      |              |      80      |
+|   `1AAE`   | Ed448 signature. Self-signing derivation.                                                         |      4      |              |      156     |
+|   `1AAF`   | Tag Base64 4 chars or 3 byte number                                                               |      4      |              |      8       |
+|   `1AAG`   | DateTime Base64 custom encoded 32 char ISO-8601 DateTime                                          |      4      |              |      36      |
 |          |                          **Indexed Two Character Codes**                           |             |              |              |
-|    A#    | Ed25519 indexed signature                                                                         |      2      |       1      |      88      |
-|    B#    | ECDSA secp256k1 indexed signature                                                                 |      2      |       1      |      88      |
+|    `A#`    | Ed25519 indexed signature                                                                         |      2      |       1      |      88      |
+|    `B#`    | ECDSA secp256k1 indexed signature                                                                 |      2      |       1      |      88      |
 |          |                        **Indexed Four Character Codes**                          |             |              |              |
-|   0A##   | Ed448 indexed signature                                                                           |      4      |       2      |      156     |
-|   0B##   | Label Base64 chars of variable length L=N*4 where N is value of index  total = L+4                |      4      |       2      |   Variable   |
+|   `0A##`   | Ed448 indexed signature                                                                           |      4      |       2      |      156     |
+|   `0B##`   | Label Base64 chars of variable length L=N*4 where N is value of index  total = L+4                |      4      |       2      |   Variable   |
 |          |                        **Counter Four Character Codes**                           |             |              |              |
-|   -A##   | Count of attached qualified Base64 indexed controller signatures                                  |      4      |       2      |       4      |
-|   -B##   | Count of attached qualified Base64 indexed witness signatures                                     |      4      |       2      |       4      |
-|   -C##   | Count of attached qualified Base64 nontransferable identifier receipt couples  pre+sig            |      4      |       2      |       4      |
-|   -D##   | Count of attached qualified Base64 transferable identifier receipt quadruples  pre+snu+dig+sig    |      4      |       2      |       4      |
-|   -E##   | Count of attached qualified Base64 first seen replay couples fn+dt                                |      4      |       2      |       4      |
-|   -F##   | Count of attached qualified Base64 transferable indexed sig groups pre+snu+dig + idx sig group    |      4      |       2      |       4      |
+|   `-A##`   | Count of attached qualified Base64 indexed controller signatures                                  |      4      |       2      |       4      |
+|   `-B##`   | Count of attached qualified Base64 indexed witness signatures                                     |      4      |       2      |       4      |
+|   `-C##`   | Count of attached qualified Base64 nontransferable identifier receipt couples  pre+sig            |      4      |       2      |       4      |
+|   `-D##`   | Count of attached qualified Base64 transferable identifier receipt quadruples  pre+snu+dig+sig    |      4      |       2      |       4      |
+|   `-E##`   | Count of attached qualified Base64 first seen replay couples fn+dt                                |      4      |       2      |       4      |
+|   `-F##`   | Count of attached qualified Base64 transferable indexed sig groups pre+snu+dig + idx sig group    |      4      |       2      |       4      |
 |          |                                                                                 |             |              |              |
-|   -U##   | Count of qualified Base64 groups or primitives in message data                                    |      4      |       2      |       4      |
-|   -V##   | Count of total attached grouped material qualified Base64 4 char quadlets                         |      4      |       2      |       4      |
-|   -W##   | Count of total message data grouped material qualified Base64 4 char quadlets                     |      4      |       2      |       4      |
-|   -X##   | Count of total group message data plus attachments qualified Base64 4 char quadlets               |      4      |       2      |       4      |
-|   -Y##   | Count of qualified Base64 groups or primitives in group. (context dependent)                      |      4      |       2      |       4      |
-|   -Z##   | Count of grouped material qualified Base64 4 char quadlets (context dependent)                    |      4      |       2      |       4      |
+|   `-U##`   | Count of qualified Base64 groups or primitives in message data                                    |      4      |       2      |       4      |
+|   `-V##`   | Count of total attached grouped material qualified Base64 4 char quadlets                         |      4      |       2      |       4      |
+|   `-W##`   | Count of total message data grouped material qualified Base64 4 char quadlets                     |      4      |       2      |       4      |
+|   `-X##`   | Count of total group message data plus attachments qualified Base64 4 char quadlets               |      4      |       2      |       4      |
+|   `-Y##`   | Count of qualified Base64 groups or primitives in group. (context dependent)                      |      4      |       2      |       4      |
+|   `-Z##`   | Count of grouped material qualified Base64 4 char quadlets (context dependent)                    |      4      |       2      |       4      |
 |          |                                                                                                   |             |              |              |
-|   -a##   | Count of anchor seal groups in list  (anchor seal list) (a)                                       |      4      |       2      |       4      |
-|   -c##   | Count of config traits (each trait is 4 char quadlet   (configuration trait list) (c)             |      4      |       2      |       4      |
-|   -d##   | Count of digest seal Base64 4 char quadlets in digest  (digest seal  (d)                          |      4      |       2      |       4      |
-|   -e##   | Count of event seal Base64 4 char quadlets in seal triple of (event seal) (i, s, d)               |      4      |       2      |       4      |
-|   -k##   | Count of keys in list  (key list) (k)                                                             |      4      |       2      |       4      |
-|   -l##   | Count of locations seal Base64 4 char quadlets in seal quadruple of (location seal) (i, s, t, p)  |      4      |       2      |       4      |
-|   -r##   | Count of root digest seal Base64 4 char quadlets in root digest  (root digest) (rd)               |      4      |       2      |       4      |
-|   -w##   | Count of witnesses in list  (witness list or witness remove list or witness add list) (w, wr, wa) |      4      |       2      |       4      |
+|   `-a##`   | Count of anchor seal groups in list  (anchor seal list) (a)                                       |      4      |       2      |       4      |
+|   `-c##`   | Count of config traits (each trait is 4 char quadlet   (configuration trait list) (c)             |      4      |       2      |       4      |
+|   `-d##`   | Count of digest seal Base64 4 char quadlets in digest  (digest seal  (d)                          |      4      |       2      |       4      |
+|   `-e##`   | Count of event seal Base64 4 char quadlets in seal triple of (event seal) (i, s, d)               |      4      |       2      |       4      |
+|   `-k##`   | Count of keys in list  (key list) (k)                                                             |      4      |       2      |       4      |
+|   `-l##`   | Count of locations seal Base64 4 char quadlets in seal quadruple of (location seal) (i, s, t, p)  |      4      |       2      |       4      |
+|   `-r##`   | Count of root digest seal Base64 4 char quadlets in root digest  (root digest) (rd)               |      4      |       2      |       4      |
+|   `-w##`   | Count of witnesses in list  (witness list or witness remove list or witness add list) (w, wr, wa) |      4      |       2      |       4      |
 |          |                       **Counter Eight Character Codes**                             |             |              |              |
-| -0U##### | Count of qualified Base64 groups or primitives in message data                                    |      8      |       5      |       8      |
-| -0V##### | Count of total attached grouped material qualified Base64 4 char quadlets                         |      8      |       5      |       8      |
-| -0W##### | Count of total message data grouped material qualified Base64 4 char quadlets                     |      8      |       5      |       8      |
-| -0X##### | Count of total group message data plus attachments qualified Base64 4 char quadlets               |      8      |       5      |       8      |
-| -0Y##### | Count of qualified Base64 groups or primitives in group (context dependent)                       |      8      |       5      |       8      |
-| -0Z##### | Count of grouped  material qualified Base64 4 char quadlets (context dependent)                   |      8      |       5      |       8      |
+| `-0U#####` | Count of qualified Base64 groups or primitives in message data                                    |      8      |       5      |       8      |
+| `-0V#####` | Count of total attached grouped material qualified Base64 4 char quadlets                         |      8      |       5      |       8      |
+| `-0W#####` | Count of total message data grouped material qualified Base64 4 char quadlets                     |      8      |       5      |       8      |
+| `-0X#####` | Count of total group message data plus attachments qualified Base64 4 char quadlets               |      8      |       5      |       8      |
+| `-0Y#####` | Count of qualified Base64 groups or primitives in group (context dependent)                       |      8      |       5      |       8      |
+| `-0Z#####` | Count of grouped  material qualified Base64 4 char quadlets (context dependent)                   |      8      |       5      |       8      |
 |          |                                                                      |             |              |              |
-| -0a##### | Count of anchor seals  (seal groups in list)                                                      |      8      |       5      |       8      |
+| `-0a#####` | Count of anchor seals  (seal groups in list)                                                      |      8      |       5      |       8      |
 
 
 
