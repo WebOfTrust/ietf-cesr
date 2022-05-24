@@ -656,5 +656,3 @@ This document has no IANA actions.
 
 # Acknowledgments
 {:numbered="false"}
-
-The keripy development team, the KERI community, and the ToIP ACDC working group.
