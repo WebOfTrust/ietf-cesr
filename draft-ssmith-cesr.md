@@ -183,13 +183,13 @@ Let `R(B)` denote the abstract transformation function from the *B* domain to th
 
 Given these transformations, we can complete a circuit of transformations that starts in any of the three domains and then crosses over the other two domains in either direction. For example, starting in the *R* domain we can traverse a circuit that crosses into the *T* and *B* domains and then crosses back into the *R* domain as follows:
 
-~~~
+~~~text
 R->T(R)->T->B(T)->B->R(B)->R
 ~~~
 
 Likewise starting in the *R* domain we can traverse a circuit that crosses into the *B* and *T* domains and then crosses back into the *R* domain as follows:
 
-~~~
+~~~text
 R->B(R)->B->T(B)->T->R(T)->R
 ~~~
 
@@ -197,7 +197,7 @@ R->B(R)->B->T(B)->T->R(T)->R
 
 Let `+` represent concatenation. Concatenation is associative and may be applied to any two primitives or any two groups or sets of concatenated primitives. For example:   
 
-~~~
+~~~text
 t[0] + t[1] + t[2] + t[3] = (t[0] + t[1]) + (t[2] + t[3])
 ~~~
 
@@ -211,7 +211,7 @@ The concatentation composability property between *T* and *B* is expressed as fo
 
 Given a set of primitives `b[k]` and `t[k]` and transformations `T(B)` and `B(T)` such that `t[k] = T(b[k])` and `b[k] = B(t[k])` for all `k`, then `T(B)` and `B(T)` are jointly concatenation composable if and only if,   
 
-~~~
+~~~text
 T(cat(b[k]))=cat(T(b[k])) and B(cat(t[k]))=cat(B(t[k])) for all k.
 ~~~
 
@@ -219,13 +219,13 @@ Basically, composability (over concatenation) means that the transformation of a
 
 For example, suppose we have two primitives in the text domain, namely, `t[0]` and `t[1]` that each respectively transforms to primitives in the binary domain, namely, `b[0]` and `b[1]`. The transformation duals `B(T)` and `T(B)` are composable if and only if,  
 
-~~~
+~~~text
 B(t[0] + t[1]) = B(t[0]) + B(t[1]) = b[0] + b[1]
 ~~~  
 
 and  
 
-~~~
+~~~text
 T(b[0] + b[1]) = T(b[0]) + T(b[1]) = t[0] + t[1].
 ~~~
  
@@ -246,21 +246,21 @@ In the following diagrams, we denote each byte in a naive binary primitive with 
 
 The byte and bit-level diagrams for `x` is shown below where we use `X` to denote its bytes:  
 
-~~~
+~~~text
 |           X0          |
 |b7:b6:b5:b4:b3:b2:b1:b0|
 ~~~
 
 Likewise for `y` below:  
 
-~~~
+~~~text
 |           Y0          |           Y1          |
 |b7:b6:b5:b4:b3:b2:b1:b0|b7:b6:b5:b4:b3:b2:b1:b0|
 ~~~
 
 And finally for `z` below:  
 
-~~~
+~~~text
 |           Z0          |           Z1          |           Z2          |
 |b7:b6:b5:b4:b3:b2:b1:b0|b7:b6:b5:b4:b3:b2:b1:b0|b7:b6:b5:b4:b3:b2:b1:b0|
 ~~~
@@ -269,7 +269,7 @@ When doing a naive Base64 conversion of a naive binary primitive, one Base64 cha
 
 Therefore to encode `x` in Base64, for example, requires at least two Base64 characters because the zeroth character only captures the six bits from the first byte and another character is needed to capture the other two bits. The convention in Base64 uses a Base64 character where the non-coding bits are zeros. This is diagrammed as follows:  
 
-~~~
+~~~text
 |           X0          |
 |b7:b6:b5:b4:b3:b2:b1:b0|
 |        C0       |        C1       |
@@ -277,16 +277,15 @@ Therefore to encode `x` in Base64, for example, requires at least two Base64 cha
 
 Naive Base64 encoding always pads each individual conversion of a string of bytes to an even multiple of four characters. This provides something is not true composability but does ensure that multiple distinct concatenated conversions are separable. It may be described as a sort of one-way composability. So with pad characters, denoted by replacing the spaces with `=` characters, the Base64 conversion of `x` is as follows:
 
-~~~
+~~~text
 |           X0          |
 |b7:b6:b5:b4:b3:b2:b1:b0|
 |        C0       |        C1       |========C2=======|========C3=======|
-
 ~~~
 
 Likewise `y` requires at least 3 Base64 characters to capture all of its 16 bits as follows:
 
-~~~
+~~~text
 |           Y0          |           Y1          |
 |b7:b6:b5:b4:b3:b2:b1:b0|b7:b6:b5:b4:b3:b2:b1:b0|
 |        C0       |        C1       |        C1       |
@@ -294,7 +293,7 @@ Likewise `y` requires at least 3 Base64 characters to capture all of its 16 bits
 
 Alignment on a 4 character boundary requires one pad character this becomes:
 
-~~~
+~~~text
 |           Y0          |           Y1          |
 |b7:b6:b5:b4:b3:b2:b1:b0|b7:b6:b5:b4:b3:b2:b1:b0|
 |        C0       |        C1       |        C2       |========C3=======|
@@ -302,7 +301,7 @@ Alignment on a 4 character boundary requires one pad character this becomes:
 
 Finally, because `z`  requires exactly four Base64 characters to capture all of its 24 bits, there are no pad characters needed.
 
-~~~
+~~~text
 |           Z0          |           Z1          |           Z2          |
 |b7:b6:b5:b4:b3:b2:b1:b0|b7:b6:b5:b4:b3:b2:b1:b0|b7:b6:b5:b4:b3:b2:b1:b0|
 |        C0       |        C1       |        C2       |        C3       |
@@ -310,7 +309,7 @@ Finally, because `z`  requires exactly four Base64 characters to capture all of 
 
 Suppose we concatenate `x + y` into a three-byte composition in the naive binary domain before Base64 encoding the concatenated whole. We have the following:
 
-~~~
+~~~text
 |           X0          |           Y0          |           Y1          |
 |b7:b6:b5:b4:b3:b2:b1:b0|b7:b6:b5:b4:b3:b2:b1:b0|b7:b6:b5:b4:b3:b2:b1:b0|
 |        C0       |        C1       |        C2       |        C3       |
@@ -321,7 +320,7 @@ We see that the least significant two bits of X0 are encoded into the same chara
 Suppose instead we start in the text domain with primitives `u` and `v` of lengths 1 and 3 characters respectively.
 If we concatenate these two primitives as `u + v` in text-domain and then convert them as a whole to naive binary. We have the following:
 
-~~~
+~~~text
 |        U0       |        V0       |        V1       |        V2       |
 |b7:b6:b5:b4:b3:b2:b1:b0|b7:b6:b5:b4:b3:b2:b1:b0|b7:b6:b5:b4:b3:b2:b1:b0|
 |           B0          |           B1          |           B2          |
@@ -455,7 +454,7 @@ Similar scale factors exist for cryptographic digests. A standard default Blake3
 
 A 32-byte raw binary value has a pad size of 1 character.
 
-~~~
+~~~text
 (3 - (32 mod 3)) mod 3) = 1
 ~~~
 
@@ -463,7 +462,7 @@ Therefore the minimal text code size is 1 character for 32-byte raw binary crypt
 
 A 64-byte raw binary value has a pad size of 2 characters.
 
-~~~
+~~~text
 (3 - (64 mod 3)) mod 3) = 2
 ~~~
 
