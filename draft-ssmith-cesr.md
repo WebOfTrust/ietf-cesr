@@ -115,11 +115,11 @@ informative:
     
   UTF8:
     target: https://en.wikipedia.org/wiki/UTF-8 
-    title: UTF-8 Unicode
+    title: "UTF-8 Unicode"
     
   Latin1:
     target: https://en.wikipedia.org/wiki/ISO/IEC_8859-1
-    title: Latin-1 ISO 8859-1
+    title: "Latin-1 ISO 8859-1"
 
   STOMP:
     target: https://stomp.github.io
@@ -558,7 +558,7 @@ The following table summarizes the *T* domain coding schemes for the 13 code tab
 |  Selector |  Selector | Type Chars | Value Size Chars | Code Size | Lead Bytes | Pad Size | Format |
 |:---------:|:---------:|:----:|:---:|:---:|:---:|:---:|--------------:|
 |           |           |      |     |     |     |     |               | 
-|`[A-Z,a-z]`|           |   1* |  0  |  1  |  0  |  1  |         `$&&&`| 
+|`[A-Z,a-z]`|           |  1\* |  0  |  1  |  0  |  1  |         `$&&&`| 
 |     `0`   |           |   1  |  0  |  2  |  0  |  2  |         `0$&&`|
 |     `1`   |           |   3  |  0  |  4  |  0  |  0  |     `1$$$&&&&`|
 |     `2`   |           |   3  |  0  |  4  |  1  |  1  |     `2$$$%&&&`|
@@ -569,7 +569,7 @@ The following table summarizes the *T* domain coding schemes for the 13 code tab
 |     `7`   |           |   3  |  4  |  8  |  0  |  0  | `7$$$####&&&&`| 
 |     `8`   |           |   3  |  4  |  8  |  1  |  1  | `8$$$####%&&&`| 
 |     `9`   |           |   3  |  4  |  8  |  2  |  2  | `9$$$####%%&&`| 
-|     `-`   |`[A-Z,a-z]`|   1* |  0  |  4  |  0  |  0  |         `-$##`|
+|     `-`   |`[A-Z,a-z]`|  1\* |  0  |  4  |  0  |  0  |         `-$##`|
 |     `-`   |     `0`   |   2  |  0  |  8  |  0  |  0  |     `-0$$####`|
 |     `_`   |           |  TBD | TBD | TBD | TBD | TBD |            `_`|
 
@@ -616,7 +616,7 @@ Text domain parsing can be simplified by using a parse size table. A text domain
 Sizes that may be derived from the table size entries are as follows,
 
 *cs* means code size where *cs = hs + ss*.  
-*rs* means raw size in bytes of binary value where *rs is derived from R(T).
+*rs* means raw size in bytes of binary value where *rs is derived from `R(T)`.
 *bs* means binary size in bytes where *bs = ls + rs*.
 
 ## Special Context-Specific Code Tables
@@ -644,7 +644,7 @@ Character format symbol definitions:
 `TBD` means to be determined
 
 
-# Master Code Table
+# Appendix: Master Code Table
 
 ## Filling Code Table
 The approach to filling the tables is a first needed first-served basis. In addition, the requirement that all cryptographic operations maintain at least 128 bits of cryptographic strength precludes the entry of many weak cryptographic suites into the compact tables. CESR's compact code table includes only best-of-class cryptographic operations. In 2022 it is expected that NIST will approve standardized post-quantum resistant cryptographic signatures at which time codes for the most appropriate post-quantum signature suites will be added. Falcon appears to be the leader with open source code already available.
@@ -657,14 +657,13 @@ This master table includes all three types of codes separated by headers. The ta
 2) A description of what is encoded or appended to the code.
 3) The length in characters of the code.
 4) the length in characters of the index or count portion of the code 
-5) The length in characters of the fully qualified primitive including code and append material or number of elements in group. 
+5) The length in characters of the fully qualified primitive including code and append material or number of elements in the group. 
 
 
 
-
-|   Code   | Description                                                                                       | Code Length | Count or Index Length | Total Length |
+|   Code   | Description | Code Length | Count or Index Length | Total Length |
 |:--------:|:----------------------------------|:------------:|:-------------:|:------------:|
-|          |                              **Basic One Character Codes**                                     |             |              |              |
+|          |                    **Basic One Character Codes**                                     |             |              |              |
 |     A    | Random seed of Ed25519 private key of length 256 bits                                             |      1      |              |      44      |
 |     B    | Ed25519 non-transferable prefix public signing verification key. Basic derivation.                |      1      |              |      44      |
 |     C    | X25519 public encryption key. May be converted from Ed25519 public signing verification key.      |      1      |              |      44      |
@@ -678,7 +677,7 @@ This master table includes all three types of codes separated by headers. The ta
 |     K    | Random seed of Ed448 private key of length 448 bits                                               |      1      |              |      76      |
 |     L    | X448 public encryption key. May be converted from Ed448 public signing verification key.          |      1      |              |      76      |
 |     M    | Short value of length 16 bits                                                                     |      1      |              |       4      |
-|          |                              **Basic Two Character Codes**                                     |             |              |              |
+|          |                **Basic Two Character Codes**                                     |             |              |              |
 |    0A    | Random salt, seed, private key, or sequence number of length 128 bits                             |      2      |              |      24      |
 |    0B    | Ed25519 signature. Self-signing derivation.                                                       |      2      |              |      88      |
 |    0C    | ECDSA secp256k1 signature. Self-signing derivation.                                               |      2      |              |      88      |
@@ -687,7 +686,7 @@ This master table includes all three types of codes separated by headers. The ta
 |    0F    | SHA3-512 Digest. Self-addressing derivation.                                                      |      2      |              |      88      |
 |    0G    | SHA2-512 Digest. Self-addressing derivation.                                                      |      2      |              |      88      |
 |    0H    | Long value of length 32 bits                                                                      |      2      |              |       8      |
-|          |                 **Basic Four Character Codes**                                                 |             |              |              |
+|          |                 **Basic Four Character Codes**                                      |             |              |              |
 |   1AAA   | ECDSA secp256k1 non-transferable prefix public signing verification key. Basic derivation.        |      4      |              |      48      |
 |   1AAB   | ECDSA secp256k1 public signing verification or encryption key. Basic derivation.                  |      4      |              |      48      |
 |   1AAC   | Ed448 non-transferable prefix public signing verification key. Basic derivation.                  |      4      |              |      80      |
@@ -695,20 +694,20 @@ This master table includes all three types of codes separated by headers. The ta
 |   1AAE   | Ed448 signature. Self-signing derivation.                                                         |      4      |              |      156     |
 |   1AAF   | Tag Base64 4 chars or 3 byte number                                                               |      4      |              |      8       |
 |   1AAG   | DateTime Base64 custom encoded 32 char ISO-8601 DateTime                                          |      4      |              |      36      |
-|          |                          **Indexed Two Character Codes**                                       |             |              |              |
+|          |                          **Indexed Two Character Codes**                           |             |              |              |
 |    A#    | Ed25519 indexed signature                                                                         |      2      |       1      |      88      |
 |    B#    | ECDSA secp256k1 indexed signature                                                                 |      2      |       1      |      88      |
-|          |                        **Indexed Four Character Codes**                                        |             |              |              |
+|          |                        **Indexed Four Character Codes**                          |             |              |              |
 |   0A##   | Ed448 indexed signature                                                                           |      4      |       2      |      156     |
 |   0B##   | Label Base64 chars of variable length L=N*4 where N is value of index  total = L+4                |      4      |       2      |   Variable   |
-|          |                        **Counter Four Character Codes**                                        |             |              |              |
+|          |                        **Counter Four Character Codes**                           |             |              |              |
 |   -A##   | Count of attached qualified Base64 indexed controller signatures                                  |      4      |       2      |       4      |
 |   -B##   | Count of attached qualified Base64 indexed witness signatures                                     |      4      |       2      |       4      |
 |   -C##   | Count of attached qualified Base64 nontransferable identifier receipt couples  pre+sig            |      4      |       2      |       4      |
 |   -D##   | Count of attached qualified Base64 transferable identifier receipt quadruples  pre+snu+dig+sig    |      4      |       2      |       4      |
 |   -E##   | Count of attached qualified Base64 first seen replay couples fn+dt                                |      4      |       2      |       4      |
 |   -F##   | Count of attached qualified Base64 transferable indexed sig groups pre+snu+dig + idx sig group    |      4      |       2      |       4      |
-|          |                                                                                                   |             |              |              |
+|          |                                                                                 |             |              |              |
 |   -U##   | Count of qualified Base64 groups or primitives in message data                                    |      4      |       2      |       4      |
 |   -V##   | Count of total attached grouped material qualified Base64 4 char quadlets                         |      4      |       2      |       4      |
 |   -W##   | Count of total message data grouped material qualified Base64 4 char quadlets                     |      4      |       2      |       4      |
@@ -724,21 +723,21 @@ This master table includes all three types of codes separated by headers. The ta
 |   -l##   | Count of locations seal Base64 4 char quadlets in seal quadruple of (location seal) (i, s, t, p)  |      4      |       2      |       4      |
 |   -r##   | Count of root digest seal Base64 4 char quadlets in root digest  (root digest) (rd)               |      4      |       2      |       4      |
 |   -w##   | Count of witnesses in list  (witness list or witness remove list or witness add list) (w, wr, wa) |      4      |       2      |       4      |
-|          |                       **Counter Eight Character Codes**                                        |             |              |              |
+|          |                       **Counter Eight Character Codes**                             |             |              |              |
 | -0U##### | Count of qualified Base64 groups or primitives in message data                                    |      8      |       5      |       8      |
 | -0V##### | Count of total attached grouped material qualified Base64 4 char quadlets                         |      8      |       5      |       8      |
 | -0W##### | Count of total message data grouped material qualified Base64 4 char quadlets                     |      8      |       5      |       8      |
 | -0X##### | Count of total group message data plus attachments qualified Base64 4 char quadlets               |      8      |       5      |       8      |
 | -0Y##### | Count of qualified Base64 groups or primitives in group (context dependent)                       |      8      |       5      |       8      |
 | -0Z##### | Count of grouped  material qualified Base64 4 char quadlets (context dependent)                   |      8      |       5      |       8      |
-|          |                                                                                                   |             |              |              |
+|          |                                                                      |             |              |              |
 | -0a##### | Count of anchor seals  (seal groups in list)                                                      |      8      |       5      |       8      |
 
 
 
-The table includes complex groups that are composed of other groups. For example consider the counter attachment group 
-with code`-F##` where ``##`` is replaced by the two character Base64 count of the number of complex groups.  
-This is known as the TransIndexedSigGroups counter.  Within the complex group are one more more attached
+The table includes complex groups that are composed of other groups. For example, consider the counter attachment group 
+with code `-F##` where `##` is replaced by the two-character Base64 count of the number of complex groups.  
+This is known as the TransIndexedSigGroups counter.  Within the complex group are one or more attached
 groups where each group consists of a triple pre+snu+dig
 followed by a ControllerIdxSigs group that in turn consists of a counter code `-A##` followed by one or more
 indexed signature primitives. The following example details how this complex group may appear.
@@ -756,9 +755,6 @@ ABBgeqntZW3Gu4HL0h3odYz6LaZ_SMfmITL-Btoq_7OZFe3L16jmOe49Ur108wH7mnBaq2E_0U0N0c5v
 ACTD7NDX93ZGTkZBBuSeSGsAQ7u0hngpNTZTK_Um7rUZGnLRNJvo5oOnnC1J2iBQHuxoq8PyjdT3BHS2LiPrs2Cg  # sig 2
 
 ~~~
-
-
-
 
 
 
