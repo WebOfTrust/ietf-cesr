@@ -1332,7 +1332,7 @@ Table of Contents
 
    _ps_ means pad size in chars.
 
-   Sizes that may be derived from the table size entries are as follows,
+   Sizes that may be derived from the table size entries are as follows:
 
    _cs_ means code size where _cs = hs + ss_.
 
