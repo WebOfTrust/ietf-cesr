@@ -600,8 +600,8 @@ Text domain parsing can be simplified by using a parse size table. A text domain
 |      `5A` |   2  |   2  |  \#   |   \#  |  1   |  1\*  |
 |           |      |      |      |      |      |      |
 
-`*` size may be calculated from other sizes.
-`#` size may be calculated from extracted code characters given by other sizes.
+`*` size may be calculated from other sizes.  
+`#` size may be calculated from extracted code characters given by other sizes.  
 
 *hs* means hard size in chars.  
 *ss* means soft size in chars.  
