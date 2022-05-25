@@ -574,10 +574,15 @@ The following table summarizes the *T* domain coding schemes for the 13 code tab
 `*` selector-character is also a type-character
 
 Character format symbol definitions:
+
 `$` means type code character from  subset of Base64  `[A-Z,a-z,0-9,-,_]`.
+
 `%` means lead character.
+
 `#` means a Base64 digit as part of a base 64 integer that determines the number of following quadlets or triplets in the primitive or when part of a count code, the count of following primitives or groups of primitives.
+
 `&` represents one or more Base64 value characters representing the converted raw binary value. The actual number of chars is determined by the prepended text code.  Shown is the minimum number of value characters.
+
 `TBD` means to be determined
 
 ## Parse Size Table
@@ -600,21 +605,27 @@ Text domain parsing can be simplified by using a parse size table. A text domain
 |      `5A` |   2  |   2  |  \#   |   \#  |  1   |  1\*  |
 |           |      |      |      |      |      |      |
 
-`*` size may be calculated from other sizes.  
-`#` size may be calculated from extracted code characters given by other sizes.  
+`*` size may be calculated from other sizes.
 
-*hs* means hard size in chars.  
-*ss* means soft size in chars.  
-*vs* means value size in chars.  
-*fs* means full size in chars where *fs = hs + ss + vs*.  
-*ls* means lead size in bytes.  
-*ps* means pad size in chars.  
+`#` size may be calculated from extracted code characters given by other sizes.
+
+*hs* means hard size in chars.
+
+*ss* means soft size in chars.
+
+*vs* means value size in chars.
+
+*fs* means full size in chars where *fs = hs + ss + vs*.
+
+*ls* means lead size in bytes.
+
+*ps* means pad size in chars.
 
 Sizes that may be derived from the table size entries are as follows,
 
-*cs* means code size where *cs = hs + ss*.  
-*rs* means raw size in bytes of binary value where *rs is derived from `R(T)`.  
-*bs* means binary size in bytes where *bs = ls + rs*.  
+*cs* means code size where *cs = hs + ss*.
+*rs* means raw size in bytes of binary value where *rs is derived from `R(T)`.
+*bs* means binary size in bytes where *bs = ls + rs*.
 
 ## Special Context-Specific Code Tables
 
@@ -634,10 +645,15 @@ The associated indexed schemes are provided in the following table.
 `*` selector-character is also a type-character
 
 Character format symbol definitions:
+
 `$` means type code character from  subset of Base64  `[A-Z,a-z,0-9,-,_]`.
+
 `#` means a Base64 digit as part of a base 64 integer that determines the index.
+
 `%` means lead character.
+
 `&` represents one or more Base64 value characters representing the converted raw binary value. The actual number of chars is determined by the prep-ended text code.  Shown is the minimum number of value characters.
+
 `TBD` means to be determined
 
 The appendix contains the master code table with the concrete codes.
