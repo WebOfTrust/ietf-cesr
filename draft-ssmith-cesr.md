@@ -199,7 +199,7 @@ Let `+` represent concatenation. Concatenation is associative and may be applied
 t[0] + t[1] + t[2] + t[3] = (t[0] + t[1]) + (t[2] + t[3])
 ~~~
 
-If we let `cat(x[k])` denote the concatenation of all elements of a set of indexed primitives `x[k]` where each element is indexed by a unique value of `k` then we can denote the transformation between domains of a concatenated set of primitives as follows:
+If we let `cat(x[k])` denote the concatenation of all elements of a set of indexed primitives `x[k]` where each element is indexed by a unique value of `k`. Given the indexed representation, we can express the transformation between domains of a concatenated set of primitives as follows:
 
 Let `T(cat(b[k]))` denote the concrete transformation of a given concatenated set of primitives, `cat(b[k])` from the *B* domain to the *T* domain.
 
@@ -213,7 +213,7 @@ Given a set of primitives `b[k]` and `t[k]` and transformations `T(B)` and `B(T)
 T(cat(b[k]))=cat(T(b[k])) and B(cat(t[k]))=cat(B(t[k])) for all k.
 ~~~
 
-Basically, composability (over concatenation) means that the transformation of a set (as a whole) of concatenated primitives is equal to the concatenation of the set of individually transformed primitives.
+Basically, *composability* (over concatenation) means that the transformation of a set (as a whole) of concatenated primitives is equal to the concatenation of the set of individually transformed primitives.
 
 For example, suppose we have two primitives in the text domain, namely, `t[0]` and `t[1]` that each respectively transforms to primitives in the binary domain, namely, `b[0]` and `b[1]`. The transformation duals `B(T)` and `T(B)` are composable if and only if,
 
