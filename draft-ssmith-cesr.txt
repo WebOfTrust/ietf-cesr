@@ -1253,15 +1253,23 @@ Table of Contents
 
    * selector-character is also a type-character
 
-   Character format symbol definitions: $ means type code character from
-   subset of Base64 [A-Z,a-z,0-9,-,_]. % means lead character. # means a
-   Base64 digit as part of a base 64 integer that determines the number
-   of following quadlets or triplets in the primitive or when part of a
-   count code, the count of following primitives or groups of
-   primitives. & represents one or more Base64 value characters
-   representing the converted raw binary value.  The actual number of
-   chars is determined by the prepended text code.  Shown is the minimum
-   number of value characters.  TBD means to be determined
+   Character format symbol definitions:
+
+   $ means type code character from subset of Base64 [A-Z,a-z,0-9,-,_].
+
+   % means lead character.
+
+   # means a Base64 digit as part of a base 64 integer that determines
+   the number of following quadlets or triplets in the primitive or when
+   part of a count code, the count of following primitives or groups of
+   primitives.
+
+   & represents one or more Base64 value characters representing the
+   converted raw binary value.  The actual number of chars is determined
+   by the prepended text code.  Shown is the minimum number of value
+   characters.
+
+   TBD means to be determined
 
 3.14.  Parse Size Table
 
@@ -1307,13 +1315,22 @@ Table of Contents
 
                                   Table 5
 
-   * size may be calculated from other sizes. # size may be calculated
-   from extracted code characters given by other sizes.
+   * size may be calculated from other sizes.
 
-   _hs_ means hard size in chars. _ss_ means soft size in chars. _vs_
-   means value size in chars. _fs_ means full size in chars where _fs =
-   hs + ss + vs_. _ls_ means lead size in bytes. _ps_ means pad size in
-   chars.
+   # size may be calculated from extracted code characters given by
+   other sizes.
+
+   _hs_ means hard size in chars.
+
+   _ss_ means soft size in chars.
+
+   _vs_ means value size in chars.
+
+   _fs_ means full size in chars where _fs = hs + ss + vs_.
+
+   _ls_ means lead size in bytes.
+
+   _ps_ means pad size in chars.
 
    Sizes that may be derived from the table size entries are as follows,
 
@@ -1373,13 +1390,21 @@ Table of Contents
 
    * selector-character is also a type-character
 
-   Character format symbol definitions: $ means type code character from
-   subset of Base64 [A-Z,a-z,0-9,-,_]. # means a Base64 digit as part of
-   a base 64 integer that determines the index. % means lead character.
+   Character format symbol definitions:
+
+   $ means type code character from subset of Base64 [A-Z,a-z,0-9,-,_].
+
+   # means a Base64 digit as part of a base 64 integer that determines
+   the index.
+
+   % means lead character.
+
    & represents one or more Base64 value characters representing the
    converted raw binary value.  The actual number of chars is determined
    by the prep-ended text code.  Shown is the minimum number of value
-   characters.  TBD means to be determined
+   characters.
+
+   TBD means to be determined
 
    The appendix contains the master code table with the concrete codes.
 

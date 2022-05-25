@@ -2088,12 +2088,12 @@ The first character is the selector, the second character is the type, and the l
           </tbody>
         </table>
 <p id="section-3.13-3"><code>*</code> selector-character is also a type-character<a href="#section-3.13-3" class="pilcrow">¶</a></p>
-<p id="section-3.13-4">Character format symbol definitions:
-<code>$</code> means type code character from  subset of Base64  <code>[A-Z,a-z,0-9,-,_]</code>.
-<code>%</code> means lead character.
-<code>#</code> means a Base64 digit as part of a base 64 integer that determines the number of following quadlets or triplets in the primitive or when part of a count code, the count of following primitives or groups of primitives.
-<code>&amp;</code> represents one or more Base64 value characters representing the converted raw binary value. The actual number of chars is determined by the prepended text code.  Shown is the minimum number of value characters.
-<code>TBD</code> means to be determined<a href="#section-3.13-4" class="pilcrow">¶</a></p>
+<p id="section-3.13-4">Character format symbol definitions:<a href="#section-3.13-4" class="pilcrow">¶</a></p>
+<p id="section-3.13-5"><code>$</code> means type code character from  subset of Base64  <code>[A-Z,a-z,0-9,-,_]</code>.<a href="#section-3.13-5" class="pilcrow">¶</a></p>
+<p id="section-3.13-6"><code>%</code> means lead character.<a href="#section-3.13-6" class="pilcrow">¶</a></p>
+<p id="section-3.13-7"><code>#</code> means a Base64 digit as part of a base 64 integer that determines the number of following quadlets or triplets in the primitive or when part of a count code, the count of following primitives or groups of primitives.<a href="#section-3.13-7" class="pilcrow">¶</a></p>
+<p id="section-3.13-8"><code>&amp;</code> represents one or more Base64 value characters representing the converted raw binary value. The actual number of chars is determined by the prepended text code.  Shown is the minimum number of value characters.<a href="#section-3.13-8" class="pilcrow">¶</a></p>
+<p id="section-3.13-9"><code>TBD</code> means to be determined<a href="#section-3.13-9" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="parse-size-table">
@@ -2206,18 +2206,18 @@ The first character is the selector, the second character is the type, and the l
             </tr>
           </tbody>
         </table>
-<p id="section-3.14-4"><code>*</code> size may be calculated from other sizes.
-<code>#</code> size may be calculated from extracted code characters given by other sizes.<a href="#section-3.14-4" class="pilcrow">¶</a></p>
-<p id="section-3.14-5"><em>hs</em> means hard size in chars.
-<em>ss</em> means soft size in chars.
-<em>vs</em> means value size in chars.
-<em>fs</em> means full size in chars where <em>fs = hs + ss + vs</em>.
-<em>ls</em> means lead size in bytes.
-<em>ps</em> means pad size in chars.<a href="#section-3.14-5" class="pilcrow">¶</a></p>
-<p id="section-3.14-6">Sizes that may be derived from the table size entries are as follows,<a href="#section-3.14-6" class="pilcrow">¶</a></p>
-<p id="section-3.14-7"><em>cs</em> means code size where <em>cs = hs + ss</em>.
+<p id="section-3.14-4"><code>*</code> size may be calculated from other sizes.<a href="#section-3.14-4" class="pilcrow">¶</a></p>
+<p id="section-3.14-5"><code>#</code> size may be calculated from extracted code characters given by other sizes.<a href="#section-3.14-5" class="pilcrow">¶</a></p>
+<p id="section-3.14-6"><em>hs</em> means hard size in chars.<a href="#section-3.14-6" class="pilcrow">¶</a></p>
+<p id="section-3.14-7"><em>ss</em> means soft size in chars.<a href="#section-3.14-7" class="pilcrow">¶</a></p>
+<p id="section-3.14-8"><em>vs</em> means value size in chars.<a href="#section-3.14-8" class="pilcrow">¶</a></p>
+<p id="section-3.14-9"><em>fs</em> means full size in chars where <em>fs = hs + ss + vs</em>.<a href="#section-3.14-9" class="pilcrow">¶</a></p>
+<p id="section-3.14-10"><em>ls</em> means lead size in bytes.<a href="#section-3.14-10" class="pilcrow">¶</a></p>
+<p id="section-3.14-11"><em>ps</em> means pad size in chars.<a href="#section-3.14-11" class="pilcrow">¶</a></p>
+<p id="section-3.14-12">Sizes that may be derived from the table size entries are as follows,<a href="#section-3.14-12" class="pilcrow">¶</a></p>
+<p id="section-3.14-13"><em>cs</em> means code size where <em>cs = hs + ss</em>.
 <em>rs</em> means raw size in bytes of binary value where <em>rs is derived from <code>R(T)</code>.
-*bs</em> means binary size in bytes where <em>bs = ls + rs</em>.<a href="#section-3.14-7" class="pilcrow">¶</a></p>
+*bs</em> means binary size in bytes where <em>bs = ls + rs</em>.<a href="#section-3.14-13" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="special-context-specific-code-tables">
@@ -2292,13 +2292,13 @@ The first character is the selector, the second character is the type, and the l
           </tbody>
         </table>
 <p id="section-3.15-5"><code>*</code> selector-character is also a type-character<a href="#section-3.15-5" class="pilcrow">¶</a></p>
-<p id="section-3.15-6">Character format symbol definitions:
-<code>$</code> means type code character from  subset of Base64  <code>[A-Z,a-z,0-9,-,_]</code>.
-<code>#</code> means a Base64 digit as part of a base 64 integer that determines the index.
-<code>%</code> means lead character.
-<code>&amp;</code> represents one or more Base64 value characters representing the converted raw binary value. The actual number of chars is determined by the prep-ended text code.  Shown is the minimum number of value characters.
-<code>TBD</code> means to be determined<a href="#section-3.15-6" class="pilcrow">¶</a></p>
-<p id="section-3.15-7">The appendix contains the master code table with the concrete codes.<a href="#section-3.15-7" class="pilcrow">¶</a></p>
+<p id="section-3.15-6">Character format symbol definitions:<a href="#section-3.15-6" class="pilcrow">¶</a></p>
+<p id="section-3.15-7"><code>$</code> means type code character from  subset of Base64  <code>[A-Z,a-z,0-9,-,_]</code>.<a href="#section-3.15-7" class="pilcrow">¶</a></p>
+<p id="section-3.15-8"><code>#</code> means a Base64 digit as part of a base 64 integer that determines the index.<a href="#section-3.15-8" class="pilcrow">¶</a></p>
+<p id="section-3.15-9"><code>%</code> means lead character.<a href="#section-3.15-9" class="pilcrow">¶</a></p>
+<p id="section-3.15-10"><code>&amp;</code> represents one or more Base64 value characters representing the converted raw binary value. The actual number of chars is determined by the prep-ended text code.  Shown is the minimum number of value characters.<a href="#section-3.15-10" class="pilcrow">¶</a></p>
+<p id="section-3.15-11"><code>TBD</code> means to be determined<a href="#section-3.15-11" class="pilcrow">¶</a></p>
+<p id="section-3.15-12">The appendix contains the master code table with the concrete codes.<a href="#section-3.15-12" class="pilcrow">¶</a></p>
 </section>
 </div>
 </section>
