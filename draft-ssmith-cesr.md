@@ -603,18 +603,18 @@ Text domain parsing can be simplified by using a parse size table. A text domain
 `*` size may be calculated from other sizes.
 `#` size may be calculated from extracted code characters given by other sizes.
 
-*hs* means hard size in chars.
-*ss* means soft size in chars.
-*vs* means value size in chars.
-*fs* means full size in chars where *fs = hs + ss + vs*.
-*ls* means lead size in bytes.
-*ps* means pad size in chars.
+*hs* means hard size in chars.  
+*ss* means soft size in chars.  
+*vs* means value size in chars.  
+*fs* means full size in chars where *fs = hs + ss + vs*.  
+*ls* means lead size in bytes.  
+*ps* means pad size in chars.  
 
 Sizes that may be derived from the table size entries are as follows,
 
-*cs* means code size where *cs = hs + ss*.
-*rs* means raw size in bytes of binary value where *rs is derived from `R(T)`.
-*bs* means binary size in bytes where *bs = ls + rs*.
+*cs* means code size where *cs = hs + ss*.  
+*rs* means raw size in bytes of binary value where *rs is derived from `R(T)`.  
+*bs* means binary size in bytes where *bs = ls + rs*.  
 
 ## Special Context-Specific Code Tables
 
