@@ -1334,9 +1334,12 @@ Table of Contents
 
    Sizes that may be derived from the table size entries are as follows,
 
-   _cs_ means code size where _cs = hs + ss_. _rs_ means raw size in
-   bytes of binary value where _rs is derived from R(T). *bs_ means
-   binary size in bytes where _bs = ls + rs_.
+   _cs_ means code size where _cs = hs + ss_.
+
+   _rs_ means raw size in bytes of binary value where *rs is derived
+   from R(T).
+
+   _bs_ means binary size in bytes where _bs = ls + rs_.
 
 3.15.  Special Context-Specific Code Tables
 
