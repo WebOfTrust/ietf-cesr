@@ -549,8 +549,9 @@ The `_` selector is reserved for the yet to be defined opcode table or tables. O
 
 ## Selector Codes and Encoding Schemes
 
-The following table summarizes the *T* domain coding schemes for the 13 code tables defined above.
+### Encoding Scheme Table
 
+The following table summarizes the *T* domain coding schemes by selector code for the 13 code tables defined above.
 
 |  Selector |  Selector | Type Chars | Value Size Chars | Code Size | Lead Bytes | Pad Size | Format |
 |:---------:|:---------:|:----:|:---:|:---:|:---:|:---:|--------------:|
@@ -571,23 +572,26 @@ The following table summarizes the *T* domain coding schemes for the 13 code tab
 |     `_`   |           |  TBD | TBD | TBD | TBD | TBD |            `_`|
 
 
-`*` selector-character is also a type-character
+### Encoding Scheme Symbols
+The following table defines the meaning of the symbols used in the encoding scheme table
 
-Character format symbol definitions:
+|  Symbol |  Description  |
+|:---:|:----:|
+|   |   |
+| `*` | selector-code character also provides the type |
+| `$` | type-code character from  subset of Base64  `[A-Z,a-z,0-9,-,_]` |
+| `%` | lead byte where pre-converted binary includes the number of lead bytes shown |
+| `#` | Base64 digit as part of a base 64 integer. When part of primitive determines the number of following quadlets or triplets. When part of a count code determines the count of following primitives or groups of primitives |
+| `&` | Base64 value characters that represent the converted raw binary value.  The actual number of characters is determined by the prepended text code.  Shown is the minimum number of value characters. |
+| `TBD` | to be determined, reserved for future  |
 
-`$` means type code character from  subset of Base64  `[A-Z,a-z,0-9,-,_]`.
 
-`%` means lead character.
 
-`#` means a Base64 digit as part of a base 64 integer that determines the number of following quadlets or triplets in the primitive or when part of a count code, the count of following primitives or groups of primitives.
-
-`&` represents one or more Base64 value characters representing the converted raw binary value. The actual number of chars is determined by the prepended text code.  Shown is the minimum number of value characters.
-
-`TBD` means to be determined
-
-## Parse Size Table
+## Parse Tables
 
 Text domain parsing can be simplified by using a parse size table. A text domain parser uses the first character selector code to look up the hard size (stable) portion of the text code. The parse then extracts hard size characters from the text stream. These characters form an index into the parse size table which includes a set of sizes for the remainder of the primitive. Using these sizes for a given code allows a parser to extract and convert a given primitive. In the binary domain, the same text parse table may be used but each size value represents a multiple of a sextet of bits instead of Base64 characters. Example entries from that table are provided below. Two of the rows may always be calculated given the other 4 rows so the table need only have 4 entries in each row. Thus all basic primitives may be parsed with one parse size table.
+
+### Selector Code Size Table
 
 |  selector |  hs  |
 |:---------:|:----:|
@@ -597,6 +601,10 @@ Text domain parsing can be simplified by using a parse size table. A text domain
 |       `5` |   2  |
 |           |      |
 
+### Parse Size Table
+
+Below is a snippet from the Parse Size Table for some example codes
+
 | hard sized index |  hs  |  ss  |  vs  |  fs  |  ls  |  ps  |
 |:---------:|:----:|:----:|:----:|:----:|:----:|:----:|
 |           |      |      |      |      |      |      |
@@ -605,29 +613,32 @@ Text domain parsing can be simplified by using a parse size table. A text domain
 |      `5A` |   2  |   2  |  \#   |   \#  |  1   |  1\*  |
 |           |      |      |      |      |      |      |
 
-`*` size may be calculated from other sizes.
+### Parse Table Symbols
 
-`#` size may be calculated from extracted code characters given by other sizes.
+|  Symbol |  Description  |
+|:---:|:----:|
+|   |   |
+| `*` | entry's size may be calculated from other sizes |
+| `#` | entry's size may be calculated from extracted code characters given by other sizes |
+|   |      |
 
-*hs* means hard size in chars.
 
-*ss* means soft size in chars.
+### Parse Part Sizes
 
-*vs* means value size in chars.
+The following table includes both labels of parts shown in the columns in the Parse Size table as well as parts that may be derived from the Parse Table parts or from transformations,
 
-*fs* means full size in chars where *fs = hs + ss + vs*.
+|  Label |  Description  |
+|:----:|:----:|
+| ***hs*** | hard (fixed) part of code size in chars  |
+| ***ss*** | soft (variable) part of code size in chars |
+| *cs* | derived value size in chars where where *cs = hs + ss* |
+| ***vs*** | value size in chars |
+| ***fs*** | full size in chars where *fs = hs + ss + vs* |
+| ***ls*** | lead size in bytes to prepad raw binary bytes |
+| ***ps*** | Base64 encoded pad size in chars |
+| *rs* | derived raw size in bytes of binary valure where *rs is derived from `R(T)` |
+| *bs* | derived binary size in bytes where where *bs = ls + rs* |
 
-*ls* means lead size in bytes.
-
-*ps* means pad size in chars.
-
-Sizes that may be derived from the table size entries are as follows:
-
-*cs* means code size where *cs = hs + ss*.
-
-*rs* means raw size in bytes of binary value where *rs is derived from `R(T)`.
-
-*bs* means binary size in bytes where *bs = ls + rs*.
 
 
 ## Special Context-Specific Code Tables
@@ -635,6 +646,8 @@ Sizes that may be derived from the table size entries are as follows:
 The table above that provides the encoding schemes each with an associated code table that provides the type codes or set of codes for each associated primitive type. These coding schemes constitute the basic set of code tables. This basic set may be extended with context-specific code tables. The context in which a primitive occurs may provide an additional implicit selector that is not part of the actual explicit text code. This allows context-specific coding schemes that would otherwise conflict with the basic code tables. Currently, there is only one context-specific coding scheme, that is, for indexed signatures. A common use case is thresholded multi-signature schemes. A threshold satisficing subset of signatures belonging to an ordered or list of public keys may be provided as part of a stream of primitives. One way to compactly associated each signature with its public key is to include in the text code for that signature the index into the ordered set of public keys. The typical raw binary size for a signature is 64-bytes which has a pad size of 2. This gives two code characters for a compact text code. The first character is the selector and type code. The second character is Base64 encoded integer index.  By using a similar dual selector type code character scheme as above, where the selectors are the numbers `0-9` and `-` and `_`. Then there are 52 type codes given by the letters `A- Z` and `a-z`. The index has 64 values which support up to 64 members in the public key list. A selector can be used to select a large text code with more characters dedicated to larger indices. Current only a small table is defined.
 
 A new signature scheme based on Ed448 with 114-byte signatures is also supported. These signatures have a pad size of zero so require a four-character text code. The first character is the selector `0`, the second character is the type with 64 values, and the last two characters provide the index as a Base64 encoded integer with 4096 different values.
+
+### Indexed Code Table
 
 The associated indexed schemes are provided in the following table.
 
@@ -645,19 +658,20 @@ The associated indexed schemes are provided in the following table.
 |     `0`   |           |   1  |  2  |  4  |  0  |  0  |    ` 0$##&&&&`|
 |           |           |      |     |     |     |     |               |
 
-`*` selector-character is also a type-character
 
-Character format symbol definitions:
+### Encoding Scheme Symbols
+The following table defines the meaning of the symbols used in the Indexed Code table
 
-`$` means type code character from  subset of Base64  `[A-Z,a-z,0-9,-,_]`.
+|  Symbol |  Description  |
+|:---:|:----:|
+|   |   |
+| `*` | selector-code character also provides the type |
+| `$` | type-code character from  subset of Base64  `[A-Z,a-z,0-9,-,_]` |
+| `%` | lead byte where pre-converted binary includes the number of lead bytes shown |
+| `#` | Base64 digit as part of a base 64 integer. When part of primitive determines the number of following quadlets or triplets. When part of a count code determines the count of following primitives or groups of primitives |
+| `&` | Base64 value characters that represent the converted raw binary value.  The actual number of characters is determined by the prepended text code.  Shown is the minimum number of value characters. |
+| `TBD` | to be determined, reserved for future  |
 
-`#` means a Base64 digit as part of a base 64 integer that determines the index.
-
-`%` means lead character.
-
-`&` represents one or more Base64 value characters representing the converted raw binary value. The actual number of chars is determined by the prep-ended text code.  Shown is the minimum number of value characters.
-
-`TBD` means to be determined
 
 The appendix contains the master code table with the concrete codes.
 
