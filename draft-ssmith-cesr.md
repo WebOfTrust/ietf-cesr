@@ -638,7 +638,7 @@ The following table includes both labels of parts shown in the columns in the Pa
 | ***ps*** | Base64 encoded pad size in chars |
 | *rs* | derived raw size in bytes of binary valure where *rs is derived from `R(T)` |
 | *bs* | derived binary size in bytes where where *bs = ls + rs* |
- 
+
 
 
 ## Special Context-Specific Code Tables
@@ -671,7 +671,7 @@ The following table defines the meaning of the symbols used in the Indexed Code 
 | `#` | Base64 digit as part of a base 64 integer. When part of primitive determines the number of following quadlets or triplets. When part of a count code determines the count of following primitives or groups of primitives |
 | `&` | Base64 value characters that represent the converted raw binary value.  The actual number of characters is determined by the prepended text code.  Shown is the minimum number of value characters. |
 | `TBD` | to be determined, reserved for future  |
-`*` selector-character is also a type-character
+
 
 The appendix contains the master code table with the concrete codes.
 
