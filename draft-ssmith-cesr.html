@@ -1237,12 +1237,42 @@ svg [stroke="fill"], svg [fill^="#fff"] {
 </li>
               <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.3.2.13">
                 <p id="section-toc.1-1.3.2.13.1"><a href="#section-3.13" class="xref">3.13</a>. <a href="#name-selector-codes-and-encoding" class="xref">Selector Codes and Encoding Schemes</a></p>
+<ul class="compact toc ulBare ulEmpty">
+<li class="compact toc ulBare ulEmpty" id="section-toc.1-1.3.2.13.2.1">
+                    <p id="section-toc.1-1.3.2.13.2.1.1"><a href="#section-3.13.1" class="xref">3.13.1</a>.  <a href="#name-encoding-scheme-table" class="xref">Encoding Scheme Table</a></p>
+</li>
+                  <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.3.2.13.2.2">
+                    <p id="section-toc.1-1.3.2.13.2.2.1"><a href="#section-3.13.2" class="xref">3.13.2</a>.  <a href="#name-encoding-scheme-symbols" class="xref">Encoding Scheme Symbols</a></p>
+</li>
+                </ul>
 </li>
               <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.3.2.14">
-                <p id="section-toc.1-1.3.2.14.1"><a href="#section-3.14" class="xref">3.14</a>. <a href="#name-parse-size-table" class="xref">Parse Size Table</a></p>
+                <p id="section-toc.1-1.3.2.14.1"><a href="#section-3.14" class="xref">3.14</a>. <a href="#name-parse-tables" class="xref">Parse Tables</a></p>
+<ul class="compact toc ulBare ulEmpty">
+<li class="compact toc ulBare ulEmpty" id="section-toc.1-1.3.2.14.2.1">
+                    <p id="section-toc.1-1.3.2.14.2.1.1"><a href="#section-3.14.1" class="xref">3.14.1</a>.  <a href="#name-selector-code-size-table" class="xref">Selector Code Size Table</a></p>
+</li>
+                  <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.3.2.14.2.2">
+                    <p id="section-toc.1-1.3.2.14.2.2.1"><a href="#section-3.14.2" class="xref">3.14.2</a>.  <a href="#name-parse-size-table" class="xref">Parse Size Table</a></p>
+</li>
+                  <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.3.2.14.2.3">
+                    <p id="section-toc.1-1.3.2.14.2.3.1"><a href="#section-3.14.3" class="xref">3.14.3</a>.  <a href="#name-parse-table-symbols" class="xref">Parse Table Symbols</a></p>
+</li>
+                  <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.3.2.14.2.4">
+                    <p id="section-toc.1-1.3.2.14.2.4.1"><a href="#section-3.14.4" class="xref">3.14.4</a>.  <a href="#name-parse-part-sizes" class="xref">Parse Part Sizes</a></p>
+</li>
+                </ul>
 </li>
               <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.3.2.15">
                 <p id="section-toc.1-1.3.2.15.1"><a href="#section-3.15" class="xref">3.15</a>. <a href="#name-special-context-specific-co" class="xref">Special Context-Specific Code Tables</a></p>
+<ul class="compact toc ulBare ulEmpty">
+<li class="compact toc ulBare ulEmpty" id="section-toc.1-1.3.2.15.2.1">
+                    <p id="section-toc.1-1.3.2.15.2.1.1"><a href="#section-3.15.1" class="xref">3.15.1</a>.  <a href="#name-indexed-code-table" class="xref">Indexed Code Table</a></p>
+</li>
+                  <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.3.2.15.2.2">
+                    <p id="section-toc.1-1.3.2.15.2.2.1"><a href="#section-3.15.2" class="xref">3.15.2</a>.  <a href="#name-encoding-scheme-symbols-2" class="xref">Encoding Scheme Symbols</a></p>
+</li>
+                </ul>
 </li>
             </ul>
 </li>
@@ -1859,365 +1889,543 @@ The first character is the selector, the second character is the type, and the l
         <h3 id="name-selector-codes-and-encoding">
 <a href="#section-3.13" class="section-number selfRef">3.13. </a><a href="#name-selector-codes-and-encoding" class="section-name selfRef">Selector Codes and Encoding Schemes</a>
         </h3>
-<p id="section-3.13-1">The following table summarizes the <em>T</em> domain coding schemes for the 13 code tables defined above.<a href="#section-3.13-1" class="pilcrow">¶</a></p>
+<div id="encoding-scheme-table">
+<section id="section-3.13.1">
+          <h4 id="name-encoding-scheme-table">
+<a href="#section-3.13.1" class="section-number selfRef">3.13.1. </a><a href="#name-encoding-scheme-table" class="section-name selfRef">Encoding Scheme Table</a>
+          </h4>
+<p id="section-3.13.1-1">The following table summarizes the <em>T</em> domain coding schemes by selector code for the 13 code tables defined above.<a href="#section-3.13.1-1" class="pilcrow">¶</a></p>
 <table class="center" id="table-3">
-          <caption><a href="#table-3" class="selfRef">Table 3</a></caption>
+            <caption><a href="#table-3" class="selfRef">Table 3</a></caption>
 <thead>
-            <tr>
-              <th class="text-center" rowspan="1" colspan="1">Selector</th>
-              <th class="text-center" rowspan="1" colspan="1">Selector</th>
-              <th class="text-center" rowspan="1" colspan="1">Type Chars</th>
-              <th class="text-center" rowspan="1" colspan="1">Value Size Chars</th>
-              <th class="text-center" rowspan="1" colspan="1">Code Size</th>
-              <th class="text-center" rowspan="1" colspan="1">Lead Bytes</th>
-              <th class="text-center" rowspan="1" colspan="1">Pad Size</th>
-              <th class="text-right" rowspan="1" colspan="1">Format</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td class="text-center" rowspan="1" colspan="1"> </td>
-              <td class="text-center" rowspan="1" colspan="1"> </td>
-              <td class="text-center" rowspan="1" colspan="1"> </td>
-              <td class="text-center" rowspan="1" colspan="1"> </td>
-              <td class="text-center" rowspan="1" colspan="1"> </td>
-              <td class="text-center" rowspan="1" colspan="1"> </td>
-              <td class="text-center" rowspan="1" colspan="1"> </td>
-              <td class="text-right" rowspan="1" colspan="1"> </td>
-            </tr>
-            <tr>
-              <td class="text-center" rowspan="1" colspan="1">
-                <code>[A-Z,a-z]</code>
+              <tr>
+                <th class="text-center" rowspan="1" colspan="1">Selector</th>
+                <th class="text-center" rowspan="1" colspan="1">Selector</th>
+                <th class="text-center" rowspan="1" colspan="1">Type Chars</th>
+                <th class="text-center" rowspan="1" colspan="1">Value Size Chars</th>
+                <th class="text-center" rowspan="1" colspan="1">Code Size</th>
+                <th class="text-center" rowspan="1" colspan="1">Lead Bytes</th>
+                <th class="text-center" rowspan="1" colspan="1">Pad Size</th>
+                <th class="text-right" rowspan="1" colspan="1">Format</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td class="text-center" rowspan="1" colspan="1"> </td>
+                <td class="text-center" rowspan="1" colspan="1"> </td>
+                <td class="text-center" rowspan="1" colspan="1"> </td>
+                <td class="text-center" rowspan="1" colspan="1"> </td>
+                <td class="text-center" rowspan="1" colspan="1"> </td>
+                <td class="text-center" rowspan="1" colspan="1"> </td>
+                <td class="text-center" rowspan="1" colspan="1"> </td>
+                <td class="text-right" rowspan="1" colspan="1"> </td>
+              </tr>
+              <tr>
+                <td class="text-center" rowspan="1" colspan="1">
+                  <code>[A-Z,a-z]</code>
 </td>
-              <td class="text-center" rowspan="1" colspan="1"> </td>
-              <td class="text-center" rowspan="1" colspan="1">1*</td>
-              <td class="text-center" rowspan="1" colspan="1">0</td>
-              <td class="text-center" rowspan="1" colspan="1">1</td>
-              <td class="text-center" rowspan="1" colspan="1">0</td>
-              <td class="text-center" rowspan="1" colspan="1">1</td>
-              <td class="text-right" rowspan="1" colspan="1">
-                <code>$&amp;&amp;&amp;</code>
+                <td class="text-center" rowspan="1" colspan="1"> </td>
+                <td class="text-center" rowspan="1" colspan="1">1*</td>
+                <td class="text-center" rowspan="1" colspan="1">0</td>
+                <td class="text-center" rowspan="1" colspan="1">1</td>
+                <td class="text-center" rowspan="1" colspan="1">0</td>
+                <td class="text-center" rowspan="1" colspan="1">1</td>
+                <td class="text-right" rowspan="1" colspan="1">
+                  <code>$&amp;&amp;&amp;</code>
 </td>
-            </tr>
-            <tr>
-              <td class="text-center" rowspan="1" colspan="1">
-                <code>0</code>
+              </tr>
+              <tr>
+                <td class="text-center" rowspan="1" colspan="1">
+                  <code>0</code>
 </td>
-              <td class="text-center" rowspan="1" colspan="1"> </td>
-              <td class="text-center" rowspan="1" colspan="1">1</td>
-              <td class="text-center" rowspan="1" colspan="1">0</td>
-              <td class="text-center" rowspan="1" colspan="1">2</td>
-              <td class="text-center" rowspan="1" colspan="1">0</td>
-              <td class="text-center" rowspan="1" colspan="1">2</td>
-              <td class="text-right" rowspan="1" colspan="1">
-                <code>0$&amp;&amp;</code>
+                <td class="text-center" rowspan="1" colspan="1"> </td>
+                <td class="text-center" rowspan="1" colspan="1">1</td>
+                <td class="text-center" rowspan="1" colspan="1">0</td>
+                <td class="text-center" rowspan="1" colspan="1">2</td>
+                <td class="text-center" rowspan="1" colspan="1">0</td>
+                <td class="text-center" rowspan="1" colspan="1">2</td>
+                <td class="text-right" rowspan="1" colspan="1">
+                  <code>0$&amp;&amp;</code>
 </td>
-            </tr>
-            <tr>
-              <td class="text-center" rowspan="1" colspan="1">
-                <code>1</code>
+              </tr>
+              <tr>
+                <td class="text-center" rowspan="1" colspan="1">
+                  <code>1</code>
 </td>
-              <td class="text-center" rowspan="1" colspan="1"> </td>
-              <td class="text-center" rowspan="1" colspan="1">3</td>
-              <td class="text-center" rowspan="1" colspan="1">0</td>
-              <td class="text-center" rowspan="1" colspan="1">4</td>
-              <td class="text-center" rowspan="1" colspan="1">0</td>
-              <td class="text-center" rowspan="1" colspan="1">0</td>
-              <td class="text-right" rowspan="1" colspan="1">
-                <code>1$$$&amp;&amp;&amp;&amp;</code>
+                <td class="text-center" rowspan="1" colspan="1"> </td>
+                <td class="text-center" rowspan="1" colspan="1">3</td>
+                <td class="text-center" rowspan="1" colspan="1">0</td>
+                <td class="text-center" rowspan="1" colspan="1">4</td>
+                <td class="text-center" rowspan="1" colspan="1">0</td>
+                <td class="text-center" rowspan="1" colspan="1">0</td>
+                <td class="text-right" rowspan="1" colspan="1">
+                  <code>1$$$&amp;&amp;&amp;&amp;</code>
 </td>
-            </tr>
-            <tr>
-              <td class="text-center" rowspan="1" colspan="1">
-                <code>2</code>
+              </tr>
+              <tr>
+                <td class="text-center" rowspan="1" colspan="1">
+                  <code>2</code>
 </td>
-              <td class="text-center" rowspan="1" colspan="1"> </td>
-              <td class="text-center" rowspan="1" colspan="1">3</td>
-              <td class="text-center" rowspan="1" colspan="1">0</td>
-              <td class="text-center" rowspan="1" colspan="1">4</td>
-              <td class="text-center" rowspan="1" colspan="1">1</td>
-              <td class="text-center" rowspan="1" colspan="1">1</td>
-              <td class="text-right" rowspan="1" colspan="1">
-                <code>2$$$%&amp;&amp;&amp;</code>
+                <td class="text-center" rowspan="1" colspan="1"> </td>
+                <td class="text-center" rowspan="1" colspan="1">3</td>
+                <td class="text-center" rowspan="1" colspan="1">0</td>
+                <td class="text-center" rowspan="1" colspan="1">4</td>
+                <td class="text-center" rowspan="1" colspan="1">1</td>
+                <td class="text-center" rowspan="1" colspan="1">1</td>
+                <td class="text-right" rowspan="1" colspan="1">
+                  <code>2$$$%&amp;&amp;&amp;</code>
 </td>
-            </tr>
-            <tr>
-              <td class="text-center" rowspan="1" colspan="1">
-                <code>3 </code>
+              </tr>
+              <tr>
+                <td class="text-center" rowspan="1" colspan="1">
+                  <code>3 </code>
 </td>
-              <td class="text-center" rowspan="1" colspan="1"> </td>
-              <td class="text-center" rowspan="1" colspan="1">3</td>
-              <td class="text-center" rowspan="1" colspan="1">0</td>
-              <td class="text-center" rowspan="1" colspan="1">4</td>
-              <td class="text-center" rowspan="1" colspan="1">2</td>
-              <td class="text-center" rowspan="1" colspan="1">2</td>
-              <td class="text-right" rowspan="1" colspan="1">
-                <code>3$$$%%&amp;&amp;</code>
+                <td class="text-center" rowspan="1" colspan="1"> </td>
+                <td class="text-center" rowspan="1" colspan="1">3</td>
+                <td class="text-center" rowspan="1" colspan="1">0</td>
+                <td class="text-center" rowspan="1" colspan="1">4</td>
+                <td class="text-center" rowspan="1" colspan="1">2</td>
+                <td class="text-center" rowspan="1" colspan="1">2</td>
+                <td class="text-right" rowspan="1" colspan="1">
+                  <code>3$$$%%&amp;&amp;</code>
 </td>
-            </tr>
-            <tr>
-              <td class="text-center" rowspan="1" colspan="1">
-                <code>4</code>
+              </tr>
+              <tr>
+                <td class="text-center" rowspan="1" colspan="1">
+                  <code>4</code>
 </td>
-              <td class="text-center" rowspan="1" colspan="1"> </td>
-              <td class="text-center" rowspan="1" colspan="1">1</td>
-              <td class="text-center" rowspan="1" colspan="1">2</td>
-              <td class="text-center" rowspan="1" colspan="1">4</td>
-              <td class="text-center" rowspan="1" colspan="1">0</td>
-              <td class="text-center" rowspan="1" colspan="1">0</td>
-              <td class="text-right" rowspan="1" colspan="1">
-                <code>4$##&amp;&amp;&amp;&amp;</code>
+                <td class="text-center" rowspan="1" colspan="1"> </td>
+                <td class="text-center" rowspan="1" colspan="1">1</td>
+                <td class="text-center" rowspan="1" colspan="1">2</td>
+                <td class="text-center" rowspan="1" colspan="1">4</td>
+                <td class="text-center" rowspan="1" colspan="1">0</td>
+                <td class="text-center" rowspan="1" colspan="1">0</td>
+                <td class="text-right" rowspan="1" colspan="1">
+                  <code>4$##&amp;&amp;&amp;&amp;</code>
 </td>
-            </tr>
-            <tr>
-              <td class="text-center" rowspan="1" colspan="1">
-                <code>5</code>
+              </tr>
+              <tr>
+                <td class="text-center" rowspan="1" colspan="1">
+                  <code>5</code>
 </td>
-              <td class="text-center" rowspan="1" colspan="1"> </td>
-              <td class="text-center" rowspan="1" colspan="1">1</td>
-              <td class="text-center" rowspan="1" colspan="1">2</td>
-              <td class="text-center" rowspan="1" colspan="1">4</td>
-              <td class="text-center" rowspan="1" colspan="1">1</td>
-              <td class="text-center" rowspan="1" colspan="1">1</td>
-              <td class="text-right" rowspan="1" colspan="1">
-                <code>5$##%&amp;&amp;&amp;</code>
+                <td class="text-center" rowspan="1" colspan="1"> </td>
+                <td class="text-center" rowspan="1" colspan="1">1</td>
+                <td class="text-center" rowspan="1" colspan="1">2</td>
+                <td class="text-center" rowspan="1" colspan="1">4</td>
+                <td class="text-center" rowspan="1" colspan="1">1</td>
+                <td class="text-center" rowspan="1" colspan="1">1</td>
+                <td class="text-right" rowspan="1" colspan="1">
+                  <code>5$##%&amp;&amp;&amp;</code>
 </td>
-            </tr>
-            <tr>
-              <td class="text-center" rowspan="1" colspan="1">
-                <code>6</code>
+              </tr>
+              <tr>
+                <td class="text-center" rowspan="1" colspan="1">
+                  <code>6</code>
 </td>
-              <td class="text-center" rowspan="1" colspan="1"> </td>
-              <td class="text-center" rowspan="1" colspan="1">1</td>
-              <td class="text-center" rowspan="1" colspan="1">2</td>
-              <td class="text-center" rowspan="1" colspan="1">4</td>
-              <td class="text-center" rowspan="1" colspan="1">2</td>
-              <td class="text-center" rowspan="1" colspan="1">2</td>
-              <td class="text-right" rowspan="1" colspan="1">
-                <code>6$##%%&amp;&amp;</code>
+                <td class="text-center" rowspan="1" colspan="1"> </td>
+                <td class="text-center" rowspan="1" colspan="1">1</td>
+                <td class="text-center" rowspan="1" colspan="1">2</td>
+                <td class="text-center" rowspan="1" colspan="1">4</td>
+                <td class="text-center" rowspan="1" colspan="1">2</td>
+                <td class="text-center" rowspan="1" colspan="1">2</td>
+                <td class="text-right" rowspan="1" colspan="1">
+                  <code>6$##%%&amp;&amp;</code>
 </td>
-            </tr>
-            <tr>
-              <td class="text-center" rowspan="1" colspan="1">
-                <code>7</code>
+              </tr>
+              <tr>
+                <td class="text-center" rowspan="1" colspan="1">
+                  <code>7</code>
 </td>
-              <td class="text-center" rowspan="1" colspan="1"> </td>
-              <td class="text-center" rowspan="1" colspan="1">3</td>
-              <td class="text-center" rowspan="1" colspan="1">4</td>
-              <td class="text-center" rowspan="1" colspan="1">8</td>
-              <td class="text-center" rowspan="1" colspan="1">0</td>
-              <td class="text-center" rowspan="1" colspan="1">0</td>
-              <td class="text-right" rowspan="1" colspan="1">
-                <code>7$$$####&amp;&amp;&amp;&amp;</code>
+                <td class="text-center" rowspan="1" colspan="1"> </td>
+                <td class="text-center" rowspan="1" colspan="1">3</td>
+                <td class="text-center" rowspan="1" colspan="1">4</td>
+                <td class="text-center" rowspan="1" colspan="1">8</td>
+                <td class="text-center" rowspan="1" colspan="1">0</td>
+                <td class="text-center" rowspan="1" colspan="1">0</td>
+                <td class="text-right" rowspan="1" colspan="1">
+                  <code>7$$$####&amp;&amp;&amp;&amp;</code>
 </td>
-            </tr>
-            <tr>
-              <td class="text-center" rowspan="1" colspan="1">
-                <code>8</code>
+              </tr>
+              <tr>
+                <td class="text-center" rowspan="1" colspan="1">
+                  <code>8</code>
 </td>
-              <td class="text-center" rowspan="1" colspan="1"> </td>
-              <td class="text-center" rowspan="1" colspan="1">3</td>
-              <td class="text-center" rowspan="1" colspan="1">4</td>
-              <td class="text-center" rowspan="1" colspan="1">8</td>
-              <td class="text-center" rowspan="1" colspan="1">1</td>
-              <td class="text-center" rowspan="1" colspan="1">1</td>
-              <td class="text-right" rowspan="1" colspan="1">
-                <code>8$$$####%&amp;&amp;&amp;</code>
+                <td class="text-center" rowspan="1" colspan="1"> </td>
+                <td class="text-center" rowspan="1" colspan="1">3</td>
+                <td class="text-center" rowspan="1" colspan="1">4</td>
+                <td class="text-center" rowspan="1" colspan="1">8</td>
+                <td class="text-center" rowspan="1" colspan="1">1</td>
+                <td class="text-center" rowspan="1" colspan="1">1</td>
+                <td class="text-right" rowspan="1" colspan="1">
+                  <code>8$$$####%&amp;&amp;&amp;</code>
 </td>
-            </tr>
-            <tr>
-              <td class="text-center" rowspan="1" colspan="1">
-                <code>9</code>
+              </tr>
+              <tr>
+                <td class="text-center" rowspan="1" colspan="1">
+                  <code>9</code>
 </td>
-              <td class="text-center" rowspan="1" colspan="1"> </td>
-              <td class="text-center" rowspan="1" colspan="1">3</td>
-              <td class="text-center" rowspan="1" colspan="1">4</td>
-              <td class="text-center" rowspan="1" colspan="1">8</td>
-              <td class="text-center" rowspan="1" colspan="1">2</td>
-              <td class="text-center" rowspan="1" colspan="1">2</td>
-              <td class="text-right" rowspan="1" colspan="1">
-                <code>9$$$####%%&amp;&amp;</code>
+                <td class="text-center" rowspan="1" colspan="1"> </td>
+                <td class="text-center" rowspan="1" colspan="1">3</td>
+                <td class="text-center" rowspan="1" colspan="1">4</td>
+                <td class="text-center" rowspan="1" colspan="1">8</td>
+                <td class="text-center" rowspan="1" colspan="1">2</td>
+                <td class="text-center" rowspan="1" colspan="1">2</td>
+                <td class="text-right" rowspan="1" colspan="1">
+                  <code>9$$$####%%&amp;&amp;</code>
 </td>
-            </tr>
-            <tr>
-              <td class="text-center" rowspan="1" colspan="1">
-                <code>-</code>
+              </tr>
+              <tr>
+                <td class="text-center" rowspan="1" colspan="1">
+                  <code>-</code>
 </td>
-              <td class="text-center" rowspan="1" colspan="1">
-                <code>[A-Z,a-z]</code>
+                <td class="text-center" rowspan="1" colspan="1">
+                  <code>[A-Z,a-z]</code>
 </td>
-              <td class="text-center" rowspan="1" colspan="1">1*</td>
-              <td class="text-center" rowspan="1" colspan="1">0</td>
-              <td class="text-center" rowspan="1" colspan="1">4</td>
-              <td class="text-center" rowspan="1" colspan="1">0</td>
-              <td class="text-center" rowspan="1" colspan="1">0</td>
-              <td class="text-right" rowspan="1" colspan="1">
-                <code>-$##</code>
+                <td class="text-center" rowspan="1" colspan="1">1*</td>
+                <td class="text-center" rowspan="1" colspan="1">0</td>
+                <td class="text-center" rowspan="1" colspan="1">4</td>
+                <td class="text-center" rowspan="1" colspan="1">0</td>
+                <td class="text-center" rowspan="1" colspan="1">0</td>
+                <td class="text-right" rowspan="1" colspan="1">
+                  <code>-$##</code>
 </td>
-            </tr>
-            <tr>
-              <td class="text-center" rowspan="1" colspan="1">
-                <code>-</code>
+              </tr>
+              <tr>
+                <td class="text-center" rowspan="1" colspan="1">
+                  <code>-</code>
 </td>
-              <td class="text-center" rowspan="1" colspan="1">
-                <code>0</code>
+                <td class="text-center" rowspan="1" colspan="1">
+                  <code>0</code>
 </td>
-              <td class="text-center" rowspan="1" colspan="1">2</td>
-              <td class="text-center" rowspan="1" colspan="1">0</td>
-              <td class="text-center" rowspan="1" colspan="1">8</td>
-              <td class="text-center" rowspan="1" colspan="1">0</td>
-              <td class="text-center" rowspan="1" colspan="1">0</td>
-              <td class="text-right" rowspan="1" colspan="1">
-                <code>-0$$####</code>
+                <td class="text-center" rowspan="1" colspan="1">2</td>
+                <td class="text-center" rowspan="1" colspan="1">0</td>
+                <td class="text-center" rowspan="1" colspan="1">8</td>
+                <td class="text-center" rowspan="1" colspan="1">0</td>
+                <td class="text-center" rowspan="1" colspan="1">0</td>
+                <td class="text-right" rowspan="1" colspan="1">
+                  <code>-0$$####</code>
 </td>
-            </tr>
-            <tr>
-              <td class="text-center" rowspan="1" colspan="1">
-                <code>_</code>
+              </tr>
+              <tr>
+                <td class="text-center" rowspan="1" colspan="1">
+                  <code>_</code>
 </td>
-              <td class="text-center" rowspan="1" colspan="1"> </td>
-              <td class="text-center" rowspan="1" colspan="1">TBD</td>
-              <td class="text-center" rowspan="1" colspan="1">TBD</td>
-              <td class="text-center" rowspan="1" colspan="1">TBD</td>
-              <td class="text-center" rowspan="1" colspan="1">TBD</td>
-              <td class="text-center" rowspan="1" colspan="1">TBD</td>
-              <td class="text-right" rowspan="1" colspan="1">
-                <code>_</code>
+                <td class="text-center" rowspan="1" colspan="1"> </td>
+                <td class="text-center" rowspan="1" colspan="1">TBD</td>
+                <td class="text-center" rowspan="1" colspan="1">TBD</td>
+                <td class="text-center" rowspan="1" colspan="1">TBD</td>
+                <td class="text-center" rowspan="1" colspan="1">TBD</td>
+                <td class="text-center" rowspan="1" colspan="1">TBD</td>
+                <td class="text-right" rowspan="1" colspan="1">
+                  <code>_</code>
 </td>
-            </tr>
-          </tbody>
-        </table>
-<p id="section-3.13-3"><code>*</code> selector-character is also a type-character<a href="#section-3.13-3" class="pilcrow">¶</a></p>
-<p id="section-3.13-4">Character format symbol definitions:<a href="#section-3.13-4" class="pilcrow">¶</a></p>
-<p id="section-3.13-5"><code>$</code> means type code character from  subset of Base64  <code>[A-Z,a-z,0-9,-,_]</code>.<a href="#section-3.13-5" class="pilcrow">¶</a></p>
-<p id="section-3.13-6"><code>%</code> means lead character.<a href="#section-3.13-6" class="pilcrow">¶</a></p>
-<p id="section-3.13-7"><code>#</code> means a Base64 digit as part of a base 64 integer that determines the number of following quadlets or triplets in the primitive or when part of a count code, the count of following primitives or groups of primitives.<a href="#section-3.13-7" class="pilcrow">¶</a></p>
-<p id="section-3.13-8"><code>&amp;</code> represents one or more Base64 value characters representing the converted raw binary value. The actual number of chars is determined by the prepended text code.  Shown is the minimum number of value characters.<a href="#section-3.13-8" class="pilcrow">¶</a></p>
-<p id="section-3.13-9"><code>TBD</code> means to be determined<a href="#section-3.13-9" class="pilcrow">¶</a></p>
+              </tr>
+            </tbody>
+          </table>
+</section>
+</div>
+<div id="encoding-scheme-symbols">
+<section id="section-3.13.2">
+          <h4 id="name-encoding-scheme-symbols">
+<a href="#section-3.13.2" class="section-number selfRef">3.13.2. </a><a href="#name-encoding-scheme-symbols" class="section-name selfRef">Encoding Scheme Symbols</a>
+          </h4>
+<p id="section-3.13.2-1">The following table defines the meaning of the symbols used in the encoding scheme table<a href="#section-3.13.2-1" class="pilcrow">¶</a></p>
+<table class="center" id="table-4">
+            <caption><a href="#table-4" class="selfRef">Table 4</a></caption>
+<thead>
+              <tr>
+                <th class="text-center" rowspan="1" colspan="1">Symbol</th>
+                <th class="text-center" rowspan="1" colspan="1">Description</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td class="text-center" rowspan="1" colspan="1"> </td>
+                <td class="text-center" rowspan="1" colspan="1"> </td>
+              </tr>
+              <tr>
+                <td class="text-center" rowspan="1" colspan="1">
+                  <code>*</code>
+</td>
+                <td class="text-center" rowspan="1" colspan="1">selector-code character also provides the type</td>
+              </tr>
+              <tr>
+                <td class="text-center" rowspan="1" colspan="1">
+                  <code>$</code>
+</td>
+                <td class="text-center" rowspan="1" colspan="1">type-code character from  subset of Base64  <code>[A-Z,a-z,0-9,-,_]</code>
+</td>
+              </tr>
+              <tr>
+                <td class="text-center" rowspan="1" colspan="1">
+                  <code>%</code>
+</td>
+                <td class="text-center" rowspan="1" colspan="1">lead byte where pre-converted binary includes the number of lead bytes shown</td>
+              </tr>
+              <tr>
+                <td class="text-center" rowspan="1" colspan="1">
+                  <code>#</code>
+</td>
+                <td class="text-center" rowspan="1" colspan="1">Base64 digit as part of a base 64 integer. When part of primitive determines the number of following quadlets or triplets. When part of a count code determines the count of following primitives or groups of primitives</td>
+              </tr>
+              <tr>
+                <td class="text-center" rowspan="1" colspan="1">
+                  <code>&amp;</code>
+</td>
+                <td class="text-center" rowspan="1" colspan="1">Base64 value characters that represent the converted raw binary value.  The actual number of characters is determined by the prepended text code.  Shown is the minimum number of value characters.</td>
+              </tr>
+              <tr>
+                <td class="text-center" rowspan="1" colspan="1">
+                  <code>TBD</code>
+</td>
+                <td class="text-center" rowspan="1" colspan="1">to be determined, reserved for future</td>
+              </tr>
+            </tbody>
+          </table>
+</section>
+</div>
+</section>
+</div>
+<div id="parse-tables">
+<section id="section-3.14">
+        <h3 id="name-parse-tables">
+<a href="#section-3.14" class="section-number selfRef">3.14. </a><a href="#name-parse-tables" class="section-name selfRef">Parse Tables</a>
+        </h3>
+<p id="section-3.14-1">Text domain parsing can be simplified by using a parse size table. A text domain parser uses the first character selector code to look up the hard size (stable) portion of the text code. The parse then extracts hard size characters from the text stream. These characters form an index into the parse size table which includes a set of sizes for the remainder of the primitive. Using these sizes for a given code allows a parser to extract and convert a given primitive. In the binary domain, the same text parse table may be used but each size value represents a multiple of a sextet of bits instead of Base64 characters. Example entries from that table are provided below. Two of the rows may always be calculated given the other 4 rows so the table need only have 4 entries in each row. Thus all basic primitives may be parsed with one parse size table.<a href="#section-3.14-1" class="pilcrow">¶</a></p>
+<div id="selector-code-size-table">
+<section id="section-3.14.1">
+          <h4 id="name-selector-code-size-table">
+<a href="#section-3.14.1" class="section-number selfRef">3.14.1. </a><a href="#name-selector-code-size-table" class="section-name selfRef">Selector Code Size Table</a>
+          </h4>
+<table class="center" id="table-5">
+            <caption><a href="#table-5" class="selfRef">Table 5</a></caption>
+<thead>
+              <tr>
+                <th class="text-center" rowspan="1" colspan="1">selector</th>
+                <th class="text-center" rowspan="1" colspan="1">hs</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td class="text-center" rowspan="1" colspan="1"> </td>
+                <td class="text-center" rowspan="1" colspan="1"> </td>
+              </tr>
+              <tr>
+                <td class="text-center" rowspan="1" colspan="1">
+                  <code>B</code>
+</td>
+                <td class="text-center" rowspan="1" colspan="1">1</td>
+              </tr>
+              <tr>
+                <td class="text-center" rowspan="1" colspan="1">
+                  <code>0</code>
+</td>
+                <td class="text-center" rowspan="1" colspan="1">2</td>
+              </tr>
+              <tr>
+                <td class="text-center" rowspan="1" colspan="1">
+                  <code>5</code>
+</td>
+                <td class="text-center" rowspan="1" colspan="1">2</td>
+              </tr>
+              <tr>
+                <td class="text-center" rowspan="1" colspan="1"> </td>
+                <td class="text-center" rowspan="1" colspan="1"> </td>
+              </tr>
+            </tbody>
+          </table>
 </section>
 </div>
 <div id="parse-size-table">
-<section id="section-3.14">
-        <h3 id="name-parse-size-table">
-<a href="#section-3.14" class="section-number selfRef">3.14. </a><a href="#name-parse-size-table" class="section-name selfRef">Parse Size Table</a>
-        </h3>
-<p id="section-3.14-1">Text domain parsing can be simplified by using a parse size table. A text domain parser uses the first character selector code to look up the hard size (stable) portion of the text code. The parse then extracts hard size characters from the text stream. These characters form an index into the parse size table which includes a set of sizes for the remainder of the primitive. Using these sizes for a given code allows a parser to extract and convert a given primitive. In the binary domain, the same text parse table may be used but each size value represents a multiple of a sextet of bits instead of Base64 characters. Example entries from that table are provided below. Two of the rows may always be calculated given the other 4 rows so the table need only have 4 entries in each row. Thus all basic primitives may be parsed with one parse size table.<a href="#section-3.14-1" class="pilcrow">¶</a></p>
-<table class="center" id="table-4">
-          <caption><a href="#table-4" class="selfRef">Table 4</a></caption>
+<section id="section-3.14.2">
+          <h4 id="name-parse-size-table">
+<a href="#section-3.14.2" class="section-number selfRef">3.14.2. </a><a href="#name-parse-size-table" class="section-name selfRef">Parse Size Table</a>
+          </h4>
+<p id="section-3.14.2-1">Below is a snippet from the Parse Size Table for some example codes<a href="#section-3.14.2-1" class="pilcrow">¶</a></p>
+<table class="center" id="table-6">
+            <caption><a href="#table-6" class="selfRef">Table 6</a></caption>
 <thead>
-            <tr>
-              <th class="text-center" rowspan="1" colspan="1">selector</th>
-              <th class="text-center" rowspan="1" colspan="1">hs</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td class="text-center" rowspan="1" colspan="1"> </td>
-              <td class="text-center" rowspan="1" colspan="1"> </td>
-            </tr>
-            <tr>
-              <td class="text-center" rowspan="1" colspan="1">
-                <code>B</code>
+              <tr>
+                <th class="text-center" rowspan="1" colspan="1">hard sized index</th>
+                <th class="text-center" rowspan="1" colspan="1">hs</th>
+                <th class="text-center" rowspan="1" colspan="1">ss</th>
+                <th class="text-center" rowspan="1" colspan="1">vs</th>
+                <th class="text-center" rowspan="1" colspan="1">fs</th>
+                <th class="text-center" rowspan="1" colspan="1">ls</th>
+                <th class="text-center" rowspan="1" colspan="1">ps</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td class="text-center" rowspan="1" colspan="1"> </td>
+                <td class="text-center" rowspan="1" colspan="1"> </td>
+                <td class="text-center" rowspan="1" colspan="1"> </td>
+                <td class="text-center" rowspan="1" colspan="1"> </td>
+                <td class="text-center" rowspan="1" colspan="1"> </td>
+                <td class="text-center" rowspan="1" colspan="1"> </td>
+                <td class="text-center" rowspan="1" colspan="1"> </td>
+              </tr>
+              <tr>
+                <td class="text-center" rowspan="1" colspan="1">
+                  <code>B</code>
 </td>
-              <td class="text-center" rowspan="1" colspan="1">1</td>
-            </tr>
-            <tr>
-              <td class="text-center" rowspan="1" colspan="1">
-                <code>0</code>
+                <td class="text-center" rowspan="1" colspan="1">1</td>
+                <td class="text-center" rowspan="1" colspan="1">0</td>
+                <td class="text-center" rowspan="1" colspan="1">43*</td>
+                <td class="text-center" rowspan="1" colspan="1">44</td>
+                <td class="text-center" rowspan="1" colspan="1">0</td>
+                <td class="text-center" rowspan="1" colspan="1">1</td>
+              </tr>
+              <tr>
+                <td class="text-center" rowspan="1" colspan="1">
+                  <code>0B</code>
 </td>
-              <td class="text-center" rowspan="1" colspan="1">2</td>
-            </tr>
-            <tr>
-              <td class="text-center" rowspan="1" colspan="1">
-                <code>5</code>
+                <td class="text-center" rowspan="1" colspan="1">2</td>
+                <td class="text-center" rowspan="1" colspan="1">0</td>
+                <td class="text-center" rowspan="1" colspan="1">86*</td>
+                <td class="text-center" rowspan="1" colspan="1">88</td>
+                <td class="text-center" rowspan="1" colspan="1">0</td>
+                <td class="text-center" rowspan="1" colspan="1">2*</td>
+              </tr>
+              <tr>
+                <td class="text-center" rowspan="1" colspan="1">
+                  <code>5A</code>
 </td>
-              <td class="text-center" rowspan="1" colspan="1">2</td>
-            </tr>
-            <tr>
-              <td class="text-center" rowspan="1" colspan="1"> </td>
-              <td class="text-center" rowspan="1" colspan="1"> </td>
-            </tr>
-          </tbody>
-        </table>
-<table class="center" id="table-5">
-          <caption><a href="#table-5" class="selfRef">Table 5</a></caption>
+                <td class="text-center" rowspan="1" colspan="1">2</td>
+                <td class="text-center" rowspan="1" colspan="1">2</td>
+                <td class="text-center" rowspan="1" colspan="1">#</td>
+                <td class="text-center" rowspan="1" colspan="1">#</td>
+                <td class="text-center" rowspan="1" colspan="1">1</td>
+                <td class="text-center" rowspan="1" colspan="1">1*</td>
+              </tr>
+              <tr>
+                <td class="text-center" rowspan="1" colspan="1"> </td>
+                <td class="text-center" rowspan="1" colspan="1"> </td>
+                <td class="text-center" rowspan="1" colspan="1"> </td>
+                <td class="text-center" rowspan="1" colspan="1"> </td>
+                <td class="text-center" rowspan="1" colspan="1"> </td>
+                <td class="text-center" rowspan="1" colspan="1"> </td>
+                <td class="text-center" rowspan="1" colspan="1"> </td>
+              </tr>
+            </tbody>
+          </table>
+</section>
+</div>
+<div id="parse-table-symbols">
+<section id="section-3.14.3">
+          <h4 id="name-parse-table-symbols">
+<a href="#section-3.14.3" class="section-number selfRef">3.14.3. </a><a href="#name-parse-table-symbols" class="section-name selfRef">Parse Table Symbols</a>
+          </h4>
+<table class="center" id="table-7">
+            <caption><a href="#table-7" class="selfRef">Table 7</a></caption>
 <thead>
-            <tr>
-              <th class="text-center" rowspan="1" colspan="1">hard sized index</th>
-              <th class="text-center" rowspan="1" colspan="1">hs</th>
-              <th class="text-center" rowspan="1" colspan="1">ss</th>
-              <th class="text-center" rowspan="1" colspan="1">vs</th>
-              <th class="text-center" rowspan="1" colspan="1">fs</th>
-              <th class="text-center" rowspan="1" colspan="1">ls</th>
-              <th class="text-center" rowspan="1" colspan="1">ps</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td class="text-center" rowspan="1" colspan="1"> </td>
-              <td class="text-center" rowspan="1" colspan="1"> </td>
-              <td class="text-center" rowspan="1" colspan="1"> </td>
-              <td class="text-center" rowspan="1" colspan="1"> </td>
-              <td class="text-center" rowspan="1" colspan="1"> </td>
-              <td class="text-center" rowspan="1" colspan="1"> </td>
-              <td class="text-center" rowspan="1" colspan="1"> </td>
-            </tr>
-            <tr>
-              <td class="text-center" rowspan="1" colspan="1">
-                <code>B</code>
+              <tr>
+                <th class="text-center" rowspan="1" colspan="1">Symbol</th>
+                <th class="text-center" rowspan="1" colspan="1">Description</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td class="text-center" rowspan="1" colspan="1"> </td>
+                <td class="text-center" rowspan="1" colspan="1"> </td>
+              </tr>
+              <tr>
+                <td class="text-center" rowspan="1" colspan="1">
+                  <code>*</code>
 </td>
-              <td class="text-center" rowspan="1" colspan="1">1</td>
-              <td class="text-center" rowspan="1" colspan="1">0</td>
-              <td class="text-center" rowspan="1" colspan="1">43*</td>
-              <td class="text-center" rowspan="1" colspan="1">44</td>
-              <td class="text-center" rowspan="1" colspan="1">0</td>
-              <td class="text-center" rowspan="1" colspan="1">1</td>
-            </tr>
-            <tr>
-              <td class="text-center" rowspan="1" colspan="1">
-                <code>0B</code>
+                <td class="text-center" rowspan="1" colspan="1">entry's size may be calculated from other sizes</td>
+              </tr>
+              <tr>
+                <td class="text-center" rowspan="1" colspan="1">
+                  <code>#</code>
 </td>
-              <td class="text-center" rowspan="1" colspan="1">2</td>
-              <td class="text-center" rowspan="1" colspan="1">0</td>
-              <td class="text-center" rowspan="1" colspan="1">86*</td>
-              <td class="text-center" rowspan="1" colspan="1">88</td>
-              <td class="text-center" rowspan="1" colspan="1">0</td>
-              <td class="text-center" rowspan="1" colspan="1">2*</td>
-            </tr>
-            <tr>
-              <td class="text-center" rowspan="1" colspan="1">
-                <code>5A</code>
+                <td class="text-center" rowspan="1" colspan="1">entry's size may be calculated from extracted code characters given by other sizes</td>
+              </tr>
+              <tr>
+                <td class="text-center" rowspan="1" colspan="1"> </td>
+                <td class="text-center" rowspan="1" colspan="1"> </td>
+              </tr>
+            </tbody>
+          </table>
+</section>
+</div>
+<div id="parse-part-sizes">
+<section id="section-3.14.4">
+          <h4 id="name-parse-part-sizes">
+<a href="#section-3.14.4" class="section-number selfRef">3.14.4. </a><a href="#name-parse-part-sizes" class="section-name selfRef">Parse Part Sizes</a>
+          </h4>
+<p id="section-3.14.4-1">The following table includes both labels of parts shown in the columns in the Parse Size table as well as parts that may be derived from the Parse Table parts or from transformations,<a href="#section-3.14.4-1" class="pilcrow">¶</a></p>
+<table class="center" id="table-8">
+            <caption><a href="#table-8" class="selfRef">Table 8</a></caption>
+<thead>
+              <tr>
+                <th class="text-center" rowspan="1" colspan="1">Label</th>
+                <th class="text-center" rowspan="1" colspan="1">Description</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td class="text-center" rowspan="1" colspan="1">
+                  <strong><em>hs</em></strong>
 </td>
-              <td class="text-center" rowspan="1" colspan="1">2</td>
-              <td class="text-center" rowspan="1" colspan="1">2</td>
-              <td class="text-center" rowspan="1" colspan="1">#</td>
-              <td class="text-center" rowspan="1" colspan="1">#</td>
-              <td class="text-center" rowspan="1" colspan="1">1</td>
-              <td class="text-center" rowspan="1" colspan="1">1*</td>
-            </tr>
-            <tr>
-              <td class="text-center" rowspan="1" colspan="1"> </td>
-              <td class="text-center" rowspan="1" colspan="1"> </td>
-              <td class="text-center" rowspan="1" colspan="1"> </td>
-              <td class="text-center" rowspan="1" colspan="1"> </td>
-              <td class="text-center" rowspan="1" colspan="1"> </td>
-              <td class="text-center" rowspan="1" colspan="1"> </td>
-              <td class="text-center" rowspan="1" colspan="1"> </td>
-            </tr>
-          </tbody>
-        </table>
-<p id="section-3.14-4"><code>*</code> size may be calculated from other sizes.<a href="#section-3.14-4" class="pilcrow">¶</a></p>
-<p id="section-3.14-5"><code>#</code> size may be calculated from extracted code characters given by other sizes.<a href="#section-3.14-5" class="pilcrow">¶</a></p>
-<p id="section-3.14-6"><em>hs</em> means hard size in chars.<a href="#section-3.14-6" class="pilcrow">¶</a></p>
-<p id="section-3.14-7"><em>ss</em> means soft size in chars.<a href="#section-3.14-7" class="pilcrow">¶</a></p>
-<p id="section-3.14-8"><em>vs</em> means value size in chars.<a href="#section-3.14-8" class="pilcrow">¶</a></p>
-<p id="section-3.14-9"><em>fs</em> means full size in chars where <em>fs = hs + ss + vs</em>.<a href="#section-3.14-9" class="pilcrow">¶</a></p>
-<p id="section-3.14-10"><em>ls</em> means lead size in bytes.<a href="#section-3.14-10" class="pilcrow">¶</a></p>
-<p id="section-3.14-11"><em>ps</em> means pad size in chars.<a href="#section-3.14-11" class="pilcrow">¶</a></p>
-<p id="section-3.14-12">Sizes that may be derived from the table size entries are as follows:<a href="#section-3.14-12" class="pilcrow">¶</a></p>
-<p id="section-3.14-13"><em>cs</em> means code size where <em>cs = hs + ss</em>.<a href="#section-3.14-13" class="pilcrow">¶</a></p>
-<p id="section-3.14-14"><em>rs</em> means raw size in bytes of binary value where *rs is derived from <code>R(T)</code>.<a href="#section-3.14-14" class="pilcrow">¶</a></p>
-<p id="section-3.14-15"><em>bs</em> means binary size in bytes where <em>bs = ls + rs</em>.<a href="#section-3.14-15" class="pilcrow">¶</a></p>
+                <td class="text-center" rowspan="1" colspan="1">hard (fixed) part of code size in chars</td>
+              </tr>
+              <tr>
+                <td class="text-center" rowspan="1" colspan="1">
+                  <strong><em>ss</em></strong>
+</td>
+                <td class="text-center" rowspan="1" colspan="1">soft (variable) part of code size in chars</td>
+              </tr>
+              <tr>
+                <td class="text-center" rowspan="1" colspan="1">
+                  <em>cs</em>
+</td>
+                <td class="text-center" rowspan="1" colspan="1">derived value size in chars where where <em>cs = hs + ss</em>
+</td>
+              </tr>
+              <tr>
+                <td class="text-center" rowspan="1" colspan="1">
+                  <strong><em>vs</em></strong>
+</td>
+                <td class="text-center" rowspan="1" colspan="1">value size in chars</td>
+              </tr>
+              <tr>
+                <td class="text-center" rowspan="1" colspan="1">
+                  <strong><em>fs</em></strong>
+</td>
+                <td class="text-center" rowspan="1" colspan="1">full size in chars where <em>fs = hs + ss + vs</em>
+</td>
+              </tr>
+              <tr>
+                <td class="text-center" rowspan="1" colspan="1">
+                  <strong><em>ls</em></strong>
+</td>
+                <td class="text-center" rowspan="1" colspan="1">lead size in bytes to prepad raw binary bytes</td>
+              </tr>
+              <tr>
+                <td class="text-center" rowspan="1" colspan="1">
+                  <strong><em>ps</em></strong>
+</td>
+                <td class="text-center" rowspan="1" colspan="1">Base64 encoded pad size in chars</td>
+              </tr>
+              <tr>
+                <td class="text-center" rowspan="1" colspan="1">
+                  <em>rs</em>
+</td>
+                <td class="text-center" rowspan="1" colspan="1">derived raw size in bytes of binary valure where *rs is derived from <code>R(T)</code>
+</td>
+              </tr>
+              <tr>
+                <td class="text-center" rowspan="1" colspan="1">
+                  <em>bs</em>
+</td>
+                <td class="text-center" rowspan="1" colspan="1">derived binary size in bytes where where <em>bs = ls + rs</em>
+</td>
+              </tr>
+            </tbody>
+          </table>
+</section>
+</div>
 </section>
 </div>
 <div id="special-context-specific-code-tables">
@@ -2227,78 +2435,138 @@ The first character is the selector, the second character is the type, and the l
         </h3>
 <p id="section-3.15-1">The table above that provides the encoding schemes each with an associated code table that provides the type codes or set of codes for each associated primitive type. These coding schemes constitute the basic set of code tables. This basic set may be extended with context-specific code tables. The context in which a primitive occurs may provide an additional implicit selector that is not part of the actual explicit text code. This allows context-specific coding schemes that would otherwise conflict with the basic code tables. Currently, there is only one context-specific coding scheme, that is, for indexed signatures. A common use case is thresholded multi-signature schemes. A threshold satisficing subset of signatures belonging to an ordered or list of public keys may be provided as part of a stream of primitives. One way to compactly associated each signature with its public key is to include in the text code for that signature the index into the ordered set of public keys. The typical raw binary size for a signature is 64-bytes which has a pad size of 2. This gives two code characters for a compact text code. The first character is the selector and type code. The second character is Base64 encoded integer index.  By using a similar dual selector type code character scheme as above, where the selectors are the numbers <code>0-9</code> and <code>-</code> and <code>_</code>. Then there are 52 type codes given by the letters <code>A- Z</code> and <code>a-z</code>. The index has 64 values which support up to 64 members in the public key list. A selector can be used to select a large text code with more characters dedicated to larger indices. Current only a small table is defined.<a href="#section-3.15-1" class="pilcrow">¶</a></p>
 <p id="section-3.15-2">A new signature scheme based on Ed448 with 114-byte signatures is also supported. These signatures have a pad size of zero so require a four-character text code. The first character is the selector <code>0</code>, the second character is the type with 64 values, and the last two characters provide the index as a Base64 encoded integer with 4096 different values.<a href="#section-3.15-2" class="pilcrow">¶</a></p>
-<p id="section-3.15-3">The associated indexed schemes are provided in the following table.<a href="#section-3.15-3" class="pilcrow">¶</a></p>
-<table class="center" id="table-6">
-          <caption><a href="#table-6" class="selfRef">Table 6</a></caption>
+<div id="indexed-code-table">
+<section id="section-3.15.1">
+          <h4 id="name-indexed-code-table">
+<a href="#section-3.15.1" class="section-number selfRef">3.15.1. </a><a href="#name-indexed-code-table" class="section-name selfRef">Indexed Code Table</a>
+          </h4>
+<p id="section-3.15.1-1">The associated indexed schemes are provided in the following table.<a href="#section-3.15.1-1" class="pilcrow">¶</a></p>
+<table class="center" id="table-9">
+            <caption><a href="#table-9" class="selfRef">Table 9</a></caption>
 <thead>
-            <tr>
-              <th class="text-center" rowspan="1" colspan="1">Selector</th>
-              <th class="text-center" rowspan="1" colspan="1">Selector</th>
-              <th class="text-center" rowspan="1" colspan="1">Type Chars</th>
-              <th class="text-center" rowspan="1" colspan="1">Index Chars</th>
-              <th class="text-center" rowspan="1" colspan="1">Code Size</th>
-              <th class="text-center" rowspan="1" colspan="1">Lead Bytes</th>
-              <th class="text-center" rowspan="1" colspan="1">Pad Size</th>
-              <th class="text-right" rowspan="1" colspan="1">Format</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td class="text-center" rowspan="1" colspan="1"> </td>
-              <td class="text-center" rowspan="1" colspan="1"> </td>
-              <td class="text-center" rowspan="1" colspan="1"> </td>
-              <td class="text-center" rowspan="1" colspan="1"> </td>
-              <td class="text-center" rowspan="1" colspan="1"> </td>
-              <td class="text-center" rowspan="1" colspan="1"> </td>
-              <td class="text-center" rowspan="1" colspan="1"> </td>
-              <td class="text-right" rowspan="1" colspan="1"> </td>
-            </tr>
-            <tr>
-              <td class="text-center" rowspan="1" colspan="1">
-                <code>[A-Z,a-z]</code>
+              <tr>
+                <th class="text-center" rowspan="1" colspan="1">Selector</th>
+                <th class="text-center" rowspan="1" colspan="1">Selector</th>
+                <th class="text-center" rowspan="1" colspan="1">Type Chars</th>
+                <th class="text-center" rowspan="1" colspan="1">Index Chars</th>
+                <th class="text-center" rowspan="1" colspan="1">Code Size</th>
+                <th class="text-center" rowspan="1" colspan="1">Lead Bytes</th>
+                <th class="text-center" rowspan="1" colspan="1">Pad Size</th>
+                <th class="text-right" rowspan="1" colspan="1">Format</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td class="text-center" rowspan="1" colspan="1"> </td>
+                <td class="text-center" rowspan="1" colspan="1"> </td>
+                <td class="text-center" rowspan="1" colspan="1"> </td>
+                <td class="text-center" rowspan="1" colspan="1"> </td>
+                <td class="text-center" rowspan="1" colspan="1"> </td>
+                <td class="text-center" rowspan="1" colspan="1"> </td>
+                <td class="text-center" rowspan="1" colspan="1"> </td>
+                <td class="text-right" rowspan="1" colspan="1"> </td>
+              </tr>
+              <tr>
+                <td class="text-center" rowspan="1" colspan="1">
+                  <code>[A-Z,a-z]</code>
 </td>
-              <td class="text-center" rowspan="1" colspan="1"> </td>
-              <td class="text-center" rowspan="1" colspan="1">1*</td>
-              <td class="text-center" rowspan="1" colspan="1">1</td>
-              <td class="text-center" rowspan="1" colspan="1">2</td>
-              <td class="text-center" rowspan="1" colspan="1">0</td>
-              <td class="text-center" rowspan="1" colspan="1">2</td>
-              <td class="text-right" rowspan="1" colspan="1">
-                <code>$#&amp;&amp;</code>
+                <td class="text-center" rowspan="1" colspan="1"> </td>
+                <td class="text-center" rowspan="1" colspan="1">1*</td>
+                <td class="text-center" rowspan="1" colspan="1">1</td>
+                <td class="text-center" rowspan="1" colspan="1">2</td>
+                <td class="text-center" rowspan="1" colspan="1">0</td>
+                <td class="text-center" rowspan="1" colspan="1">2</td>
+                <td class="text-right" rowspan="1" colspan="1">
+                  <code>$#&amp;&amp;</code>
 </td>
-            </tr>
-            <tr>
-              <td class="text-center" rowspan="1" colspan="1">
-                <code>0</code>
+              </tr>
+              <tr>
+                <td class="text-center" rowspan="1" colspan="1">
+                  <code>0</code>
 </td>
-              <td class="text-center" rowspan="1" colspan="1"> </td>
-              <td class="text-center" rowspan="1" colspan="1">1</td>
-              <td class="text-center" rowspan="1" colspan="1">2</td>
-              <td class="text-center" rowspan="1" colspan="1">4</td>
-              <td class="text-center" rowspan="1" colspan="1">0</td>
-              <td class="text-center" rowspan="1" colspan="1">0</td>
-              <td class="text-right" rowspan="1" colspan="1">` 0$##&amp;&amp;&amp;&amp;`</td>
-            </tr>
-            <tr>
-              <td class="text-center" rowspan="1" colspan="1"> </td>
-              <td class="text-center" rowspan="1" colspan="1"> </td>
-              <td class="text-center" rowspan="1" colspan="1"> </td>
-              <td class="text-center" rowspan="1" colspan="1"> </td>
-              <td class="text-center" rowspan="1" colspan="1"> </td>
-              <td class="text-center" rowspan="1" colspan="1"> </td>
-              <td class="text-center" rowspan="1" colspan="1"> </td>
-              <td class="text-right" rowspan="1" colspan="1"> </td>
-            </tr>
-          </tbody>
-        </table>
-<p id="section-3.15-5"><code>*</code> selector-character is also a type-character<a href="#section-3.15-5" class="pilcrow">¶</a></p>
-<p id="section-3.15-6">Character format symbol definitions:<a href="#section-3.15-6" class="pilcrow">¶</a></p>
-<p id="section-3.15-7"><code>$</code> means type code character from  subset of Base64  <code>[A-Z,a-z,0-9,-,_]</code>.<a href="#section-3.15-7" class="pilcrow">¶</a></p>
-<p id="section-3.15-8"><code>#</code> means a Base64 digit as part of a base 64 integer that determines the index.<a href="#section-3.15-8" class="pilcrow">¶</a></p>
-<p id="section-3.15-9"><code>%</code> means lead character.<a href="#section-3.15-9" class="pilcrow">¶</a></p>
-<p id="section-3.15-10"><code>&amp;</code> represents one or more Base64 value characters representing the converted raw binary value. The actual number of chars is determined by the prep-ended text code.  Shown is the minimum number of value characters.<a href="#section-3.15-10" class="pilcrow">¶</a></p>
-<p id="section-3.15-11"><code>TBD</code> means to be determined<a href="#section-3.15-11" class="pilcrow">¶</a></p>
-<p id="section-3.15-12">The appendix contains the master code table with the concrete codes.<a href="#section-3.15-12" class="pilcrow">¶</a></p>
+                <td class="text-center" rowspan="1" colspan="1"> </td>
+                <td class="text-center" rowspan="1" colspan="1">1</td>
+                <td class="text-center" rowspan="1" colspan="1">2</td>
+                <td class="text-center" rowspan="1" colspan="1">4</td>
+                <td class="text-center" rowspan="1" colspan="1">0</td>
+                <td class="text-center" rowspan="1" colspan="1">0</td>
+                <td class="text-right" rowspan="1" colspan="1">` 0$##&amp;&amp;&amp;&amp;`</td>
+              </tr>
+              <tr>
+                <td class="text-center" rowspan="1" colspan="1"> </td>
+                <td class="text-center" rowspan="1" colspan="1"> </td>
+                <td class="text-center" rowspan="1" colspan="1"> </td>
+                <td class="text-center" rowspan="1" colspan="1"> </td>
+                <td class="text-center" rowspan="1" colspan="1"> </td>
+                <td class="text-center" rowspan="1" colspan="1"> </td>
+                <td class="text-center" rowspan="1" colspan="1"> </td>
+                <td class="text-right" rowspan="1" colspan="1"> </td>
+              </tr>
+            </tbody>
+          </table>
+</section>
+</div>
+<div id="encoding-scheme-symbols-1">
+<section id="section-3.15.2">
+          <h4 id="name-encoding-scheme-symbols-2">
+<a href="#section-3.15.2" class="section-number selfRef">3.15.2. </a><a href="#name-encoding-scheme-symbols-2" class="section-name selfRef">Encoding Scheme Symbols</a>
+          </h4>
+<p id="section-3.15.2-1">The following table defines the meaning of the symbols used in the Indexed Code table<a href="#section-3.15.2-1" class="pilcrow">¶</a></p>
+<table class="center" id="table-10">
+            <caption><a href="#table-10" class="selfRef">Table 10</a></caption>
+<thead>
+              <tr>
+                <th class="text-center" rowspan="1" colspan="1">Symbol</th>
+                <th class="text-center" rowspan="1" colspan="1">Description</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td class="text-center" rowspan="1" colspan="1"> </td>
+                <td class="text-center" rowspan="1" colspan="1"> </td>
+              </tr>
+              <tr>
+                <td class="text-center" rowspan="1" colspan="1">
+                  <code>*</code>
+</td>
+                <td class="text-center" rowspan="1" colspan="1">selector-code character also provides the type</td>
+              </tr>
+              <tr>
+                <td class="text-center" rowspan="1" colspan="1">
+                  <code>$</code>
+</td>
+                <td class="text-center" rowspan="1" colspan="1">type-code character from  subset of Base64  <code>[A-Z,a-z,0-9,-,_]</code>
+</td>
+              </tr>
+              <tr>
+                <td class="text-center" rowspan="1" colspan="1">
+                  <code>%</code>
+</td>
+                <td class="text-center" rowspan="1" colspan="1">lead byte where pre-converted binary includes the number of lead bytes shown</td>
+              </tr>
+              <tr>
+                <td class="text-center" rowspan="1" colspan="1">
+                  <code>#</code>
+</td>
+                <td class="text-center" rowspan="1" colspan="1">Base64 digit as part of a base 64 integer. When part of primitive determines the number of following quadlets or triplets. When part of a count code determines the count of following primitives or groups of primitives</td>
+              </tr>
+              <tr>
+                <td class="text-center" rowspan="1" colspan="1">
+                  <code>&amp;</code>
+</td>
+                <td class="text-center" rowspan="1" colspan="1">Base64 value characters that represent the converted raw binary value.  The actual number of characters is determined by the prepended text code.  Shown is the minimum number of value characters.</td>
+              </tr>
+              <tr>
+                <td class="text-center" rowspan="1" colspan="1">
+                  <code>TBD</code>
+</td>
+                <td class="text-center" rowspan="1" colspan="1">to be determined, reserved for future</td>
+              </tr>
+            </tbody>
+          </table>
+<p id="section-3.15.2-3">The appendix contains the master code table with the concrete codes.<a href="#section-3.15.2-3" class="pilcrow">¶</a></p>
+</section>
+</div>
 </section>
 </div>
 </section>
@@ -2327,8 +2595,8 @@ The first character is the selector, the second character is the type, and the l
 3) The length in characters of the code.
 4) the length in characters of the index or count portion of the code
 5) The length in characters of the fully qualified primitive including code and append material or number of elements in the group.<a href="#section-4.2-2" class="pilcrow">¶</a></p>
-<table class="center" id="table-7">
-          <caption><a href="#table-7" class="selfRef">Table 7</a></caption>
+<table class="center" id="table-11">
+          <caption><a href="#table-11" class="selfRef">Table 11</a></caption>
 <thead>
             <tr>
               <th class="text-center" rowspan="1" colspan="1">Code</th>

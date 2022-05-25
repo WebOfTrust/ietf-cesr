@@ -110,8 +110,16 @@ Table of Contents
        3.11.2.  Large Count Code Table
      3.12. OpCode Tables
      3.13. Selector Codes and Encoding Schemes
-     3.14. Parse Size Table
+       3.13.1.  Encoding Scheme Table
+       3.13.2.  Encoding Scheme Symbols
+     3.14. Parse Tables
+       3.14.1.  Selector Code Size Table
+       3.14.2.  Parse Size Table
+       3.14.3.  Parse Table Symbols
+       3.14.4.  Parse Part Sizes
      3.15. Special Context-Specific Code Tables
+       3.15.1.  Indexed Code Table
+       3.15.2.  Encoding Scheme Symbols
    4.  Appendix: Master Code Table
      4.1.  Filling Code Table
      4.2.  Description
@@ -1211,8 +1219,10 @@ Table of Contents
 
 3.13.  Selector Codes and Encoding Schemes
 
-   The following table summarizes the _T_ domain coding schemes for the
-   13 code tables defined above.
+3.13.1.  Encoding Scheme Table
+
+   The following table summarizes the _T_ domain coding schemes by
+   selector code for the 13 code tables defined above.
 
    +===========+===========+=====+=====+====+======+====+==============+
    |  Selector |  Selector | Type|Value|Code| Lead |Pad |       Format |
@@ -1251,27 +1261,42 @@ Table of Contents
 
                                   Table 3
 
-   * selector-character is also a type-character
+3.13.2.  Encoding Scheme Symbols
 
-   Character format symbol definitions:
+   The following table defines the meaning of the symbols used in the
+   encoding scheme table
 
-   $ means type code character from subset of Base64 [A-Z,a-z,0-9,-,_].
+   +========+==========================================================+
+   | Symbol |                       Description                        |
+   +========+==========================================================+
+   +--------+----------------------------------------------------------+
+   |   *    |        selector-code character also provides the         |
+   |        |                           type                           |
+   +--------+----------------------------------------------------------+
+   |   $    |        type-code character from subset of Base64         |
+   |        |                    [A-Z,a-z,0-9,-,_]                     |
+   +--------+----------------------------------------------------------+
+   |   %    |           lead byte where pre-converted binary           |
+   |        |         includes the number of lead bytes shown          |
+   +--------+----------------------------------------------------------+
+   |   #    |        Base64 digit as part of a base 64 integer.        |
+   |        |       When part of primitive determines the number       |
+   |        |         of following quadlets or triplets.  When         |
+   |        |       part of a count code determines the count of       |
+   |        |       following primitives or groups of primitives       |
+   +--------+----------------------------------------------------------+
+   |   &    |        Base64 value characters that represent the        |
+   |        |         converted raw binary value.  The actual          |
+   |        |        number of characters is determined by the         |
+   |        |        prepended text code.  Shown is the minimum        |
+   |        |               number of value characters.                |
+   +--------+----------------------------------------------------------+
+   |  TBD   |          to be determined, reserved for future           |
+   +--------+----------------------------------------------------------+
 
-   % means lead character.
+                                  Table 4
 
-   # means a Base64 digit as part of a base 64 integer that determines
-   the number of following quadlets or triplets in the primitive or when
-   part of a count code, the count of following primitives or groups of
-   primitives.
-
-   & represents one or more Base64 value characters representing the
-   converted raw binary value.  The actual number of chars is determined
-   by the prepended text code.  Shown is the minimum number of value
-   characters.
-
-   TBD means to be determined
-
-3.14.  Parse Size Table
+3.14.  Parse Tables
 
    Text domain parsing can be simplified by using a parse size table.  A
    text domain parser uses the first character selector code to look up
@@ -1287,6 +1312,8 @@ Table of Contents
    rows so the table need only have 4 entries in each row.  Thus all
    basic primitives may be parsed with one parse size table.
 
+3.14.1.  Selector Code Size Table
+
                              +==========+====+
                              | selector | hs |
                              +==========+====+
@@ -1299,7 +1326,11 @@ Table of Contents
                              +----------+----+
                              +----------+----+
 
-                                  Table 4
+                                  Table 5
+
+3.14.2.  Parse Size Table
+
+   Below is a snippet from the Parse Size Table for some example codes
 
             +==================+====+====+=====+====+====+====+
             | hard sized index | hs | ss |  vs | fs | ls | ps |
@@ -1313,33 +1344,54 @@ Table of Contents
             +------------------+----+----+-----+----+----+----+
             +------------------+----+----+-----+----+----+----+
 
-                                  Table 5
+                                  Table 6
 
-   * size may be calculated from other sizes.
+3.14.3.  Parse Table Symbols
 
-   # size may be calculated from extracted code characters given by
-   other sizes.
+       +========+=================================================+
+       | Symbol |                   Description                   |
+       +========+=================================================+
+       +--------+-------------------------------------------------+
+       |   *    | entry's size may be calculated from other sizes |
+       +--------+-------------------------------------------------+
+       |   #    |  entry's size may be calculated from extracted  |
+       |        |       code characters given by other sizes      |
+       +--------+-------------------------------------------------+
+       +--------+-------------------------------------------------+
 
-   _hs_ means hard size in chars.
+                                 Table 7
 
-   _ss_ means soft size in chars.
+3.14.4.  Parse Part Sizes
 
-   _vs_ means value size in chars.
+   The following table includes both labels of parts shown in the
+   columns in the Parse Size table as well as parts that may be derived
+   from the Parse Table parts or from transformations,
 
-   _fs_ means full size in chars where _fs = hs + ss + vs_.
+    +========+========================================================+
+    | Label  |                      Description                       |
+    +========+========================================================+
+    | *_hs_* |        hard (fixed) part of code size in chars         |
+    +--------+--------------------------------------------------------+
+    | *_ss_* |       soft (variable) part of code size in chars       |
+    +--------+--------------------------------------------------------+
+    |  _cs_  | derived value size in chars where where _cs = hs + ss_ |
+    +--------+--------------------------------------------------------+
+    | *_vs_* |                  value size in chars                   |
+    +--------+--------------------------------------------------------+
+    | *_fs_* |      full size in chars where _fs = hs + ss + vs_      |
+    +--------+--------------------------------------------------------+
+    | *_ls_* |     lead size in bytes to prepad raw binary bytes      |
+    +--------+--------------------------------------------------------+
+    | *_ps_* |            Base64 encoded pad size in chars            |
+    +--------+--------------------------------------------------------+
+    |  _rs_  |  derived raw size in bytes of binary valure where *rs  |
+    |        |                  is derived from R(T)                  |
+    +--------+--------------------------------------------------------+
+    |  _bs_  |  derived binary size in bytes where where _bs = ls +   |
+    |        |                          rs_                           |
+    +--------+--------------------------------------------------------+
 
-   _ls_ means lead size in bytes.
-
-   _ps_ means pad size in chars.
-
-   Sizes that may be derived from the table size entries are as follows:
-
-   _cs_ means code size where _cs = hs + ss_.
-
-   _rs_ means raw size in bytes of binary value where *rs is derived
-   from R(T).
-
-   _bs_ means binary size in bytes where _bs = ls + rs_.
+                                  Table 8
 
 3.15.  Special Context-Specific Code Tables
 
@@ -1376,6 +1428,8 @@ Table of Contents
    characters provide the index as a Base64 encoded integer with 4096
    different values.
 
+3.15.1.  Indexed Code Table
+
    The associated indexed schemes are provided in the following table.
 
    +===========+==========+======+=======+====+=======+====+===========+
@@ -1389,25 +1443,42 @@ Table of Contents
    +-----------+----------+------+-------+----+-------+----+-----------+
    +-----------+----------+------+-------+----+-------+----+-----------+
 
-                                  Table 6
+                                  Table 9
 
-   * selector-character is also a type-character
+3.15.2.  Encoding Scheme Symbols
 
-   Character format symbol definitions:
+   The following table defines the meaning of the symbols used in the
+   Indexed Code table
 
-   $ means type code character from subset of Base64 [A-Z,a-z,0-9,-,_].
+   +========+==========================================================+
+   | Symbol |                       Description                        |
+   +========+==========================================================+
+   +--------+----------------------------------------------------------+
+   |   *    |        selector-code character also provides the         |
+   |        |                           type                           |
+   +--------+----------------------------------------------------------+
+   |   $    |        type-code character from subset of Base64         |
+   |        |                    [A-Z,a-z,0-9,-,_]                     |
+   +--------+----------------------------------------------------------+
+   |   %    |           lead byte where pre-converted binary           |
+   |        |         includes the number of lead bytes shown          |
+   +--------+----------------------------------------------------------+
+   |   #    |        Base64 digit as part of a base 64 integer.        |
+   |        |       When part of primitive determines the number       |
+   |        |         of following quadlets or triplets.  When         |
+   |        |       part of a count code determines the count of       |
+   |        |       following primitives or groups of primitives       |
+   +--------+----------------------------------------------------------+
+   |   &    |        Base64 value characters that represent the        |
+   |        |         converted raw binary value.  The actual          |
+   |        |        number of characters is determined by the         |
+   |        |        prepended text code.  Shown is the minimum        |
+   |        |               number of value characters.                |
+   +--------+----------------------------------------------------------+
+   |  TBD   |          to be determined, reserved for future           |
+   +--------+----------------------------------------------------------+
 
-   # means a Base64 digit as part of a base 64 integer that determines
-   the index.
-
-   % means lead character.
-
-   & represents one or more Base64 value characters representing the
-   converted raw binary value.  The actual number of chars is determined
-   by the prep-ended text code.  Shown is the minimum number of value
-   characters.
-
-   TBD means to be determined
+                                  Table 10
 
    The appendix contains the master code table with the concrete codes.
 
@@ -1728,7 +1799,7 @@ Table of Contents
    |          | (seal groups in list)     |        |        |          |
    +----------+---------------------------+--------+--------+----------+
 
-                                  Table 7
+                                  Table 11
 
    The table includes complex groups that are composed of other groups.
    For example, consider the counter attachment group with code -F##
