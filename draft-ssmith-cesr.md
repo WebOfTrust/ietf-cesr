@@ -621,7 +621,7 @@ Text domain parsing can be simplified by using a parse size table. A text domain
 
 *ps* means pad size in chars.
 
-Sizes that may be derived from the table size entries are as follows,
+Sizes that may be derived from the table size entries are as follows:
 
 *cs* means code size where *cs = hs + ss*.
 
