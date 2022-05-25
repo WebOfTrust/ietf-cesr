@@ -1379,7 +1379,7 @@ R-&gt;B(R)-&gt;B-&gt;T(B)-&gt;T-&gt;R(T)-&gt;R
 t[0] + t[1] + t[2] + t[3] = (t[0] + t[1]) + (t[2] + t[3])
 </pre><a href="#section-1.2.2-2" class="pilcrow">¶</a>
 </div>
-<p id="section-1.2.2-3">If we let <code>cat(x[k])</code> denote the concatenation of all elements of a set of indexed primitives <code>x[k]</code> where each element is indexed by a unique value of <code>k</code> then we can denote the transformation between domains of a concatenated set of primitives as follows:<a href="#section-1.2.2-3" class="pilcrow">¶</a></p>
+<p id="section-1.2.2-3">If we let <code>cat(x[k])</code> denote the concatenation of all elements of a set of indexed primitives <code>x[k]</code> where each element is indexed by a unique value of <code>k</code>. Given the indexed representation, we can express the transformation between domains of a concatenated set of primitives as follows:<a href="#section-1.2.2-3" class="pilcrow">¶</a></p>
 <p id="section-1.2.2-4">Let <code>T(cat(b[k]))</code> denote the concrete transformation of a given concatenated set of primitives, <code>cat(b[k])</code> from the <em>B</em> domain to the <em>T</em> domain.<a href="#section-1.2.2-4" class="pilcrow">¶</a></p>
 <p id="section-1.2.2-5">Let <code>B(cat(t[k]))</code> denote the concrete transformation of a given concatenated set of primitives, <code>cat(t[k])</code> from the <em>T</em> domain to the <em>B</em> domain.<a href="#section-1.2.2-5" class="pilcrow">¶</a></p>
 <p id="section-1.2.2-6">The concatentation composability property between <em>T</em> and <em>B</em> is expressed as follows:<a href="#section-1.2.2-6" class="pilcrow">¶</a></p>
@@ -1389,7 +1389,7 @@ t[0] + t[1] + t[2] + t[3] = (t[0] + t[1]) + (t[2] + t[3])
 T(cat(b[k]))=cat(T(b[k])) and B(cat(t[k]))=cat(B(t[k])) for all k.
 </pre><a href="#section-1.2.2-8" class="pilcrow">¶</a>
 </div>
-<p id="section-1.2.2-9">Basically, composability (over concatenation) means that the transformation of a set (as a whole) of concatenated primitives is equal to the concatenation of the set of individually transformed primitives.<a href="#section-1.2.2-9" class="pilcrow">¶</a></p>
+<p id="section-1.2.2-9">Basically, <em>composability</em> (over concatenation) means that the transformation of a set (as a whole) of concatenated primitives is equal to the concatenation of the set of individually transformed primitives.<a href="#section-1.2.2-9" class="pilcrow">¶</a></p>
 <p id="section-1.2.2-10">For example, suppose we have two primitives in the text domain, namely, <code>t[0]</code> and <code>t[1]</code> that each respectively transforms to primitives in the binary domain, namely, <code>b[0]</code> and <code>b[1]</code>. The transformation duals <code>B(T)</code> and <code>T(B)</code> are composable if and only if,<a href="#section-1.2.2-10" class="pilcrow">¶</a></p>
 <div id="section-1.2.2-11">
 <pre class="lang-text sourcecode">

@@ -302,8 +302,9 @@ Table of Contents
 
    If we let cat(x[k]) denote the concatenation of all elements of a set
    of indexed primitives x[k] where each element is indexed by a unique
-   value of k then we can denote the transformation between domains of a
-   concatenated set of primitives as follows:
+   value of k.  Given the indexed representation, we can express the
+   transformation between domains of a concatenated set of primitives as
+   follows:
 
    Let T(cat(b[k])) denote the concrete transformation of a given
    concatenated set of primitives, cat(b[k]) from the _B_ domain to the
@@ -322,7 +323,7 @@ Table of Contents
 
    T(cat(b[k]))=cat(T(b[k])) and B(cat(t[k]))=cat(B(t[k])) for all k.
 
-   Basically, composability (over concatenation) means that the
+   Basically, _composability_ (over concatenation) means that the
    transformation of a set (as a whole) of concatenated primitives is
    equal to the concatenation of the set of individually transformed
    primitives.
