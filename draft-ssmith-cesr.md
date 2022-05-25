@@ -624,8 +624,11 @@ Text domain parsing can be simplified by using a parse size table. A text domain
 Sizes that may be derived from the table size entries are as follows,
 
 *cs* means code size where *cs = hs + ss*.
+
 *rs* means raw size in bytes of binary value where *rs is derived from `R(T)`.
+
 *bs* means binary size in bytes where *bs = ls + rs*.
+
 
 ## Special Context-Specific Code Tables
 
