@@ -165,7 +165,7 @@ A given primitive in the *T* domain is denoted with `t`.  A member of an indexed
 
 ### Transformations Between Domains
 
-Although the composability property (mentioned above but described in detail below) only applies to conversions back and forth between the *T*, and *B*, domains, conversions between the *R*, and *T* domains as well as conversions between the *R* and *B* domains are also defined and supported by the protocol. As a result there is a total of six transformations, one in each direction between the three domains.
+Although the composability property (mentioned above but described in detail below) only applies to conversions back and forth between the *T*, and *B*, domains, conversions between the *R* and *T* domains as well as conversions between the *R* and *B* domains are also defined and supported by the protocol. As a result there are six transformations in total, one in each direction between the three domains.
 
 Let `T(B)` denote the abstract transformation function from the *B* domain to the *T* domain. This is the dual of `B(T)` below.
 
@@ -233,7 +233,7 @@ The composability property is an essential building block for streaming in eithe
 
 # Concrete Domain Representations
 
-Text, *T*, domain representations in CESR use only the characters from the URL and filename safe variant of the IETF RFC-4648 Base64 standard {{RFC4648}}. Unless otherwise indicated all references to Base64 {{RFC4648}} in this document imply the URL and filename safe variant. The URL and filename safe variant of Base64 uses in order the 64 characters `A to Z`, `a to z`, `-`, and `_` to encode 6 bits of information. In addition, Base64 uses the `=` character for padding but CESR does not use the `=` character for any purpose.
+Text, *T*, domain representations in CESR use only the characters from the URL and filename safe variant of the IETF RFC-4648 Base64 standard {{RFC4648}}. Unless otherwise indicated all references to Base64 {{RFC4648}} in this document imply the URL and filename safe variant. The URL and filename safe variant of Base64 uses in order the 64 characters `A to Z`, `a to z`, `0-9`, `-`, and `_` to encode 6 bits of information. In addition, Base64 uses the `=` character for padding but CESR does not use the `=` character for any purpose.
 
 Base64 {{RFC4648}} by itself does not satisfy the composability property.
 In CESR, both *T* and *B* domain representations include a prepended framing code prefix that is structured in such a way as to ensure composability.
