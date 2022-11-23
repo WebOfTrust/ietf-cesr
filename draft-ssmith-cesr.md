@@ -412,9 +412,9 @@ Noteworthy is that the first two (i.e. `ps`) characters of the conversion, namel
 |        S1       |        S0       |        T1       |        T0       |
 |s5:s4:s3:s2:s1:s0|s5:s4|s3:s2:s1:s0|z3:z2:z1:z0|a7:a6:a5:a4:a3:a2:a1:a0|
 ~~~
-where  `ZX` represents a zeroed pre-pad byte, `zX` represents a zeroed pre-pad bit, `AX` represents a byte from `a`, `aX` represents a bit from `a`,  `TX` represents a Base64 character that results from the Base64 conversion of the pre-padded `a`, `SX` represents a Base64 code character replacing one of the `TX`, and `sX` is a code bit. The resultant four character Base64 encoded primitive would be `C1C0T1T0`.
+where  `ZX` represents a zeroed pre-pad byte, `zX` represents a zeroed pre-pad bit, `AX` represents a byte from `a`, `aX` represents a bit from `a`,  `TX` represents a Base64 character that results from the Base64 conversion of the pre-padded `a`, `SX` represents a Base64 code character replacing one of the `TX`, and `sX` is a code bit. The resultant four character Base64 encoded primitive would be `S1S0T1T0`.
 
-When `C1C0T1T0` is converted back to binary from Base64 the result would be as follows:
+When `S1S0T1T0` is converted back to binary from Base64 the result would be as follows:
 
 ~~~text
 |        S1       |        S0       |        T1       |        T0       |
@@ -422,12 +422,12 @@ When `C1C0T1T0` is converted back to binary from Base64 the result would be as f
 |           U1          |        U0             |           A0          |
 ~~~
 
-where  `CX` represents a Base64 code character replacing one of the `TX`, `cX` is a code bit, `UX` represents byte from converted code char which may include zeroed bits, `zX` represents a zeroed pre-pad bit, `AX` represents a byte from `a`, `aX` represents a bit from `a`, and `TX` represents a Base64 character that results from the Base64 conversion of the pre-padded `a`.
+where  `SX` represents a Base64 code character replacing one of the `TX`, `sX` is a code bit, `UX` represents byte from converted code char which may include zeroed bits, `zX` represents a zeroed pre-pad bit, `AX` represents a byte from `a`, `aX` represents a bit from `a`, and `TX` represents a Base64 character that results from the Base64 conversion of the pre-padded `a`.
 
-Stripping off `U1U0` leaves `a` in its original state. Noteworthy is that the code characters (only) are effectively left shifted 4 bits after conversion. The code characters `S1S0` can be recovered as the first two characters obtained from simply converting `U1O0` only back to Base64.
+Stripping off `U1U0` leaves `a` in its original state. Noteworthy is that the code characters (only) are effectively left shifted 4 bits after conversion. The code characters `S1S0` can be recovered as the first two characters obtained from simply converting `U1U0` only back to Base64.
 
 
-## Two Byte
+### Two Byte
 
 For the two byte raw binary string `b`, `ps` is one. The pre-padded conversion results in the following:
 
@@ -438,7 +438,7 @@ For the two byte raw binary string `b`, `ps` is one. The pre-padded conversion r
 ~~~
 where  `ZX` represents a zeroed pre-pad byte, `zX` represents a zeroed pre-pad bit, `BX` represents a byte from `b`, `bX` represents a bit from `b`, and `TX` represents a Base64 character that results from the Base64 conversion of the pre-padded `b`.
 
-Noteworthy is that the first one (i.e. `ps`) character of the conversion, namely, `T3`, does not include any bits of information from `b`. This also means that `T3` can be modified after conversion without impacting the appearance or value of the converted `b` that appears solely in `T2T1T0`, i.e. there is no overlap. Moreover, the resulting Base64 conversion of `b` is right aligned with respect to the trailing Base64 character. This means that one can "read" and understand the numerical values for `b` from such an unshifted Base64 conversion.  This also means that a text-based parser on a character-by-character basis can cleanly process `T3` separate from the Base64 encoding of `b` that appears in `T2T1T0`. Given this separation we could replace `T3` with one character Base64 textual type code `C0` as follows:
+Noteworthy is that the first one (i.e. `ps`) character of the conversion, namely, `T3`, does not include any bits of information from `b`. This also means that `T3` can be modified after conversion without impacting the appearance or value of the converted `b` that appears solely in `T2T1T0`, i.e. there is no overlap. Moreover, the resulting Base64 conversion of `b` is right aligned with respect to the trailing Base64 character. This means that one can "read" and understand the numerical values for `b` from such an unshifted Base64 conversion.  This also means that a text-based parser on a character-by-character basis can cleanly process `T3` separate from the Base64 encoding of `b` that appears in `T2T1T0`. Given this separation we could replace `T3` with one character Base64 textual type code `S0` as follows:
 
 ~~~text
 |           Z1          |           B1          |           B0          |
@@ -453,17 +453,18 @@ When `S0T2T1T0` is converted back to binary from Base64 the result would be as f
 ~~~text
 |        S0       |        T2       |        T1       |        T0       |
 |s5:s4:s3:c2:cs:s0|z1:z0|b7:b6:b5:b4:b3:b2:b1:b0|b7:b6:b5:b4:b3:b2:b1:b0|
-|           U0          |           U1          |           A0          |
+|           U0          |           B1          |           B0          |
 ~~~
 where  `SX` represents a Base64 code character replacing one of the `TX`, `sX` is a code bit, `UX` represents byte from converted code char which may include zeroed bits, `zX` represents a zeroed pre-pad bit, `BX` represents a byte from `b`, `bX` represents a bit from `b`, and `TX` represents a Base64 character that results from the Base64 conversion of the pre-padded `b`.
 
-Stripping off `U0` leaves `b` in its original state. Noteworthy is that the code character (only) is effectively left shifted 4 bits after conversion. The code character `S0` can be recovered as the first character obtained from simply converting `U0` only to Base64 .
+Stripping off `U0` leaves `b` in its original state. Noteworthy is that the code character (only) is effectively left shifted 2 bits after conversion. The code character `S0` can be recovered as the first character obtained from simply converting `U0` only to Base64 .
 
 ### Three Byte
 
 For the three byte raw binary string `c`, `ps` is zero. So prepadding is not needed.
+
 ~~~text
-|           C2          |           C1          |           C2          |
+|           C2          |           C1          |           C0          |
 |c7:c6:c5:c4:c3:c2:c1:c0|c7:c6:c5:c4:c3:c2:c1:c0|c7:c6:c5:c4:c3:c2:c1:c0|
 |        T3       |        T2       |        T1       |        T0       |
 ~~~
@@ -517,7 +518,7 @@ Amongst the codes for map objects in the JSON, CBOR, and MGPK only the first thr
 
 So we have the set of four used starting tritets (3 bits) in numeric order of `0b011`, `0b100`, `0b101`, and `0b110`. This leaves four unused tritets, namely, `0b000`, `0b001`, `0b010`, and `0b111` that may be selected as the CESR count (framing) code start bits. In Base64 there are two codes that satisfy our constraints. The first is the dash character, `-`, encoded as `0x2d`. Its first three bits are `0b001`. The second is the underscore character,`_`, encoded as `0x5f`. Its first three bits are `0b010`. Both of these are distinct from the starting tritets of any of the JSON, CBOR, and MGPK encodings above. Moreover, the starting tritet of the corresponding binary encodings of `-` and `_` is `0b111` which is also distinct from all the others. To elaborate, Base64 uses `_` in position 62 or `0x3E` (hex) and uses `_` in position 63 or `0x3F` (hex) both of which have starting tritet of `0b111`
 
-This gives us two different Base64 characters, `-` and `_` we can use for the first character of any framing (count) code in the *T* domain. This also means we can have two different classes of framing (count) codes. This also provides a BOM-like capability to determine if a framing code is expressed in the *T* or *B* domain. To clarify, if a stream starts with the tritet `0b111` then the stream is *B* domain CESR and a stream parser would thereby know how to convert the first sextet of the stream to determine which of the two framing codes is being used, `0x3E` or `ox3F`. If on the other hand, the framing code starts with either of the tritets `0b001` or `0b010` then the framing code is expressed in the *T* domain and a stream parser likewise would thereby know how to convert the first character (octet) of the framing code to determine which framing code is being used. Otherwise, if a stream starts with  `0b100` then is JSON, with `0b101` then its CBOR, and with either `0b011`, and `0b110` then its MGPK.
+This gives us two different Base64 characters, `-` and `_` we can use for the first character of any framing (count) code in the *T* domain. This also means we can have two different classes of framing (count) codes. This also provides a BOM-like capability to determine if a framing code is expressed in the *T* or *B* domain. To clarify, if a stream starts with the tritet `0b111` then the stream is *B* domain CESR and a stream parser would thereby know how to convert the first sextet of the stream to determine which of the two framing codes is being used, `0x3E` or `0x3F`. If on the other hand, the framing code starts with either of the tritets `0b001` or `0b010` then the framing code is expressed in the *T* domain and a stream parser likewise would thereby know how to convert the first character (octet) of the framing code to determine which framing code is being used. Otherwise, if a stream starts with  `0b100` then is JSON, with `0b101` then its CBOR, and with either `0b011`, and `0b110` then its MGPK.
 
 This is summarized in the following table:
 
@@ -648,13 +649,13 @@ This table uses `9` as its first character or selector. The next three character
 
 ## Count (Framing) Code Tables
 
-There may be as many at 13 count code tables, but only three are currently specified. These three are the small count, four-character table, the large count, eight-character table, and the eight character protocol genus and version table. Because count codes only count quadlets/triplets or the number of primitives or groups of primitives, count codes have no value component but have only type and size components. Because primitives are already guaranteed to be composable, count codes do not need to account for pad size as long as the count code itself is aligned on a 24-bit boundary. The count code type indicates the type of primitive or group being counted and the size indicates either how many of that type are in the group or the number of quadlets/triplets consumed by that group. Both count code tables use the first two characters as a nested set of selectors. The first selector uses`-` as the initial selector for count codes. The next character is either a selector for another count code table or is the type for the small count code table. When the second character is numeral `0` - `9` or the letters `-` or `_` then it is a secondary count code table selector. When the second character is a letter in the range `A` - `Z` or `a` - `z` then it is a unique count code type. This gives a total of 52 single-character count code types.
+There may be as many at 13 count code tables, but only three are currently specified. These three are the small count, four-character table, the large count, eight-character table, and the eight character protocol genus and version table. Because count codes only count quadlets/triplets or the number of primitives or groups of primitives, count codes have no value component but have only type and size components. Because primitives are already guaranteed to be composable, count codes do not need to account for pad size as long as the count code itself is aligned on a 24-bit boundary. The count code type indicates the type of primitive or group being counted and the size indicates either how many of that type are in the group or the number of quadlets/triplets consumed by that group. Both count code tables use the first two characters as a nested set of selectors. The first selector uses `-` as the initial selector for count codes. The next character is either a selector for another count code table or is the type for the small count code table. When the second character is numeral `0` - `9` or the letters `-` or `_` then it is a secondary count code table selector. When the second character is a letter in the range `A` - `Z` or `a` - `z` then it is a unique count code type. This gives a total of 52 single-character count code types.
 
 ### Small Count Code Table
 Codes in the small count code table are each four characters long. The first character is the selector `-`. The second character is the count code type. the last two characters are the count size as a Base64 encoded integer. The count code type MUST be a letter `A` - `Z` or `a` - `z`. If the second character is not a letter but is a numeral `0` - `9` or `-` or `_` then it is a selector for a different count code table. The set of letters provides 52 unique count codes. A two-character size provides counts from 0 to 4095 (`64**2 - 1`).
 
 ### Large Count Code Table
-Codes in the large count code table are each 8 characters long. The first two characters are the selectors `-`0. The next two characters are the count code type. the last four characters are the count size as a Base64 encoded integer. With two characters for type, there are 4096 unique large-count code types. A four-character size provides counts from 0 to 16,777,215 (`64**4 - 1`).
+Codes in the large count code table are each 8 characters long. The first two characters are the selectors `-0`. The next two characters are the count code type. the last four characters are the count size as a Base64 encoded integer. With two characters for type, there are 4096 unique large-count code types. A four-character size provides counts from 0 to 16,777,215 (`64**4 - 1`).
 
 ## Protocol Genus and Version Table
 The protocol genus and version table is special because its codes modifies the following count code group. A protocol genus and version code itself does not provide a count of following quadlets or triplets but modifies the protocol genus and version of all the following count codes until another protocol and genus count code is provided. Consequently a protocol genus and version code MUST only appear at the top level of any count group. In other words a protocol genus and version code MUST NOT be nested inside any other count code.
@@ -753,13 +754,13 @@ The following table includes both labels of parts shown in the columns in the Pa
 | ***ss*** | soft (variable) part of code size in chars |
 | ***os*** | other size in chars when soft part provides two variable values |
 | **ms** | derived main size in chars when soft part provides two variable values where *ms = ss - os* |
-| *cs* | derived value size in chars where where *cs = hs + ss* |
+| *cs* | derived value size in chars where *cs = hs + ss* |
 | ***vs*** | value size in chars |
 | ***fs*** | full size in chars where *fs = hs + ss + vs* |
 | ***ls*** | lead size in bytes to prepad raw binary bytes |
 | ***ps*** | Base64 encoded pad size in chars |
 | *rs* | derived raw size in bytes of binary valure where *rs is derived from `R(T)` |
-| *bs* | derived binary size in bytes where where *bs = ls + rs* |
+| *bs* | derived binary size in bytes where *bs = ls + rs* |
 
 
 ## Special Context-Specific Code Tables
@@ -770,7 +771,7 @@ The set of tables above provides the basic or master encoding schemes. These cod
 
 Currently, there is only one context-specific coding scheme, that is, for indexed signatures. A common use case is thresholded multi-signature schemes. A threshold-satisficing subset of signatures belonging to an ordered set or list of public keys may be provided as part of a stream of primitives. One way to compactly associated each signature with its public key is to include in the text code for that signature the index into the ordered set of public keys.
 
-A popular raw binary size for a signature is 64 bytes which has a pad size of 2. This gives two code characters for a compact text code. The first character is the selector and type code. The second character is the Base64 encoded integer index.  By using a similar dual selector type code character scheme as above, where the selectors are the numbers `0-9` and `-` and `_`. Then there are 52 type codes given by the letters `A- Z` and `a-z`. The index has 64 values which support up to 64 members in the public key list. A selector can be used to select a large text code with more characters dedicated to larger indices. Some applications of CESR, like KERI, have the need for dual-indexed signatures (i.e. each signature has two indices) in order to support pre-rotation with partial or reserved participants in a rotation. With partial rotation, a given signature may contribute to the signing threshold for two different thresholds, each on two different lists of keys where the associated key may appear at a different location in each list. For 64-byte signatures, the Ed25519 and ECDSA secp256k1 schemes have entries in the table. For dual indexed codes, the next larger code size that aligns a 64-byte signature on a 24-bit boundary is 6 characters. The table provides entries for dual-indexed 64-byte signatures. The code includes one selector character, one type character, and two each of two character indices.
+A popular raw binary size for a signature is 64 bytes which has a pad size of 2. This gives two code characters for a compact text code. The first character is the selector and type code. The second character is the Base64 encoded integer index.  By using a similar dual selector type code character scheme as above, where the selectors are the numbers `0-9` and `-` and `_`. Then there are 52 type codes given by the letters `A-Z` and `a-z`. The index has 64 values which support up to 64 members in the public key list. A selector can be used to select a large text code with more characters dedicated to larger indices. Some applications of CESR, like KERI, have the need for dual-indexed signatures (i.e. each signature has two indices) in order to support pre-rotation with partial or reserved participants in a rotation. With partial rotation, a given signature may contribute to the signing threshold for two different thresholds, each on two different lists of keys where the associated key may appear at a different location in each list. For 64-byte signatures, the Ed25519 and ECDSA secp256k1 schemes have entries in the table. For dual indexed codes, the next larger code size that aligns a 64-byte signature on a 24-bit boundary is 6 characters. The table provides entries for dual-indexed 64-byte signatures. The code includes one selector character, one type character, and two each of two character indices.
 
 A new signature scheme based on Ed448 with 114-byte signatures is also supported. These signatures have a pad size of zero so require a four-character text code. The first character is the selector `0`, the second character is the type with 64 values, and the last two characters each provide a one-character index as a Base64 encoded integer with 64 different values. A big version code consumes eight characters with one character for the selector, one for the type, and three characters for each of the dual indices.
 
@@ -779,7 +780,7 @@ A new signature scheme based on Ed448 with 114-byte signatures is also supported
 The associated indexed schemes are provided in the following table.
 
 |  Selector | Type Chars | Index Chars | Ondex Chars | Code Size | Lead Bytes | Pad Size |     Format    |
-|:---------:|:----------:|:-----------:|:-----------:|:---------:|:----------:|:--------:|--------------:|
+|:---------:|:----------:|:-----------:|:-----------:|:---------:|:----------:|:--------:|:-------------:|
 |           |            |             |             |           |            |          |               |
 |`[A-Z,a-z]`|  `1*`      |     1       |      0      |      2    |      0     |      2   |         `$#&&`|
 |     `0`   |   1        |     1       |      1      |      4    |      0     |      0   |     `0$##&&&&`|
@@ -870,7 +871,7 @@ This master table includes both the primitive and count code types. The types ar
 |            |  **Large Variable Raw Size Codes**   |             |              |              |
 |   `7AAA`   | String Big Base64 Only Lead Size 0 |      8      |      4        |            |
 |   `8AAA`   | String Big Base64 Only Lead Size 1 |      8      |      4        |            |
-|   `7AAA`   | String Big Base64 Only Lead Size 2 |      8      |      4        |            |
+|   `9AAA`   | String Big Base64 Only Lead Size 2 |      8      |      4        |            |
 |   `7AAB`   | Bytes Big Lead Size 0              |      8      |      4        |            |
 |   `8AAB`   | Bytes Big Lead Size 1              |      8      |      4        |            |
 |   `9AAB`   | Bytes Big Lead Size 2              |      8      |      4        |            |
@@ -892,7 +893,7 @@ This master table includes both the primitive and count code types. The types ar
 ## Indexed Code Table
 
 |   Code    | Description                            | Code Length | Index Length | Ondex Length | Total Length |
-|:-------- :|:---------------------------------------|:-----------:|:------------:|:------------:|:------------:|
+|:---------:|:---------------------------------------|:-----------:|:------------:|:------------:|:------------:|
 |           |    **Indexed Two Character Codes**     |             |              |              |              |
 |    `A#`   | Ed25519 indexed signature both same    |      2      |       1      |      0       |      88      |
 |    `B#`   | Ed25519 indexed signature current only |      2      |       1      |      0       |      88      |
