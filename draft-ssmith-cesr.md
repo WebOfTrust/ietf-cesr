@@ -573,48 +573,48 @@ A 64-byte raw binary value has a pad size of 2 characters.
 
 Therefore the minimal text code size is 2 characters for 64-byte raw binary cryptographic material and all other raw binary material values whose pad size is 1 character. For example, a 16-byte raw binary value also has a pad size of 2 characters.
 
-For all other cryptographic material values whose pad size is 0, such as the 33 byte ECDSA public keys then the minimum size text code is 4 characters. So the minimally sized text code tables are 1, 2, and 4 characters respectively.
+For all other cryptographic material values whose pad size is 0, such as the 33-byte ECDSA public keys then, the minimum size text code is 4 characters. So the minimally sized text code tables are 1, 2, and 4 characters, respectively.
 
-Given that a given cryptographic primitive type has a known fixed raw binary size then we can efficiently encode that primitive type and size with just the type information. The size is given by the type.
+Given that a given cryptographic primitive type has a known fixed raw binary size, then we can efficiently encode that primitive type and size with just the type information. The size is given by the type.
 
-So for example an Ed25519 (EdDSA) raw public key is always 32 bytes so knowing that the type is `Ed25519 public key` implies the size of 32 bytes and a pad size of 1 character that therefore may be encoded with a 1 character text code. Likewise an Ed25519 (EdDSA) signature is always 64 bytes so knowing that the type is  `Ed25519 signature` implies the size of 64 bytes and a pad size of 2 characters that therefore may be encoded with a 2 character text code.
+So, for example, an Ed25519 (EdDSA) raw public key is always 32 bytes so knowing that the type is `Ed25519 public key` implies the size of 32 bytes and a pad size of 1 character that, therefore, may be encoded with a 1 character text code. Likewise, an Ed25519 (EdDSA) signature is always 64 bytes, so knowing that the type is  `Ed25519 signature` implies the size of 64 bytes and a pad size of 2 characters that, therefore, may be encoded with a 2-character text code.
 
 ## Code Table Selectors
 
-In order to efficiently parse a stream of primitives with types from multiple text code tables, the first character in the text code must determine which code table to use, either a default code table or a code table selector character when not the default code table. Thus the 1 character text code table must do double duty. It must provide selectors for the different text code tables and also provide type codes for the most popular primitives that have a pad size of 1 that appear is the default code table. There are 64 Base64 characters (64 values). We only need 12 tables to support all the codes and code formats needed for the foreseeable future. Therefore only 12 of those characters need to be dedicated as code table selectors which leaves 52 characters that may be used for the 1 character type codes in the default table. This gives a total of 13 type code tables consisting of the dual purpose 1 character type or selector code table and 12 other tables.
+In order to efficiently parse a stream of primitives with types from multiple text code tables, the first character in the text code must determine which code table to use, either a default code table or a code table selector character when not the default code table. Thus the 1 character text code table must do double duty. It must provide selectors for the different text code tables and also provide type codes for the most popular primitives that have a pad size of 1 that appears as the default code table. There are 64 Base64 characters (64 values). We only need 12 tables to support all the codes and code formats needed for the foreseeable future. Therefore only 12 of those characters need to be dedicated as code table selectors, which leaves 52 characters that may be used for the 1 character type codes in the default table. This gives a total of 13 type code tables consisting of the dual purpose 1 character type or selector code table and 12 other tables.
 
-As described above the selector characters for the framing or count code tables that best support interleaved JSON, CBOR, and MGPK are `-` and `_`. We use the numerals `0` through `9` to each serve as a selector for the other tables. That leaves the letters `A` to `Z` and `a` to `z` as single character selectors. This provides 52 unique type codes for fixed-length primitive types with raw binary values that have a pad size of 1.
+As described above, the selector characters for the framing or count code tables that best support interleaved JSON, CBOR, and MGPK are `-` and `_`. We use the numerals `0` through `9` to each serve as a selector for the other tables. That leaves the letters `A` to `Z` and `a` to `z` as single character selectors. This provides 52 unique type codes for fixed-length primitive types with raw binary values that have a pad size of 1.
 
-To clarify, the first character of any primitive is either a selector or a 1 character code type. The characters `0` through `9`, `-` and `_` are selectors that select a given code table and indicate the number of remaining characters in the text code.
+To clarify, the first character of any primitive is either a selector or a 1-character code type. The characters `0` through `9`, `-`, and `_` are selectors that select a given code table and indicate the number of remaining characters in the text code.
 
 ## Small Fixed Raw Size Tables
 
-There are two special tables that are dedicated to the most popular fixed size raw binary cryptographic primitive types. These are the most compact so they optimize bandwidth but only provide a small number of total types. In both of these, the text code size equals the number of pad characters, i.e. the pad size.
+There are two special tables that are dedicated to the most popular fixed-size raw binary cryptographic primitive types. These are the most compact, so they optimize bandwidth but only provide a small number of total types. In both of these, the text code size equals the number of pad characters, i.e. the pad size.
 
 ### One Character Fixed Raw Size Table
 
 The one character type code table does not have a selector character per se but uses as type codes the non-selector characters `A` - `Z` and `a` - `z`. This provides 52 unique type codes for fixed-size raw binary values with a pad size of 1.
 
 ### Two-Character Fixed Raw Size Table
-The two-character type code table uses selector `0` as its first character. The second character is the type code. This provides 64 unique type codes for fixed-size raw binary values that have a pad size of 2.
+The two-character type code table uses the selector `0` as its first character. The second character is the type code. This provides 64 unique type codes for fixed-size raw binary values that have a pad size of 2.
 
 ## Large Fixed Raw Size Tables
-The three tables in this group are for large fixed raw size primitives. These three tables use 0, 1, or 2 lead bytes as appropriate for a pad size of 0, 1, or 2 for a given fixed raw binary value. The text code size for all three tables is 4 characters. The selector character not only encodes the table but also implicitly encodes the number of lead bytes. The 3 remaining characters is each type code in each table provide 262,144 unique types. This should provide enough type codes to accommodate all fixed raw size primitive types for the foreseeable future.
+The three tables in this group are for large fixed raw-size primitives. These three tables use 0, 1, or 2 lead bytes as appropriate for a pad size of 0, 1, or 2 for a given fixed raw binary value. The text code size for all three tables is 4 characters. The selector character not only encodes the table but also implicitly encodes the number of lead bytes. The 3 remaining characters is each type code in each table, providing 262,144 unique types. This should provide enough type codes to accommodate all fixed raw-size primitive types for the foreseeable future.
 
 ### Large Fixed Raw Size Table With 0 Lead Bytes
-This table uses `1` as its first character or selector. The remaining 3 characters provide the types codes. Only fixed size raw binaries with a pad size of 0 are encoded with this table. The 3-character type code provides a total of 262,144 unique type code values (`262144 = 64**3)` for fixed-size raw binary primitives with a pad size of 0.
+This table uses `1` as its first character or selector. The remaining 3 characters provide the type of each code. Only fixed-size raw binaries with a pad size of 0 are encoded with this table. The 3-character type code provides a total of 262,144 unique type code values (`262144 = 64**3`) for fixed-size raw binary primitives with a pad size of 0.
 
 ### Large Fixed Raw Size Table With 1 Lead Byte
-This table uses `2` as its first character or selector. The remaining 3 characters provide the types codes. Only fixed size raw binaries with a pad size of 1 are encoded with this table. The 3 character type code provides a total of 262,144 unique type code values (`262144 = 64**3)` . Together with the 52 values from the 1 character code table above there are 262,196 type codes for fixed-size raw binary primitives with a pad size of 1.
+This table uses `2` as its first character or selector. The remaining 3 characters provide the type of each code. Only fixed-size raw binaries with a pad size of 1 are encoded with this table. The 3-character type code provides a total of 262,144 unique type code values (`262144 = 64**3`). Together with the 52 values from the 1-character code table above, there are 262,196 type codes for fixed-size raw binary primitives with a pad size of 1.
 
 ### Large Fixed Raw Size Table With 2 Lead Bytes
-This table uses `3` as its first character or selector. The remaining 3 characters provide the types codes. Only fixed size raw binaries with a pad size of 2 are encoded with this table. The 3 character type code provides a total of 262,144 unique type code values (`262144 = 64**3)` . Together with the 64 values from the 2 character code table above (selector `0`), there are 262,208 type codes for fixed-size raw binary primitives with a pad size of 2.
+This table uses `3` as its first character or selector. The remaining 3 characters provide the type of each code. Only fixed-size raw binaries with a pad size of 2 are encoded with this table. The 3-character type code provides a total of 262,144 unique type code values (`262144 = 64**3`). Together with the 64 values from the 2-character code table above (selector `0`), there are 262,208 type codes for fixed-size raw binary primitives with a pad size of 2.
 
 ## Small Variable Raw Size Tables
-Although many primitives have fixed raw binary sizes, especially those for modern cryptographic suites such as keys, signatures, and digests, there are other primitives that benefit from variable sizing such as encrypted material or legacy cryptographic material types like RSA found in GPG or OpenSSL libraries. Indeed CESR is meant to support not only cryptographic material types but other basic types such as generic text strings and numbers. These benefit from variable-size codes.
+Although many primitives have fixed raw binary sizes, especially those for modern cryptographic suites such as keys, signatures, and digests, there are other primitives that benefit from variable sizings such as either encrypted material or legacy cryptographic material types found in the GPG or OpenSSL libraries (like RSA). Furthermore, because CESR is meant to support not merely cryptographic material types but other basic types, such as generic text strings and numbers. These basic non-cryptographic types may also benefit from variable-size codes.
 
-The three tables in this group are for small variable raw size primitives. These three tables use 0, 1, or 2 lead bytes as appropriate given the pad size of 0, 1, or 2 for a given variable size raw binary value. The text code size for all three tables is 4 characters.
-The first character is the selector, the second character is the type, and the last two characters provide the size of the value as a Base64 encoded integer. The number of unique type codes in each table is therefore 64. A given type code is repeated in each table for the same type so that all that differs is the number of lead bytes needed to align a given length on a twenty-four bit boundary. To clarify, what is different in each table is the number of lead bytes to twenty-four bit align a given variable length. Thus, the selector not only encodes for which type table but also implicitly encodes the number of lead bytes. The variable size is measured in quadlets of 4 characters each in the *T* domain and equivalently in triplets of 3 bytes each in the *B* domain. Thus computing the number of characters when parsing or off-loading in the *T* domain means multiplying the variable size by 4. Computing the number of bytes when parsing or off-loading in the *B* domain means multiplying the variable size by 3. The two Base64 size characters provide value lengths in quadlets/triplets from 0 to 4095 (`64**2 -1`). This corresponds to value lengths of up to 16,380 characters (`4095 • 4`) or 12,285 bytes (`4095 • 3`).
+The three tables in this group are for small variable raw-size primitives. These three tables use 0, 1, or 2 lead bytes as appropriate given the pad size of 0, 1, or 2 for a given variable size raw binary value. The text code size for all three tables is 4 characters.
+The first character is the selector, the second character is the type, and the last two characters provide the size of the value as a Base64 encoded integer. The number of unique type codes in each table is, therefore, 64. A given type code is repeated in each table for the same type so that all that differs between codes of the same type in each table is the number of lead bytes needed to align a given variable length on a twenty-four-bit boundary. To clarify, what is different in each table is the number of lead bytes needed to achieve twenty-four-bit alignment for a given variable length. Thus, the selector not only encodes for which type table but also implicitly encodes the number of lead bytes. The variable size is measured in quadlets of 4 characters each in the *T* domain and equivalently in triplets of 3 bytes each in the *B* domain. Thus computing the number of characters when parsing or off-loading in the *T* domain means multiplying the variable size by 4. Computing the number of bytes when parsing or off-loading in the *B* domain means multiplying the variable size by 3. The two Base64 size characters provide value lengths in quadlets/triplets from 0 to 4095 (`64**2 -1`). This corresponds to value lengths of up to 16,380 characters (`4095 • 4`) or 12,285 bytes (`4095 • 3`).
 
 ### Small Variable Raw Size Table With 0 Lead Bytes
 This table uses `4` as its first character or selector. The second character provides the type. The final two characters provide the size of the value in quadlets/triplets as a Base64 encoded integer. Only raw binaries with a pad size of 0 are encoded with this table. The 1-character type code provides a total of 64 unique type code values. The maximum length of the value provided by the 2 size characters is 4095 quadlets of characters in the *T* domain and triplets of bytes in the *B* domain. All are raw binary primitives with a pad size of 0 that each includes 0 lead bytes.
@@ -650,10 +650,10 @@ There may be as many at 13 count code tables, but only two are currently specifi
 Codes in the small count code table are each four characters long. The first character is the selector `-`. The second character is the count code type. the last two characters are the count size as a Base64 encoded integer. The count code type MUST be a letter `A` - `Z` or `a` - `z`. If the second character is not a letter but is a numeral `0` - `9` or `-` or `_` then it is a selector for a different count code table. The set of letters provides 52 unique count codes. A two-character size provides counts from 0 to 4095 (`64**2 - 1`).
 
 ### Large Count Code Table
-Codes in the large count code table are each 8 characters long. The first two characters are the selectors `-`0. The next two characters are the count code type. the last four characters are the count size as a Base64 encoded integer. With two characters for type, there are 4096 unique large count code types. A four-character size provides counts from 0 to 16,777,215 (`64**4 - 1`).
+Codes in the large count code table are each 8 characters long. The first two characters are the selectors `-`0. The next two characters are the count code type. the last four characters are the count size as a Base64 encoded integer. With two characters for type, there are 4096 unique large-count code types. A four-character size provides counts from 0 to 16,777,215 (`64**4 - 1`).
 
 ## OpCode Tables
-The `_` selector is reserved for the yet to be defined opcode table or tables. Opcodes are meant to provide stream processing instructions that are more general and flexible than simply concatenated primitives or groups of primitives. A yet to be determined stack based virtual machine could be excecuted using a set of opcodes that provides primitive, primitive group, or stream processing instructions. This would enable highly customizable uses for CESR.
+The `_` selector is reserved for the yet-to-be-defined opcode table or tables. Opcodes are meant to provide stream processing instructions that are more general and flexible than simply concatenated primitives or groups of primitives. A yet-to-be-determined stack-based virtual machine could be executed using a set of opcodes that provides primitive, primitive group, or stream processing instructions. This would enable highly customizable uses for CESR.
 
 ## Selector Codes and Encoding Schemes
 
@@ -748,26 +748,33 @@ The following table includes both labels of parts shown in the columns in the Pa
 | *bs* | derived binary size in bytes where where *bs = ls + rs* |
 
 
-
 ## Special Context-Specific Code Tables
 
-The set of tables above provide the basic or master encoding schemes. These coding schemes constitute the basic or master set of code tables. This basic or master set, however, may be extended with context-specific code tables. The context in which a primitive occurs may provide an additional implicit selector that is not part of the actual explicit text code. This allows context-specific coding schemes that would otherwise conflict with the basic or master encoding schemes and tables. Currently, there is only one context-specific coding scheme, that is, for indexed signatures. A common use case is thresholded multi-signature schemes. A threshold satisficing subset of signatures belonging to an ordered set or list of public keys may be provided as part of a stream of primitives. One way to compactly associated each signature with its public key is to include in the text code for that signature the index into the ordered set of public keys. The typical raw binary size for a signature is 64-bytes which has a pad size of 2. This gives two code characters for a compact text code. The first character is the selector and type code. The second character is the Base64 encoded integer index.  By using a similar dual selector type code character scheme as above, where the selectors are the numbers `0-9` and `-` and `_`. Then there are 52 type codes given by the letters `A- Z` and `a-z`. The index has 64 values which support up to 64 members in the public key list. A selector can be used to select a large text code with more characters dedicated to larger indices. Current only a small table is defined.
+The set of tables above provides the basic or master encoding schemes. These coding schemes constitute the basic or master set of code tables. This basic or master set, however, may be extended with context-specific code tables. The context in which a primitive occurs may provide an additional implicit selector that is not part of the actual explicit text code. This allows context-specific coding schemes that would otherwise conflict with the basic or master encoding schemes and tables.
 
-A new signature scheme based on Ed448 with 114-byte signatures is also supported. These signatures have a pad size of zero so require a four-character text code. The first character is the selector `0`, the second character is the type with 64 values, and the last two characters provide the index as a Base64 encoded integer with 4096 different values.
+### Indexed Codes
 
-### Indexed Code Table
+Currently, there is only one context-specific coding scheme, that is, for indexed signatures. A common use case is thresholded multi-signature schemes. A threshold-satisficing subset of signatures belonging to an ordered set or list of public keys may be provided as part of a stream of primitives. One way to compactly associated each signature with its public key is to include in the text code for that signature the index into the ordered set of public keys.
+
+A popular raw binary size for a signature is 64 bytes which has a pad size of 2. This gives two code characters for a compact text code. The first character is the selector and type code. The second character is the Base64 encoded integer index.  By using a similar dual selector type code character scheme as above, where the selectors are the numbers `0-9` and `-` and `_`. Then there are 52 type codes given by the letters `A- Z` and `a-z`. The index has 64 values which support up to 64 members in the public key list. A selector can be used to select a large text code with more characters dedicated to larger indices. Some applications of CESR, like KERI, have the need for dual-indexed signatures (i.e. each signature has two indices) in order to support pre-rotation with partial or reserved participants in a rotation. With partial rotation, a given signature may contribute to the signing threshold for two different thresholds, each on two different lists of keys where the associated key may appear at a different location in each list. For 64-byte signatures, the Ed25519 and ECDSA secp256k1 schemes have entries in the table. For dual indexed codes, the next larger code size that aligns a 64-byte signature on a 24-bit boundary is 6 characters. The table provides entries for dual-indexed 64-byte signatures. The code includes one selector character, one type character, and two each of two character indices.
+
+A new signature scheme based on Ed448 with 114-byte signatures is also supported. These signatures have a pad size of zero so require a four-character text code. The first character is the selector `0`, the second character is the type with 64 values, and the last two characters each provide a one-character index as a Base64 encoded integer with 64 different values. A big version code consumes eight characters with one character for the selector, one for the type, and three characters for each of the dual indices.
+
+#### Indexed Code Table
 
 The associated indexed schemes are provided in the following table.
 
-|  Selector |  Selector | Type Chars | Index Chars | Code Size | Lead Bytes | Pad Size | Format |
+|  Selector | Type Chars | Index Chars | Ondex Chars | Code Size | Lead Bytes | Pad Size | Format |
 |:---------:|:---------:|:----:|:---:|:---:|:---:|:---:|--------------:|
 |           |           |      |     |     |     |     |               |
-|`[A-Z,a-z]`|           |   1\* |  1  |  2  |  0  |  2  |         `$#&&`|
-|     `0`   |           |   1  |  2  |  4  |  0  |  0  |    ` 0$##&&&&`|
+|`[A-Z,a-z]`|  1\*      |  1   |  0  |  2  |  0  |  2  |         `$#&&`|
+|     `0`   |   1       |  1   |  1  |  4  |  0  |  0  |    ` 0$##&&&&`|
+|     `2`   |   1       |  2   |  2  |  6  |  0  |  0  |  ` 0$####&&&&`|
+|     `3`   |   1       |  3   |  3  |  6  |  0  |  0  |` 0$######&&&&`|
 |           |           |      |     |     |     |     |               |
 
 
-### Encoding Scheme Symbols
+#### Encoding Scheme Symbols
 The following table defines the meaning of the symbols used in the Indexed Code table
 
 |  Symbol |  Description  |
@@ -785,103 +792,121 @@ The appendix contains the master code table with the concrete codes.
 
 # Appendix: Master Code Table
 
-## Filling Code Table
-The approach to filling the tables is a first needed first-served basis. In addition, the compact code tables prioritize  entries that satisfy the requirement cryptographic operations maintain at least 128 bits of cryptographic strength. This precludes the entry of many weak cryptographic suites into the compact tables. CESR's compact code table includes only best-of-class cryptographic operations along with common non-cryptograpic primitive types. At the time of this writing, there is the expectaion that NIST will soon approve standardized post-quantum resistant cryptographic operations. When that happens, codes for the most appropriate post-quantum operations will be added. For example, Falcon appears to be one of the leading candidates with open source code already available.
+## Code Table Entry Policy
+
+The policy for placing entries into the tables in general is in order of first needed first-entered basis. In addition, the compact code tables prioritize  entries that satisfy the requirement that the associated cryptographic operations maintain at least 128 bits of cryptographic strength. This precludes the entry of many weak cryptographic suites into the compact tables. CESR's compact code table includes only best-of-class cryptographic operations along with common non-cryptograpic primitive types. At the time of this writing, there is the expectaion that NIST will soon approve standardized post-quantum resistant cryptographic operations. When that happens, codes for the most appropriate post-quantum operations will be added. For example, Falcon appears to be one of the leading candidates with open source code already available.
 
 
 ## Description
-This master table includes all the different types of codes grouped and separated by headers. The table has 5 columns. These are as follows:
+This master table includes both the primitive and count code types. The types are separated by headers. The table has 5 columns. These are as follows:
 
 1) The Base64 stable (hard) text code itself.
 2) A description of what is encoded or appended to the code.
 3) The length in characters of the code.
-4) the length in characters of the index or count portion of the code
-5) The length in characters of the fully qualified primitive including code and append material or number of elements in the group.
+4) the length in characters of the count portion of the code
+5) The length in characters of the fully qualified primitive including code and append material or number of elements in the group. This is empty when variable length.
 
 
 
-|   Code   | Description | Code Length | Count or Index Length | Total Length |
-|:--------:|:----------------------------------|:------------:|:-------------:|:------------:|
-|          |                    **Basic One Character Codes**                                     |             |              |              |
-|     `A`    | Random seed of Ed25519 private key of length 256 bits                                             |      1      |              |      44      |
-|     `B`    | Ed25519 non-transferable prefix public signing verification key. Basic derivation.                |      1      |              |      44      |
-|     `C`    | X25519 public encryption key. May be converted from Ed25519 public signing verification key.      |      1      |              |      44      |
-|     `D`    | Ed25519 public signing verification key. Basic derivation.                                        |      1      |              |      44      |
-|     `E`    | Blake3-256 Digest. Self-addressing derivation.                                                    |      1      |              |      44      |
-|     `F`    | Blake2b-256 Digest. Self-addressing derivation.                                                   |      1      |              |      44      |
-|     `G`    | Blake2s-256 Digest. Self-addressing derivation.                                                   |      1      |              |      44      |
-|     `H`    | SHA3-256 Digest. Self-addressing derivation.                                                      |      1      |              |      44      |
-|     `I`    | SHA2-256 Digest. Self-addressing derivation.                                                      |      1      |              |      44      |
-|     `J`    | Random seed of ECDSA secp256k1 private key of length 256 bits                                     |      1      |              |      44      |
-|     `K`    | Random seed of Ed448 private key of length 448 bits                                               |      1      |              |      76      |
-|     `L`    | X448 public encryption key. May be converted from Ed448 public signing verification key.          |      1      |              |      76      |
-|     `M`    | Short value of length 16 bits                                                                     |      1      |              |       4      |
-|          |                **Basic Two Character Codes**                                     |             |              |              |
-|    `0A`    | Random salt, seed, private key, or sequence number of length 128 bits                             |      2      |              |      24      |
-|    `0B`    | Ed25519 signature. Self-signing derivation.                                                       |      2      |              |      88      |
-|    `0C`    | ECDSA secp256k1 signature. Self-signing derivation.                                               |      2      |              |      88      |
-|    `0D`    | Blake3-512 Digest. Self-addressing derivation.                                                    |      2      |              |      88      |
-|    `0E`    | Blake2b-512 Digest. Self-addressing derivation.                                                   |      2      |              |      88      |
-|    `0F`    | SHA3-512 Digest. Self-addressing derivation.                                                      |      2      |              |      88      |
-|    `0G`    | SHA2-512 Digest. Self-addressing derivation.                                                      |      2      |              |      88      |
-|    `0H`    | Long value of length 32 bits                                                                      |      2      |              |       8      |
-|          |                 **Basic Four Character Codes**                                      |             |              |              |
-|   `1AAA`   | ECDSA secp256k1 non-transferable prefix public signing verification key. Basic derivation.        |      4      |              |      48      |
-|   `1AAB`   | ECDSA secp256k1 public signing verification or encryption key. Basic derivation.                  |      4      |              |      48      |
-|   `1AAC`   | Ed448 non-transferable prefix public signing verification key. Basic derivation.                  |      4      |              |      80      |
-|   `1AAD`   | Ed448 public signing verification key. Basic derivation.                                          |      4      |              |      80      |
-|   `1AAE`   | Ed448 signature. Self-signing derivation.                                                         |      4      |              |      156     |
-|   `1AAF`   | Tag Base64 4 chars or 3 byte number                                                               |      4      |              |      8       |
-|   `1AAG`   | DateTime Base64 custom encoded 32 char ISO-8601 DateTime                                          |      4      |              |      36      |
-|          |                          **Indexed Two Character Codes**                           |             |              |              |
-|    `A#`    | Ed25519 indexed signature                                                                         |      2      |       1      |      88      |
-|    `B#`    | ECDSA secp256k1 indexed signature                                                                 |      2      |       1      |      88      |
-|          |                        **Indexed Four Character Codes**                          |             |              |              |
-|   `0A##`   | Ed448 indexed signature                                                                           |      4      |       2      |      156     |
-|   `0B##`   | Label Base64 chars of variable length `L=N*4` where N is value of index                |      4      |       2      |   Variable   |
-|          |                        **Counter Four Character Codes**                           |             |              |              |
-|   `-A##`   | Count of attached qualified Base64 indexed controller signatures                                  |      4      |       2      |       4      |
-|   `-B##`   | Count of attached qualified Base64 indexed witness signatures                                     |      4      |       2      |       4      |
-|   `-C##`   | Count of attached qualified Base64 nontransferable identifier receipt couples  pre+sig            |      4      |       2      |       4      |
-|   `-D##`   | Count of attached qualified Base64 transferable identifier receipt quadruples  pre+snu+dig+sig    |      4      |       2      |       4      |
-|   `-E##`   | Count of attached qualified Base64 first seen replay couples fn+dt                                |      4      |       2      |       4      |
-|   `-F##`   | Count of attached qualified Base64 transferable indexed sig groups pre+snu+dig + idx sig group    |      4      |       2      |       4      |
+|   Code     | Description                       | Code Length | Count Length | Total Length |
+|:----------:|:----------------------------------|:-----------:|:------------:|:------------:|
+|            |    **Basic One Character Codes**  |             |              |              |
+|     `A`    | Seed of Ed25519 private key       |      1      |              |      44      |
+|     `B`    | Ed25519 non-transferable prefix public verification key |      1      |              |      44      |
+|     `C`    | X25519 public encryption key.     |      1      |              |      44      |
+|     `D`    | Ed25519 public verification key   |      1      |              |      44      |
+|     `E`    | Blake3-256 Digest                 |             |      44      |
+|     `F`    | Blake2b-256 Digest                |      1      |              |      44      |
+|     `G`    | Blake2s-256 Digest                |      1      |              |      44      |
+|     `H`    | SHA3-256 Digest                   |      1      |              |      44      |
+|     `I`    | SHA2-256 Digest                   |      1      |              |      44      |
+|     `J`    | Seed of ECDSA secp256k1 private key  |      1      |              |      44      |
+|     `K`    | Seed of Ed448 private key         |      1      |              |      76      |
+|     `L`    | X448 public encryption key        |      1      |              |      76      |
+|     `M`    | Short number 2 byte b2            |      1      |              |       4      |
+|     `N`    | Big number 4 byte b2              |      1      |              |       12     |
+|     `O`    | X25519 private decryption key     |      1      |              |       44     |
+|     `P`    | X25519 124 char b64 Cipher of 44 char qb64 Seed     |      1      |              |      124     |
+|            |  **Basic Two Character Codes**    |             |              |              |
+|    `0A`    | Random salt, seed, private key, or sequence number of length 128 bits |      2      |              |      24      |
+|    `0B`    | Ed25519 signature                 |      2      |              |      88      |
+|    `0C`    | ECDSA secp256k1 signature         |      2      |              |      88      |
+|    `0D`    | Blake3-512 Digest                 |      2      |              |      88      |
+|    `0E`    | Blake2b-512 Digest                |      2      |              |      88      |
+|    `0F`    | SHA3-512 Digest                   |      2      |              |      88      |
+|    `0G`    | SHA2-512 Digest                   |      2      |              |      88      |
+|    `0H`    | Long value of length 32 bits      |      2      |              |       8      |
+|            |  **Basic Four Character Codes**   |             |              |              |
+|   `1AAA`   | ECDSA secp256k1 non-transferable prefix public verification key   |      4      |              |      48      |
+|   `1AAB`   | ECDSA secp256k1 public verification or encryption key |      4      |              |      48      |
+|   `1AAC`   | Ed448 non-transferable prefix public verification key |      4      |              |      80      |
+|   `1AAD`   | Ed448 public verification key     |      4      |              |      80      |
+|   `1AAE`   | Ed448 signature                   |      4      |              |      156     |
+|   `1AAF`   | Tag Base64 4 chars or 3 byte number  |      4      |              |      8       |
+|   `1AAG`   | DateTime Base64 custom encoded 32 char ISO-8601 DateTime |      4      |              |      36      |
+|   `1AAH`   | X25519 100 char b64 Cipher of 24 char qb64 Salt |      4      |              |      100      |
+|            |  **Small Variable Raw Size Codes**   |             |              |              |
+|   `4A`     | String Base64 Only Lead Size 0      |      4      |      2        |            |
+|   `5A`     | String Base64 Only Lead Size 1      |      4      |      2        |            |
+|   `6A`     | String Base64 Only Lead Size 2      |      4      |      2        |            |
+|   `4B`     | Bytes Lead Size 0                  |      4      |      2        |            |
+|   `5B`     | Bytes Lead Size 1                  |      4      |      2        |            |
+|   `6B`     | Bytes Lead Size 2                  |      4      |      2        |            |
+|            |  **Large Variable Raw Size Codes**   |             |              |              |
+|   `7AAA`   | String Big Base64 Only Lead Size 0 |      8      |      4        |            |
+|   `8AAA`   | String Big Base64 Only Lead Size 1 |      8      |      4        |            |
+|   `7AAA`   | String Big Base64 Only Lead Size 2 |      8      |      4        |            |
+|   `7AAB`   | Bytes Big Lead Size 0              |      8      |      4        |            |
+|   `8AAB`   | Bytes Big Lead Size 1              |      8      |      4        |            |
+|   `9AAB`   | Bytes Big Lead Size 2              |      8      |      4        |            |
+|            |  **Counter Four Character Codes** |             |              |              |
+|   `-A##`   | Count of attached qualified Base64 indexed controller signatures |      4      |       2      |       4      |
+|   `-B##`   | Count of attached qualified Base64 indexed witness signatures    |      4      |       2      |       4      |
+|   `-C##`   | Count of attached qualified Base64 nontransferable identifier receipt couples  pre+sig |      4      |       2      |       4      |
+|   `-D##`   | Count of attached qualified Base64 transferable identifier receipt quadruples  pre+snu+dig+sig   |      4      |       2      |       4      |
+|   `-E##`   | Count of attached qualified Base64 first seen replay couples fn+dt |      4      |       2      |       4      |
+|   `-F##`   | Count of attached qualified Base64 transferable indexed sig groups pre+snu+dig + idx sig group|      4      |       2      |       4      |
 |          |                                                                                 |             |              |              |
-|   `-U##`   | Count of qualified Base64 groups or primitives in message data                                    |      4      |       2      |       4      |
 |   `-V##`   | Count of total attached grouped material qualified Base64 4 char quadlets                         |      4      |       2      |       4      |
-|   `-W##`   | Count of total message data grouped material qualified Base64 4 char quadlets                     |      4      |       2      |       4      |
-|   `-X##`   | Count of total group message data plus attachments qualified Base64 4 char quadlets               |      4      |       2      |       4      |
-|   `-Y##`   | Count of qualified Base64 groups or primitives in group. (context dependent)                      |      4      |       2      |       4      |
-|   `-Z##`   | Count of grouped material qualified Base64 4 char quadlets (context dependent)                    |      4      |       2      |       4      |
-|          |                                                                                                   |             |              |              |
-|   `-a##`   | Count of anchor seal groups in list  (anchor seal list) (a)                                       |      4      |       2      |       4      |
-|   `-c##`   | Count of config traits (each trait is 4 char quadlet   (configuration trait list) (c)             |      4      |       2      |       4      |
-|   `-d##`   | Count of digest seal Base64 4 char quadlets in digest  (digest seal  (d)                          |      4      |       2      |       4      |
-|   `-e##`   | Count of event seal Base64 4 char quadlets in seal triple of (event seal) (i, s, d)               |      4      |       2      |       4      |
-|   `-k##`   | Count of keys in list  (key list) (k)                                                             |      4      |       2      |       4      |
-|   `-l##`   | Count of locations seal Base64 4 char quadlets in seal quadruple of (location seal) (i, s, t, p)  |      4      |       2      |       4      |
-|   `-r##`   | Count of root digest seal Base64 4 char quadlets in root digest  (root digest) (rd)               |      4      |       2      |       4      |
-|   `-w##`   | Count of witnesses in list  (witness list or witness remove list or witness add list) (w, wr, wa) |      4      |       2      |       4      |
-|          |                       **Counter Eight Character Codes**                             |             |              |              |
-| `-0U#####` | Count of qualified Base64 groups or primitives in message data                                    |      8      |       5      |       8      |
-| `-0V#####` | Count of total attached grouped material qualified Base64 4 char quadlets                         |      8      |       5      |       8      |
-| `-0W#####` | Count of total message data grouped material qualified Base64 4 char quadlets                     |      8      |       5      |       8      |
-| `-0X#####` | Count of total group message data plus attachments qualified Base64 4 char quadlets               |      8      |       5      |       8      |
-| `-0Y#####` | Count of qualified Base64 groups or primitives in group (context dependent)                       |      8      |       5      |       8      |
-| `-0Z#####` | Count of grouped  material qualified Base64 4 char quadlets (context dependent)                   |      8      |       5      |       8      |
-|          |                                                                      |             |              |              |
-| `-0a#####` | Count of anchor seals  (seal groups in list)                                                      |      8      |       5      |       8      |
+
+|            |  **Counter Eight Character Codes** |             |              |              |
+| `-0V#####` | Count of total attached grouped material qualified Base64 4 char quadlets |      8      |       5      |       8      |
 
 
 
-The table includes complex groups that are composed of other groups. For example, consider the counter attachment group
+
+## Indexed Code Table
+
+|   Code    | Description                            | Code Length | Index Length | Ondex Length | Total Length |
+|:-------- :|:---------------------------------------|:-----------:|:------------:|:------------:|:------------:|
+|           |    **Indexed Two Character Codes**     |             |              |              |              |
+|    `A#`   | Ed25519 indexed signature both same    |      2      |       1      |      0       |      88      |
+|    `B#`   | Ed25519 indexed signature current only |      2      |       1      |      0       |      88      |
+|    `C#`   | ECDSA secp256k1 indexed sig both same  |      2      |       1      |      0       |      88      |
+|    `D#`   | ECDSA secp256k1 indexed sig curr only  |      2      |       1      |      0       |      88      |
+|           |    **Indexed Four Character Codes**    |             |              |              |              |
+|   `0A##`  | Ed448 indexed signature  dual          |      4      |       1      |       1      |      156     |
+|   `0B##`  | Ed448 indexed signature current only   |      4      |       1      |       1      |      156     |
+|           |    **Indexed Six Character Codes**     |             |              |              |              |
+| `2A####`  | Ed25519 indexed sig big dual           |      6      |       2      |       2      |      92      |
+| `2B####`  | Ed25519 indexed sig big current only   |      6      |       2      |       2      |      92      |
+| `2C####`  | ECDSA secp256k1 indexed sig big dual   |      6      |       2      |       2      |      92      |
+| `2D####`  | ECDSA secp256k1 idx sig big curr only  |      6      |       2      |       2      |      92      |
+|           |    **Indexed Eight Character Codes**   |             |              |              |              |
+|`3A######` | Ed448 indexed signature  big dual      |      8      |       3      |       3      |      160     |
+|`3B######` | Ed448 indexed signature  big curr only |      8      |       3      |       3      |      160     |
+
+
+### Examples
+The tables above include complex groups that maybe composed of other groups. For example, consider the counter attachment group
 with code `-F##` where `##` is replaced by the two-character Base64 count of the number of complex groups.
 This is known as the TransIndexedSigGroups counter.  Within the complex group are one or more attached
 groups where each group consists of a triple pre+snu+dig
-followed by a ControllerIdxSigs group that in turn consists of a counter code `-A##` followed by one or more
-indexed signature primitives. The following example details how this complex group may appear.
+followed by a ControllerIdxSigs group that in turn, consists of a counter code `-A##` followed by one or more
+indexed signature primitives.
+The following example details how a complex nested group may appear.
 
-The example has only one group. The example is annotated with comments, spaces and line feeds for clarity.
+The example has only one group that includes nested groups. The example is annotated with comments, spaces, and line feeds for clarity.
 
 ~~~text
 -FAB     # Trans Indexed Sig Groups counter code 1 following group
