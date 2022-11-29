@@ -675,7 +675,7 @@ The following table summarizes the *T* domain coding schemes by selector code fo
 |  Selector |  Selector | Type Chars | Value Size Chars | Code Size | Lead Bytes | Pad Size | Format |
 |:---------:|:---------:|:----:|:---:|:---:|:---:|:---:|--------------:|
 |           |           |      |     |     |     |     |               |
-|`[A-Z,a-z]`|           |  1\* |  0  |  1  |  0  |  1  |         `$&&&`|
+|`[A-Z,a-z]`|           | `1*` |  0  |  1  |  0  |  1  |         `$&&&`|
 |     `0`   |           |   1  |  0  |  2  |  0  |  2  |         `0$&&`|
 |     `1`   |           |   3  |  0  |  4  |  0  |  0  |     `1$$$&&&&`|
 |     `2`   |           |   3  |  0  |  4  |  1  |  1  |     `2$$$%&&&`|
@@ -686,7 +686,7 @@ The following table summarizes the *T* domain coding schemes by selector code fo
 |     `7`   |           |   3  |  4  |  8  |  0  |  0  | `7$$$####&&&&`|
 |     `8`   |           |   3  |  4  |  8  |  1  |  1  | `8$$$####%&&&`|
 |     `9`   |           |   3  |  4  |  8  |  2  |  2  | `9$$$####%%&&`|
-|     `-`   |`[A-Z,a-z]`|  1\* |  0  |  4  |  0  |  0  |         `-$##`|
+|     `-`   |`[A-Z,a-z]`| `1*` |  0  |  4  |  0  |  0  |         `-$##`|
 |     `-`   |     `0`   |   2  |  0  |  8  |  0  |  0  |     `-0$$####`|
 |     `-`   |     `-`   |   2  |  0  |  8  |  0  |  0  |     `--$$$###`|
 |     `_`   |           |  TBD | TBD | TBD | TBD | TBD |            `_`|
@@ -781,7 +781,7 @@ The associated indexed schemes are provided in the following table.
 |  Selector | Type Chars | Index Chars | Ondex Chars | Code Size | Lead Bytes | Pad Size |     Format    |
 |:---------:|:----------:|:-----------:|:-----------:|:---------:|:----------:|:--------:|--------------:|
 |           |            |             |             |           |            |          |               |
-|`[A-Z,a-z]`|   1*       |     1       |      0      |      2    |      0     |      2   |         `$#&&`|
+|`[A-Z,a-z]`|  `1*`      |     1       |      0      |      2    |      0     |      2   |         `$#&&`|
 |     `0`   |   1        |     1       |      1      |      4    |      0     |      0   |     `0$##&&&&`|
 |     `2`   |   1        |     2       |      2      |      6    |      0     |      2   |   `0$####&&&&`|
 |     `3`   |   1        |     3       |      3      |      6    |      0     |      0   | `0$######&&&&`|
