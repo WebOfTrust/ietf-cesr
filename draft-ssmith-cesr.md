@@ -114,6 +114,10 @@ informative:
     title: Analysis of the Effect of Core Affinity on High-Throughput Flows
     date: 2014-11-16
 
+  SEMVER:
+    target: https://semver.org
+    title: Semantic Versioning
+
 
 --- abstract
 The Composable Event Streaming Representation (CESR) is a dual text-binary encoding format that has the unique property of text-binary concatenation composability. This composability property enables the round trip conversion en-masse of concatenated primitives between the text domain and binary domain while maintaining the separability of individual primitives. This enables convenient usability in the text domain and compact transmission in the binary domain. CESR primitives are self-framing. CESR supports self-framing group codes that enable stream processing and pipelining in both the text and binary domains. CESR supports composable text-binary encodings for general data types as well as suites of cryptographic material. Popular cryptographic material suites have compact encodings for efficiency while less compact encodings provide sufficient extensibility to support all foreseeable types. CESR streams also support interleaved JSON, CBOR, and MGPK serializations. CESR is a universal encoding that uniquely provides dual text and binary domain representations via composable conversion. The CESR protocol is used by other protocols such as KERI {{KERI}}.
@@ -644,13 +648,20 @@ This table uses `9` as its first character or selector. The next three character
 
 ## Count (Framing) Code Tables
 
-There may be as many at 13 count code tables, but only two are currently specified. These two are the small count, four-character table, and the large count, eight-character table. Because count codes only count quadlets/triplets or the number of primitives or groups of primitives, count codes have no value component but have only type and size components. Because primitives are already guaranteed to be composable, count codes do not need to account for pad size as long as the count code itself is aligned on a 24-bit boundary. The count code type indicates the type of primitive or group being counted and the size indicates either how many of that type are in the group or the number of quadlets/triplets consumed by that group. Both count code tables use the first two characters as a nested set of selectors. The first selector uses`-` as the initial selector for count codes. The next character is either a selector for another count code table or is the type for the small count code table. When the second character is numeral `0` - `9` or the letters `-` or `_` then it is a secondary count code table selector. When the second character is a letter in the range `A` - `Z` or `a` - `z` then it is a unique count code type. This gives a total of 52 single-character count code types.
+There may be as many at 13 count code tables, but only three are currently specified. These three are the small count, four-character table, the large count, eight-character table, and the eight character protocol genus and version table. Because count codes only count quadlets/triplets or the number of primitives or groups of primitives, count codes have no value component but have only type and size components. Because primitives are already guaranteed to be composable, count codes do not need to account for pad size as long as the count code itself is aligned on a 24-bit boundary. The count code type indicates the type of primitive or group being counted and the size indicates either how many of that type are in the group or the number of quadlets/triplets consumed by that group. Both count code tables use the first two characters as a nested set of selectors. The first selector uses`-` as the initial selector for count codes. The next character is either a selector for another count code table or is the type for the small count code table. When the second character is numeral `0` - `9` or the letters `-` or `_` then it is a secondary count code table selector. When the second character is a letter in the range `A` - `Z` or `a` - `z` then it is a unique count code type. This gives a total of 52 single-character count code types.
 
 ### Small Count Code Table
 Codes in the small count code table are each four characters long. The first character is the selector `-`. The second character is the count code type. the last two characters are the count size as a Base64 encoded integer. The count code type MUST be a letter `A` - `Z` or `a` - `z`. If the second character is not a letter but is a numeral `0` - `9` or `-` or `_` then it is a selector for a different count code table. The set of letters provides 52 unique count codes. A two-character size provides counts from 0 to 4095 (`64**2 - 1`).
 
 ### Large Count Code Table
 Codes in the large count code table are each 8 characters long. The first two characters are the selectors `-`0. The next two characters are the count code type. the last four characters are the count size as a Base64 encoded integer. With two characters for type, there are 4096 unique large-count code types. A four-character size provides counts from 0 to 16,777,215 (`64**4 - 1`).
+
+## Protocol Genus and Version Table
+The protocol genus and version table is special because its codes modifies the following count code group. A protocol genus and version code itself does not provide a count of following quadlets or triplets but modifies the protocol genus and version of all the following count codes until another protocol and genus count code is provided. Consequently a protocol genus and version code MUST only appear at the top level of any count group. In other words a protocol genus and version code MUST NOT be nested inside any other count code.
+
+The purpose of this table is two fold. Firstly it allows CESR to be used for different protocols and protocol stacks where each protocol may have its own dedicated set of code tables. The only table that all protocols must share is the protocol genus and version table (protocol table for short) in the set  count code tables. All other entries in all other tables may vary by protocol. Secondly, for a given protocol genus, a protocol genus and version code provides the version of that given protocol's table set. This allows versioning of the CESR code tables for a given protocol.
+
+The format for a protocol genus and version code is as follows: `--GGGVVV` where `GGG` represents the protocol genus and `VVV` is the version of that protocol genus. The genus uses three Base64 characters for a possible total of 262,144 different protocol genera. The version also uses three Base64 characters which can be used in a protocol genus specific manner. One suggested approach is to use one character for each of the three components of a semantic version of the form `major.minor.patch` {{SEMVER}}. This provides 64 major versions, where each major version has up to 64 minor versions, and where each minor version in turn has up to 64 patches.
 
 ## OpCode Tables
 The `_` selector is reserved for the yet-to-be-defined opcode table or tables. Opcodes are meant to provide stream processing instructions that are more general and flexible than simply concatenated primitives or groups of primitives. A yet-to-be-determined stack-based virtual machine could be executed using a set of opcodes that provides primitive, primitive group, or stream processing instructions. This would enable highly customizable uses for CESR.
@@ -677,6 +688,7 @@ The following table summarizes the *T* domain coding schemes by selector code fo
 |     `9`   |           |   3  |  4  |  8  |  2  |  2  | `9$$$####%%&&`|
 |     `-`   |`[A-Z,a-z]`|  1\* |  0  |  4  |  0  |  0  |         `-$##`|
 |     `-`   |     `0`   |   2  |  0  |  8  |  0  |  0  |     `-0$$####`|
+|     `-`   |     `-`   |   2  |  0  |  8  |  0  |  0  |     `--$$$###`|
 |     `_`   |           |  TBD | TBD | TBD | TBD | TBD |            `_`|
 
 
@@ -739,6 +751,8 @@ The following table includes both labels of parts shown in the columns in the Pa
 |:----:|:----:|
 | ***hs*** | hard (fixed) part of code size in chars  |
 | ***ss*** | soft (variable) part of code size in chars |
+| ***os*** | other size in chars when soft part provides two variable values |
+| **ms** | derived main size in chars when soft part provides two variable values where *ms = ss - os* |
 | *cs* | derived value size in chars where where *cs = hs + ss* |
 | ***vs*** | value size in chars |
 | ***fs*** | full size in chars where *fs = hs + ss + vs* |
@@ -790,14 +804,14 @@ The following table defines the meaning of the symbols used in the Indexed Code 
 
 The appendix contains the master code table with the concrete codes.
 
-# Appendix: Master Code Table
+# Appendix: KERI Protocol Stack Code Tables
 
 ## Code Table Entry Policy
 
 The policy for placing entries into the tables in general is in order of first needed first-entered basis. In addition, the compact code tables prioritize  entries that satisfy the requirement that the associated cryptographic operations maintain at least 128 bits of cryptographic strength. This precludes the entry of many weak cryptographic suites into the compact tables. CESR's compact code table includes only best-of-class cryptographic operations along with common non-cryptograpic primitive types. At the time of this writing, there is the expectaion that NIST will soon approve standardized post-quantum resistant cryptographic operations. When that happens, codes for the most appropriate post-quantum operations will be added. For example, Falcon appears to be one of the leading candidates with open source code already available.
 
 
-## Description
+## Master Code Table
 This master table includes both the primitive and count code types. The types are separated by headers. The table has 5 columns. These are as follows:
 
 1) The Base64 stable (hard) text code itself.
@@ -866,12 +880,11 @@ This master table includes both the primitive and count code types. The types ar
 |   `-D##`   | Count of attached qualified Base64 transferable identifier receipt quadruples  pre+snu+dig+sig   |      4      |       2      |       4      |
 |   `-E##`   | Count of attached qualified Base64 first seen replay couples fn+dt |      4      |       2      |       4      |
 |   `-F##`   | Count of attached qualified Base64 transferable indexed sig groups pre+snu+dig + idx sig group|      4      |       2      |       4      |
-|          |                                                                                 |             |              |              |
-|   `-V##`   | Count of total attached grouped material qualified Base64 4 char quadlets                         |      4      |       2      |       4      |
-
+|   `-V##`   | Count of total attached grouped material qualified Base64 4 char quadlets |      4      |       2      |       4      |
 |            |  **Counter Eight Character Codes** |             |              |              |
 | `-0V#####` | Count of total attached grouped material qualified Base64 4 char quadlets |      8      |       5      |       8      |
-
+|            |    **Protocol Genus Version Codes**    |             |              |             |
+|`--AAA###`  | KERI ACDC protocol stack  version      |      8      |       5      |       8     |
 
 
 
@@ -895,6 +908,7 @@ This master table includes both the primitive and count code types. The types ar
 |           |    **Indexed Eight Character Codes**   |             |              |              |              |
 |`3A######` | Ed448 indexed signature  big dual      |      8      |       3      |       3      |      160     |
 |`3B######` | Ed448 indexed signature  big curr only |      8      |       3      |       3      |      160     |
+
 
 
 ### Examples
