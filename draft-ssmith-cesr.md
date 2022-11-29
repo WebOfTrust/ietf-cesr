@@ -778,17 +778,18 @@ A new signature scheme based on Ed448 with 114-byte signatures is also supported
 
 The associated indexed schemes are provided in the following table.
 
-|  Selector | Type Chars | Index Chars | Ondex Chars | Code Size | Lead Bytes | Pad Size | Format |
-|:---------:|:---------:|:----:|:---:|:---:|:---:|:---:|--------------:|
-|           |           |      |     |     |     |     |               |
-|`[A-Z,a-z]`|  1\*      |  1   |  0  |  2  |  0  |  2  |         `$#&&`|
-|     `0`   |   1       |  1   |  1  |  4  |  0  |  0  |    ` 0$##&&&&`|
-|     `2`   |   1       |  2   |  2  |  6  |  0  |  0  |  ` 0$####&&&&`|
-|     `3`   |   1       |  3   |  3  |  6  |  0  |  0  |` 0$######&&&&`|
-|           |           |      |     |     |     |     |               |
+|  Selector | Type Chars | Index Chars | Ondex Chars | Code Size | Lead Bytes | Pad Size |     Format    |
+|:---------:|:----------:|:-----------:|:-----------:|:---------:|:----------:|:--------:|--------------:|
+|           |            |             |             |           |            |          |               |
+|`[A-Z,a-z]`|   1*       |     1       |      0      |      2    |      0     |      2   |         `$#&&`|
+|     `0`   |   1        |     1       |      1      |      4    |      0     |      0   |     `0$##&&&&`|
+|     `2`   |   1        |     2       |      2      |      6    |      0     |      2   |   `0$####&&&&`|
+|     `3`   |   1        |     3       |      3      |      6    |      0     |      0   | `0$######&&&&`|
+
 
 
 #### Encoding Scheme Symbols
+
 The following table defines the meaning of the symbols used in the Indexed Code table
 
 |  Symbol |  Description  |
