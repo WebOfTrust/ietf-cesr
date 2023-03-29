@@ -9,26 +9,26 @@
 <meta content="
        The Composable Event Streaming Representation (CESR) is a dual text-binary encoding format that has the unique property of text-binary concatenation composability. This composability property enables the round trip conversion en-masse of concatenated primitives between the text domain and binary domain while maintaining the separability of individual primitives. This enables convenient usability in the text domain and compact transmission in the binary domain. CESR primitives are self-framing. CESR supports self-framing group codes that enable stream processing and pipelining in both the text and binary domains. CESR supports composable text-binary encodings for general data types as well as suites of cryptographic material. Popular cryptographic material suites have compact encodings for efficiency while less compact encodings provide sufficient extensibility to support all foreseeable types. CESR streams also support interleaved JSON, CBOR, and MGPK serializations. CESR is a universal encoding that uniquely provides dual text and binary domain representations via composable conversion. The CESR protocol is used by other protocols such as KERI  . 
     " name="description">
-<meta content="xml2rfc 3.15.2" name="generator">
+<meta content="xml2rfc 3.17.0" name="generator">
 <meta content="Internet-Draft" name="keyword">
 <meta content="draft-ssmith-cesr-latest" name="ietf.draft">
 <!-- Generator version information:
-  xml2rfc 3.15.2
-    Python 3.10.8
+  xml2rfc 3.17.0
+    Python 3.10.10
     appdirs 1.4.4
     ConfigArgParse 1.5.3
     google-i18n-address 2.5.2
     html5lib 1.1
     intervaltree 3.1.0
     Jinja2 3.1.2
-    lxml 4.9.1
+    lxml 4.9.2
     MarkupSafe 2.1.1
     pycountry 22.3.5
     PyYAML 6.0
-    requests 2.27.1
-    setuptools 59.4.0
+    requests 2.28.1
+    setuptools 65.6.0
     six 1.16.0
-    wcwidth 0.2.5
+    wcwidth 0.2.6
 -->
 <link href="draft-ssmith-cesr.xml" rel="alternate" type="application/rfc+xml">
 <link href="#copyright" rel="license">
@@ -359,7 +359,7 @@ ul.empty li, .ulEmpty li {
   margin-top: 0.5em;
 }
 :is(ul, ol).compact, .ulCompact, .olCompact {
-  line-height: 100%;
+  line-height: 1;
   margin: 0 0 0 2em;
 }
 
@@ -369,10 +369,13 @@ dl {
   --indent: 3ch;
   /* --indent: attr(indent ch); not supported in any browser, but we can dream */
 }
+dl.olPercent {
+  --indent: 5ch;
+}
 dl > dt {
   float: left;
-  margin-right: 1em;
-  min-width: 12ch;
+  margin-right: 2ch;
+  min-width: 8ch;
 }
 dl.dlNewline > dt {
   float: none;
@@ -381,6 +384,9 @@ dl > dd {
   margin-bottom: .8em;
   margin-left: var(--indent) !important; /* stupid element overrides */
   min-height: 2ex;
+}
+dl.olPercent > dt {
+  min-width: calc(var(--indent) - 2ch);
 }
 :is(dl.compact, .dlCompact) > dd {
   margin-bottom: 0;
@@ -395,7 +401,7 @@ dl > dd > dl {
   margin-top: 0.5em;
   margin-bottom: 0;
 }
-dl .break {
+:is(dd, span).break {
   display: none;
 }
 
@@ -403,11 +409,11 @@ dl .break {
 a, a[href].selfRef:hover {
   text-decoration: none;
 }
-a[href].selfRef {
-  color: var(--text-color);
-}
 a[href] {
   color: var(--link-color);
+}
+a[href].selfRef, .iref + a[href].internal {
+  color: var(--text-color);
 }
 a[href]:hover {
   text-decoration: underline;
@@ -415,7 +421,7 @@ a[href]:hover {
 a[href].selfRef:hover {
   background-color: var(--highlight-color);
 }
-a.xref {
+a.xref:is(.cite, .auto), :is(#status-of-memo, #copyright) a {
   white-space: nowrap;
 }
 
@@ -427,7 +433,9 @@ tt, code, pre {
 tt, code {
   /* changing the font for inline elements leads to different ascender
      and descender heights; as we want to retain baseline alignment,
-     remove leading to avoid altering the final height of lines */
+     remove leading to avoid altering the final height of lines
+     note: this fails if these blocks take an entire line,
+     a different solution would be great */
   line-height: 0;
 }
 :is(h1, h2, h3, h4, h5, h6) :is(tt, code) {
@@ -579,10 +587,14 @@ hr {
 .bcp14 {
   font-variant: small-caps;
   font-weight: 600;
-  font-size: 14.5px;
+  font-size: var(--small-font-size);
 }
 .role {
   font-variant: all-small-caps;
+}
+sub, sup {
+  line-height: 1;
+  font-size: 80%;
 }
 
 /* info block */
@@ -1024,7 +1036,7 @@ svg :is([stroke="white"], [stroke^="#fff"]) {
 svg :is([fill="black"], [fill^="#000"], :not([fill])) {
   fill: var(--text-color);
 }
-svg :is([stroke="fill"], [fill^="#fff"]) {
+svg :is([fill="white"], [fill^="#fff"]) {
   fill: var(--background-color);
 }
 </style>
@@ -1035,11 +1047,11 @@ svg :is([stroke="fill"], [fill^="#fff"]) {
 <thead><tr>
 <td class="left">Internet-Draft</td>
 <td class="center">CESR</td>
-<td class="right">November 2022</td>
+<td class="right">March 2023</td>
 </tr></thead>
 <tfoot><tr>
 <td class="left">Smith</td>
-<td class="center">Expires 2 June 2023</td>
+<td class="center">Expires 30 September 2023</td>
 <td class="right">[Page]</td>
 </tr></tfoot>
 </table>
@@ -1052,12 +1064,12 @@ svg :is([stroke="fill"], [fill^="#fff"]) {
 <dd class="internet-draft">draft-ssmith-cesr-latest</dd>
 <dt class="label-published">Published:</dt>
 <dd class="published">
-<time datetime="2022-11-29" class="published">29 November 2022</time>
+<time datetime="2023-03-29" class="published">29 March 2023</time>
     </dd>
 <dt class="label-intended-status">Intended Status:</dt>
 <dd class="intended-status">Informational</dd>
 <dt class="label-expires">Expires:</dt>
-<dd class="expires"><time datetime="2023-06-02">2 June 2023</time></dd>
+<dd class="expires"><time datetime="2023-09-30">30 September 2023</time></dd>
 <dt class="label-authors">Author:</dt>
 <dd class="authors">
 <div class="author">
@@ -1099,7 +1111,7 @@ svg :is([stroke="fill"], [fill^="#fff"]) {
         time. It is inappropriate to use Internet-Drafts as reference
         material or to cite them other than as "work in progress."<a href="#section-boilerplate.1-3" class="pilcrow">¶</a></p>
 <p id="section-boilerplate.1-4">
-        This Internet-Draft will expire on 2 June 2023.<a href="#section-boilerplate.1-4" class="pilcrow">¶</a></p>
+        This Internet-Draft will expire on 30 September 2023.<a href="#section-boilerplate.1-4" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="copyright">
@@ -1108,7 +1120,7 @@ svg :is([stroke="fill"], [fill^="#fff"]) {
 <a href="#name-copyright-notice" class="section-name selfRef">Copyright Notice</a>
         </h2>
 <p id="section-boilerplate.2-1">
-            Copyright (c) 2022 IETF Trust and the persons identified as the
+            Copyright (c) 2023 IETF Trust and the persons identified as the
             document authors. All rights reserved.<a href="#section-boilerplate.2-1" class="pilcrow">¶</a></p>
 <p id="section-boilerplate.2-2">
             This document is subject to BCP 78 and the IETF Trust's Legal
@@ -1402,7 +1414,7 @@ svg :is([stroke="fill"], [fill^="#fff"]) {
           <h4 id="name-transformations-between-dom">
 <a href="#section-1.2.1" class="section-number selfRef">1.2.1. </a><a href="#name-transformations-between-dom" class="section-name selfRef">Transformations Between Domains</a>
           </h4>
-<p id="section-1.2.1-1">Although, the composability property mentioned in the previous section only applies to conversions back and forth between the <em>T</em>, and <em>B</em>, domains, conversions between the <em>R</em>, and <em>T</em> domains as well as conversions between the <em>R</em> and <em>B</em> domains are also defined and supported by the protocol as described in detail in this section. As a result, there is a total of six transformations, one in each direction between the three domains.<a href="#section-1.2.1-1" class="pilcrow">¶</a></p>
+<p id="section-1.2.1-1">Although the composability property mentioned in the previous section only applies to conversions back and forth between the <em>T</em>, and <em>B</em>, domains, conversions between the <em>R</em>, and <em>T</em> domains, as well as conversions between the <em>R</em> and <em>B</em> domains are also defined and supported by the protocol as described in detail in this section. As a result, there is a total of six transformations, one in each direction, between the three domains.<a href="#section-1.2.1-1" class="pilcrow">¶</a></p>
 <p id="section-1.2.1-2">Let <code>T(B)</code> denote the abstract transformation function from the <em>B</em> domain to the <em>T</em> domain. This is the dual of <code>B(T)</code> below.<a href="#section-1.2.1-2" class="pilcrow">¶</a></p>
 <p id="section-1.2.1-3">Let <code>B(T)</code> denote the abstract transformation function from the <em>T</em> domain to the <em>B</em> domain. This is the dual of <code>T(B)</code> above.<a href="#section-1.2.1-3" class="pilcrow">¶</a></p>
 <p id="section-1.2.1-4">Let <code>T(R)</code> denote the abstract transformation function from the <em>R</em> domain to the <em>T</em> domain. This is the dual of <code>R(T)</code> below.<a href="#section-1.2.1-4" class="pilcrow">¶</a></p>
@@ -1410,14 +1422,14 @@ svg :is([stroke="fill"], [fill^="#fff"]) {
 <p id="section-1.2.1-6">Let <code>B(R)</code> denote the abstract transformation function from the <em>R</em> domain to the <em>B</em> domain. This is the dual of <code>R(B)</code> below.<a href="#section-1.2.1-6" class="pilcrow">¶</a></p>
 <p id="section-1.2.1-7">Let <code>R(B)</code> denote the abstract transformation function from the <em>B</em> domain to the <em>R</em> domain. This is the dual of <code>B(R)</code> above.<a href="#section-1.2.1-7" class="pilcrow">¶</a></p>
 <p id="section-1.2.1-8">Given these transformations, we can complete a circuit of transformations that starts in any of the three domains and then crosses over the other two domains in either direction. For example, starting in the <em>R</em> domain we can traverse a circuit that crosses into the <em>T</em> and <em>B</em> domains and then crosses back into the <em>R</em> domain as follows:<a href="#section-1.2.1-8" class="pilcrow">¶</a></p>
-<div id="section-1.2.1-9">
-<pre class="lang-text sourcecode">
+<div class="lang-text sourcecode" id="section-1.2.1-9">
+<pre>
 R-&gt;T(R)-&gt;T-&gt;B(T)-&gt;B-&gt;R(B)-&gt;R
 </pre><a href="#section-1.2.1-9" class="pilcrow">¶</a>
 </div>
-<p id="section-1.2.1-10">Likewise starting in the <em>R</em> domain we can traverse a circuit that crosses into the <em>B</em> and <em>T</em> domains and then crosses back into the <em>R</em> domain as follows:<a href="#section-1.2.1-10" class="pilcrow">¶</a></p>
-<div id="section-1.2.1-11">
-<pre class="lang-text sourcecode">
+<p id="section-1.2.1-10">Likewise, starting in the <em>R</em> domain we can traverse a circuit that crosses into the <em>B</em> and <em>T</em> domains and then crosses back into the <em>R</em> domain as follows:<a href="#section-1.2.1-10" class="pilcrow">¶</a></p>
+<div class="lang-text sourcecode" id="section-1.2.1-11">
+<pre>
 R-&gt;B(R)-&gt;B-&gt;T(B)-&gt;T-&gt;R(T)-&gt;R
 </pre><a href="#section-1.2.1-11" class="pilcrow">¶</a>
 </div>
@@ -1429,36 +1441,36 @@ R-&gt;B(R)-&gt;B-&gt;T(B)-&gt;T-&gt;R(T)-&gt;R
 <a href="#section-1.2.2" class="section-number selfRef">1.2.2. </a><a href="#name-concatenation-composability" class="section-name selfRef">Concatenation Composability Property</a>
           </h4>
 <p id="section-1.2.2-1">Let <code>+</code> represent concatenation. Concatenation is associative and may be applied to any two primitives or any two groups or sets of concatenated primitives. For example:<a href="#section-1.2.2-1" class="pilcrow">¶</a></p>
-<div id="section-1.2.2-2">
-<pre class="lang-text sourcecode">
+<div class="lang-text sourcecode" id="section-1.2.2-2">
+<pre>
 t[0] + t[1] + t[2] + t[3] = (t[0] + t[1]) + (t[2] + t[3])
 </pre><a href="#section-1.2.2-2" class="pilcrow">¶</a>
 </div>
 <p id="section-1.2.2-3">If we let <code>cat(x[k])</code> denote the concatenation of all elements of a set of indexed primitives <code>x[k]</code> where each element is indexed by a unique value of <code>k</code>. Given the indexed representation, we can express the transformation between domains of a concatenated set of primitives as follows:<a href="#section-1.2.2-3" class="pilcrow">¶</a></p>
 <p id="section-1.2.2-4">Let <code>T(cat(b[k]))</code> denote the concrete transformation of a given concatenated set of primitives, <code>cat(b[k])</code> from the <em>B</em> domain to the <em>T</em> domain.<a href="#section-1.2.2-4" class="pilcrow">¶</a></p>
 <p id="section-1.2.2-5">Let <code>B(cat(t[k]))</code> denote the concrete transformation of a given concatenated set of primitives, <code>cat(t[k])</code> from the <em>T</em> domain to the <em>B</em> domain.<a href="#section-1.2.2-5" class="pilcrow">¶</a></p>
-<p id="section-1.2.2-6">The concatentation composability property between <em>T</em> and <em>B</em> is expressed as follows:<a href="#section-1.2.2-6" class="pilcrow">¶</a></p>
+<p id="section-1.2.2-6">The <em>concatenation composability property</em> or <em>composability</em> for short, between <em>T</em> and <em>B</em> is expressed as follows:<a href="#section-1.2.2-6" class="pilcrow">¶</a></p>
 <p id="section-1.2.2-7">Given a set of primitives <code>b[k]</code> and <code>t[k]</code> and transformations <code>T(B)</code> and <code>B(T)</code> such that <code>t[k] = T(b[k])</code> and <code>b[k] = B(t[k])</code> for all <code>k</code>, then <code>T(B)</code> and <code>B(T)</code> are jointly concatenation composable if and only if,<a href="#section-1.2.2-7" class="pilcrow">¶</a></p>
-<div id="section-1.2.2-8">
-<pre class="lang-text sourcecode">
+<div class="lang-text sourcecode" id="section-1.2.2-8">
+<pre>
 T(cat(b[k]))=cat(T(b[k])) and B(cat(t[k]))=cat(B(t[k])) for all k.
 </pre><a href="#section-1.2.2-8" class="pilcrow">¶</a>
 </div>
 <p id="section-1.2.2-9">Basically, <em>composability</em> (over concatenation) means that the transformation of a set (as a whole) of concatenated primitives is equal to the concatenation of the set of individually transformed primitives.<a href="#section-1.2.2-9" class="pilcrow">¶</a></p>
 <p id="section-1.2.2-10">For example, suppose we have two primitives in the text domain, namely, <code>t[0]</code> and <code>t[1]</code> that each transforms, respectively, to primitives in the binary domain, namely, <code>b[0]</code> and <code>b[1]</code>. The transformation duals, <code>B(T)</code> and <code>T(B)</code>, are composable if and only if,<a href="#section-1.2.2-10" class="pilcrow">¶</a></p>
-<div id="section-1.2.2-11">
-<pre class="lang-text sourcecode">
+<div class="lang-text sourcecode" id="section-1.2.2-11">
+<pre>
 B(t[0] + t[1]) = B(t[0]) + B(t[1]) = b[0] + b[1]
 </pre><a href="#section-1.2.2-11" class="pilcrow">¶</a>
 </div>
 <p id="section-1.2.2-12">and<a href="#section-1.2.2-12" class="pilcrow">¶</a></p>
-<div id="section-1.2.2-13">
-<pre class="lang-text sourcecode">
+<div class="lang-text sourcecode" id="section-1.2.2-13">
+<pre>
 T(b[0] + b[1]) = T(b[0]) + T(b[1]) = t[0] + t[1].
 </pre><a href="#section-1.2.2-13" class="pilcrow">¶</a>
 </div>
-<p id="section-1.2.2-14">The composability property defined above allows us to create arbitrary compositions of primitives via concatenation in either the <em>T</em> or <em>B</em> domain and then convert the composition en masse to the other domain and then de-concatenate the result without loss. The self-framing property of the primitives enables de-concatenation.<a href="#section-1.2.2-14" class="pilcrow">¶</a></p>
-<p id="section-1.2.2-15">The composability property is an essential building block for streaming in either domain. The use of framing primitives that count or group other primitives enables multiplexing and demultiplexing of arbitrary groups of primitives for pipelining and/or on or offloading of streams. The text domain representation of a stream enables better usability (readability) and the binary domain representation of a stream enables better compactness. In addition, pipelined hierarchical composition codes, allow efficient conversion or off-loading for concurrent processing of composed (concatenated) groups of primitives in a stream without having to individually parse each primitive before off-loading.<a href="#section-1.2.2-15" class="pilcrow">¶</a></p>
+<p id="section-1.2.2-14">The <em>composability</em> property defined above allows us to create arbitrary compositions of primitives via concatenation in either the <em>T</em> or <em>B</em> domain and then convert the composition en masse to the other domain and then de-concatenate the result without loss. The self-framing property of the primitives enables de-concatenation.<a href="#section-1.2.2-14" class="pilcrow">¶</a></p>
+<p id="section-1.2.2-15">The <em>composability</em> property is an essential building block for streaming in either domain. The use of framing primitives that count or group other primitives enables multiplexing and demultiplexing of arbitrary groups of primitives for pipelining and/or on or offloading of streams. The text domain representation of a stream enables better usability (readability), and the binary domain representation of a stream enables better compactness. In addition, pipelined hierarchical composition codes allow efficient conversion or off-loading for concurrent processing of composed (concatenated) groups of primitives in a stream without having to individually parse each primitive before off-loading.<a href="#section-1.2.2-15" class="pilcrow">¶</a></p>
 </section>
 </div>
 </section>
@@ -1470,28 +1482,28 @@ T(b[0] + b[1]) = T(b[0]) + T(b[1]) = t[0] + t[1].
       <h2 id="name-concrete-domain-representat">
 <a href="#section-2" class="section-number selfRef">2. </a><a href="#name-concrete-domain-representat" class="section-name selfRef">Concrete Domain Representations</a>
       </h2>
-<p id="section-2-1">Text, <em>T</em>, domain representations in CESR use only the characters from the URL and filename safe variant of the IETF RFC-4648 Base64 standard <span>[<a href="#RFC4648" class="cite xref">RFC4648</a>]</span>. Unless otherwise indicated all references to Base64 <span>[<a href="#RFC4648" class="cite xref">RFC4648</a>]</span> in this document imply the URL and filename safe variant. The URL and filename safe variant of Base64 uses in order the 64 characters <code>A to Z</code>, <code>a to z</code>, <code>0 to 9</code>,  <code>-</code>, and <code>_</code> to encode 6 bits of information. In addition, Base64 uses the <code>=</code> character for padding but CESR does not use the <code>=</code> character for any purpose because all CESR-encoded primitives are composable.<a href="#section-2-1" class="pilcrow">¶</a></p>
-<p id="section-2-2">Notable is the fact that, Base64 <span>[<a href="#RFC4648" class="cite xref">RFC4648</a>]</span> by itself does not satisfy the composability property and must employ pad characters to ensure one-way convertability between binary and text.<a href="#section-2-2" class="pilcrow">¶</a></p>
+<p id="section-2-1">Text, <em>T</em>, domain representations in CESR use only the characters from the URL and filename safe variant of the IETF RFC-4648 Base64 standard <span>[<a href="#RFC4648" class="cite xref">RFC4648</a>]</span>. Unless otherwise indicated, all references to Base64 <span>[<a href="#RFC4648" class="cite xref">RFC4648</a>]</span> in this document imply the URL and filename safe variant. The URL and filename safe variant of Base64 uses in order the 64 characters <code>A to Z</code>, <code>a to z</code>, <code>0 to 9</code>,  <code>-</code>, and <code>_</code> to encode 6 bits of information. In addition, Base64 uses the <code>=</code> character for padding, but CESR does not use the <code>=</code> character for any purpose because all CESR-encoded primitives are composable.<a href="#section-2-1" class="pilcrow">¶</a></p>
+<p id="section-2-2">Notable is the fact that Base64 <span>[<a href="#RFC4648" class="cite xref">RFC4648</a>]</span> by itself does not satisfy the composability property and must employ pad characters to ensure one-way convertibility between binary and text.<a href="#section-2-2" class="pilcrow">¶</a></p>
 <p id="section-2-3">In CESR, however, both <em>T</em> and <em>B</em> domain representations include a prepended framing code prefix that is structured in such a way as to ensure composability.<a href="#section-2-3" class="pilcrow">¶</a></p>
-<p id="section-2-4">Suppose for example we wish to use Base64 characters in the text domain and binary bytes in the binary domain. For the sake of example, we will call these respectively, naive text and naive binary encodings and domains. Recall that a byte encodes 8 bits of information and a Base64 character encodes 6 bits of information. Furthermore suppose that we have three primitives denoted <code>a</code>, <code>b</code>, and <code>c</code> in the naive binary domain with lengths of 1, 2, and 3 bytes respectively.<a href="#section-2-4" class="pilcrow">¶</a></p>
+<p id="section-2-4">Suppose, for example, we wish to use Base64 characters in the text domain and binary bytes in the binary domain. For the sake of example, we will call these, respectively, naive text and naive binary encodings and domains. Recall that a byte encodes 8 bits of information and a Base64 character encodes 6 bits of information. Furthermore, suppose that we have three primitives denoted <code>a</code>, <code>b</code>, and <code>c</code> in the naive binary domain with lengths of 1, 2, and 3 bytes, respectively.<a href="#section-2-4" class="pilcrow">¶</a></p>
 <p id="section-2-5">In the following diagrams, we denote each byte in a naive binary primitive with zero-based most significant bit first indices.  For example, <code>a1</code> is bit one from <code>a</code>, <code>a0</code> is bit zero, and <code>A0</code> for byte zero, <code>A1</code> for byte 1, etc.<a href="#section-2-5" class="pilcrow">¶</a></p>
-<p id="section-2-6">The byte and bit-level diagrams for <code>a</code> is shown below where we use <code>A</code> to denote its bytes:<a href="#section-2-6" class="pilcrow">¶</a></p>
-<div id="section-2-7">
-<pre class="lang-text sourcecode">
+<p id="section-2-6">The byte and bit-level diagrams for <code>a</code> are shown below, where we use <code>A</code> to denote its bytes:<a href="#section-2-6" class="pilcrow">¶</a></p>
+<div class="lang-text sourcecode" id="section-2-7">
+<pre>
 |           A0          |
 |a7:a6:a5:a4:a3:a2:a1:a0|
 </pre><a href="#section-2-7" class="pilcrow">¶</a>
 </div>
 <p id="section-2-8">Likewise for <code>b</code> below:<a href="#section-2-8" class="pilcrow">¶</a></p>
-<div id="section-2-9">
-<pre class="lang-text sourcecode">
+<div class="lang-text sourcecode" id="section-2-9">
+<pre>
 |           B1          |           B0          |
 |b7:b6:b5:b4:b3:b2:b1:b0|b7:b6:b5:b4:b3:b2:b1:b0|
 </pre><a href="#section-2-9" class="pilcrow">¶</a>
 </div>
-<p id="section-2-10">And finally for <code>c</code> below:<a href="#section-2-10" class="pilcrow">¶</a></p>
-<div id="section-2-11">
-<pre class="lang-text sourcecode">
+<p id="section-2-10">And finally, for <code>c</code> below:<a href="#section-2-10" class="pilcrow">¶</a></p>
+<div class="lang-text sourcecode" id="section-2-11">
+<pre>
 |           C2          |           C1          |           C0          |
 |c7:c6:c5:c4:c3:c2:c1:c0|c7:c6:c5:c4:c3:c2:c1:c0|c7:c6:c5:c4:c3:c2:c1:c0|
 </pre><a href="#section-2-11" class="pilcrow">¶</a>
@@ -1501,10 +1513,10 @@ T(b[0] + b[1]) = T(b[0]) + T(b[1]) = t[0] + t[1].
         <h3 id="name-conversions">
 <a href="#section-2.1" class="section-number selfRef">2.1. </a><a href="#name-conversions" class="section-name selfRef">Conversions</a>
         </h3>
-<p id="section-2.1-1">When doing a naive Base64 conversion of a naive binary primitive, one Base64 character represents only six bits from a given byte. In the following diagrams, each character of a Base64 conversion is denoted using zero-based indices, most significant character first.<a href="#section-2.1-1" class="pilcrow">¶</a></p>
-<p id="section-2.1-2">Therefore encoding <code>a</code> in Base64 requires at least two Base64 characters because the zeroth character only captures the six bits from the first byte and another character is needed to capture the other two bits. The convention in Base64 uses a Base64 character where the non-coding bits are zeros. This is diagrammed as follows:<a href="#section-2.1-2" class="pilcrow">¶</a></p>
-<div id="section-2.1-3">
-<pre class="lang-text sourcecode">
+<p id="section-2.1-1">When doing a naive Base64 conversion of a naive binary primitive, one Base64 character represents only six bits from a given byte. In the following diagrams, each character of a Base64 conversion is denoted using zero-based indices, with the most significant character first.<a href="#section-2.1-1" class="pilcrow">¶</a></p>
+<p id="section-2.1-2">Therefore encoding <code>a</code> in Base64 requires at least two Base64 characters because the zeroth character only captures the six bits from the first byte, and another character is needed to capture the other two bits. The convention in Base64 uses a Base64 character where the non-coding bits are zeros. This is diagrammed as follows:<a href="#section-2.1-2" class="pilcrow">¶</a></p>
+<div class="lang-text sourcecode" id="section-2.1-3">
+<pre>
 |           A0          |
 |a7:a6:a5:a4:a3:a2:a1:a0|z3:z2:z1:z0|
 |        T1       |        T0       |
@@ -1512,36 +1524,36 @@ T(b[0] + b[1]) = T(b[0]) + T(b[1]) = t[0] + t[1].
 </div>
 <p id="section-2.1-4">where <code>aX</code> represents a bit from <code>A0</code> and <code>zX</code> represents a zeroed pad bit, and <code>TX</code> represents a non-pad character from the converted Base64 text representing one hextet of information from the converted binary string.<a href="#section-2.1-4" class="pilcrow">¶</a></p>
 <p id="section-2.1-5">Naive Base64 encoding always pads each individual conversion of a string of bytes to an even multiple of four characters. This provides a property that is not true composability but does ensure that multiple distinct concatenated conversions from binary to Base64 text are separable. It may be described as a sort of one-way composability. So with pad characters, denoted by replacing the spaces with <code>=</code> characters, the Base64 conversion of <code>a</code> is as follows:<a href="#section-2.1-5" class="pilcrow">¶</a></p>
-<div id="section-2.1-6">
-<pre class="lang-text sourcecode">
+<div class="lang-text sourcecode" id="section-2.1-6">
+<pre>
 |           A0          |
 |a7:a6:a5:a4:a3:a2:a1:a0|z3:z2:z1:z0|
 |        T3       |        T2       |========P1=======|========P0=======|
 </pre><a href="#section-2.1-6" class="pilcrow">¶</a>
 </div>
-<p id="section-2.1-7">where <code>aX</code> represents a bit from <code>a</code>, <code>AX</code> represents a byte from <code>a</code>,  <code>zX</code> represents a zeroed pad bit, <code>PX</code> represents a trailing pad character, and <code>TX</code> represents a non-pad character from the converted Base64 text representing one hextet of information from the converted binary string. We see that Base64 conversion effectively left shifts <code>a</code> by four bits plus two pad characters. In other words, the Base64 conversion of <code>a</code> is no longer right aligned with respect to the trailing Base64 character.<a href="#section-2.1-7" class="pilcrow">¶</a></p>
-<p id="section-2.1-8">Likewise <code>b</code> requires at least three Base64 characters to capture all of its sixteen bits of information as follows:<a href="#section-2.1-8" class="pilcrow">¶</a></p>
-<div id="section-2.1-9">
-<pre class="lang-text sourcecode">
+<p id="section-2.1-7">where <code>aX</code> represents a bit from <code>a</code>, <code>AX</code> represents a byte from <code>a</code>,  <code>zX</code> represents a zeroed pad bit, <code>PX</code> represents a trailing pad character, and <code>TX</code> represents a non-pad character from the converted Base64 text representing one hextet of information from the converted binary string. We see that Base64 conversion effectively left shifts <code>a</code> by four bits plus two pad characters. In other words, the Base64 conversion of <code>a</code> is no longer right-aligned with respect to the trailing Base64 character.<a href="#section-2.1-7" class="pilcrow">¶</a></p>
+<p id="section-2.1-8">Likewise, <code>b</code> requires at least three Base64 characters to capture all of its sixteen bits of information as follows:<a href="#section-2.1-8" class="pilcrow">¶</a></p>
+<div class="lang-text sourcecode" id="section-2.1-9">
+<pre>
 |           B1          |           B0          |
 |b7:b6:b5:b4:b3:b2:b1:b0|b7:b6:b5:b4:b3:b2:b1:b0|z1:z0|
 |        T2       |        T1       |        T0       |
 </pre><a href="#section-2.1-9" class="pilcrow">¶</a>
 </div>
 <p id="section-2.1-10">where <code>bX</code> represents a bit from <code>b</code>, <code>BX</code> represents a byte from <code>b</code>, <code>zX</code> represents a zeroed pad bit,  and <code>TX</code> represents a non-pad character from the converted Base64 text representing one hextet of information from the converted binary string.
-Alignment on a 4 character (24-bit) boundary requires one pad character this becomes:<a href="#section-2.1-10" class="pilcrow">¶</a></p>
-<div id="section-2.1-11">
-<pre class="lang-text sourcecode">
+Alignment on a four-character (24-bit) boundary requires one pad character this becomes:<a href="#section-2.1-10" class="pilcrow">¶</a></p>
+<div class="lang-text sourcecode" id="section-2.1-11">
+<pre>
 |           B1          |           B0          |
 |b7:b6:b5:b4:b3:b2:b1:b0|b7:b6:b5:b4:b3:b2:b1:b0|z1:z0|
 |        T2       |        T1       |        T0       |========P0=======|
 
 </pre><a href="#section-2.1-11" class="pilcrow">¶</a>
 </div>
-<p id="section-2.1-12">where <code>bX</code> represents a bit from <code>b</code>, <code>BX</code> represents a byte from <code>b</code>, <code>zX</code> represents a zeroed pad bit, <code>PX</code> represents a trailing pad character,  and <code>TX</code> represents a non-pad character from the converted Base64 text representing one hextet of information from the converted binary string. We see that Base64 conversion effectively left shifts <code>a</code> by four bits plus two pad characters.  We see that Base64 conversion effectively left shifts <code>b</code> by four bits plus one pad character. In other words, the Base64 conversion of <code>b</code> is no longer right aligned with respect to the trailing Base64 character.<a href="#section-2.1-12" class="pilcrow">¶</a></p>
+<p id="section-2.1-12">where <code>bX</code> represents a bit from <code>b</code>, <code>BX</code> represents a byte from <code>b</code>, <code>zX</code> represents a zeroed pad bit, <code>PX</code> represents a trailing pad character,  and <code>TX</code> represents a non-pad character from the converted Base64 text representing one hextet of information from the converted binary string. We see that Base64 conversion effectively left shifts <code>a</code> by four bits plus two pad characters.  We see that Base64 conversion effectively left shifts <code>b</code> by four bits plus one pad character. In other words, the Base64 conversion of <code>b</code> is no longer right-aligned with respect to the trailing Base64 character.<a href="#section-2.1-12" class="pilcrow">¶</a></p>
 <p id="section-2.1-13">Finally, <code>c</code>  requires exactly four Base64 characters to capture all of its twenty-four bits of information. There are no pad characters required.<a href="#section-2.1-13" class="pilcrow">¶</a></p>
-<div id="section-2.1-14">
-<pre class="lang-text sourcecode">
+<div class="lang-text sourcecode" id="section-2.1-14">
+<pre>
 |           C2          |           C1          |           C2          |
 |c7:c6:c5:c4:c3:c2:c1:c0|c7:c6:c5:c4:c3:c2:c1:c0|c7:c6:c5:c4:c3:c2:c1:c0|
 |        T3       |        T2       |        T1       |        T0       |
@@ -1549,18 +1561,18 @@ Alignment on a 4 character (24-bit) boundary requires one pad character this bec
 </div>
 <p id="section-2.1-15">where <code>cX</code> represents a bit from <code>c</code>, <code>CX</code> represents a byte from <code>c</code>,  and <code>TX</code> represents a non-pad character from the converted Base64 text representing one hextet of information from the converted binary string. There are no bit shifts because there are no pad bits nor pad characters needed, and the resulting Base64 conversion is right aligned with respect to the trailing Base64 character.<a href="#section-2.1-15" class="pilcrow">¶</a></p>
 <p id="section-2.1-16">Suppose now we concatenate <code>a + b</code> into a three-byte composition in the naive binary domain before Base64 encoding the concatenated whole. We have the following:<a href="#section-2.1-16" class="pilcrow">¶</a></p>
-<div id="section-2.1-17">
-<pre class="lang-text sourcecode">
+<div class="lang-text sourcecode" id="section-2.1-17">
+<pre>
 |           A0          |           B1          |           B0          |
 |a7:a6:a5:a4:a3:a2:a1:a0|b7:b6:b5:b4:b3:b2:b1:b0|b7:b6:b5:b4:b3:b2:b1:b0|
 |        T3       |        T2       |        T1       |        T0       |
 </pre><a href="#section-2.1-17" class="pilcrow">¶</a>
 </div>
 <p id="section-2.1-18">We see that the least significant two bits of <code>A0</code> are encoded into the same character, <code>T2</code> as the four most significant four bits of <code>B1</code>. Therefore, a text-domain parser would be unable to cleanly de-concatenate on a character-by-character basis the conversion of <code>a + b</code> into separate text-domain primitives. Therefore, standard (naive) binary to Base64 conversion does not satisfy the composability constraint.<a href="#section-2.1-18" class="pilcrow">¶</a></p>
-<p id="section-2.1-19">Suppose instead we start in the text domain with primitives <code>u</code> and <code>v</code> of lengths 1 and 3 characters respectively.
+<p id="section-2.1-19">Suppose instead we start in the text domain with primitives <code>u</code> and <code>v</code> of lengths 1 and 3 characters, respectively.
 If we concatenate these two primitives as <code>u + v</code> in the text domain and then convert them as a whole to naive binary. We have the following:<a href="#section-2.1-19" class="pilcrow">¶</a></p>
-<div id="section-2.1-20">
-<pre class="lang-text sourcecode">
+<div class="lang-text sourcecode" id="section-2.1-20">
+<pre>
 |        U0       |        V2       |        V1       |        V0       |
 |b7:b6:b5:b4:b3:b2:b1:b0|b7:b6:b5:b4:b3:b2:b1:b0|b7:b6:b5:b4:b3:b2:b1:b0|
 |           B2          |           B1          |           B0          |
@@ -1585,7 +1597,7 @@ If we concatenate these two primitives as <code>u + v</code> in the text domain 
         <h3 id="name-stable-value-encoding">
 <a href="#section-2.3" class="section-number selfRef">2.3. </a><a href="#name-stable-value-encoding" class="section-name selfRef">Stable Value Encoding</a>
         </h3>
-<p id="section-2.3-1">A secondary usability constraint is recognizable or readable stable value coding in the text, <em>T</em>, domain. Not all primitives benefit from stable value coding. Any representation of a value that is a long random string of characters is essentially unreadable or recognizable versus some other representation. Bit shifts of the value, as long as they are static do not change the readability. This is not true however of values that are small numbers. Base64 encodings of small numbers are readable. for example, the numerical sequence of decimal numbers, <code>0, 1, 2</code>, is recognizable as the sequence of Base64 characters, <code>A, B, C</code>. Thus, all else equal, readable stable value encodings also contribute to usability, at least in some cases.<a href="#section-2.3-1" class="pilcrow">¶</a></p>
+<p id="section-2.3-1">A secondary usability constraint is recognizable or readable stable value coding in the text, <em>T</em>, domain. Not all primitives benefit from stable value coding. Any representation of a value that is a long random string of characters is essentially unreadable or recognizable versus some other representation. Bit shifts of the value, as long as they are static, do not change the readability. This is not true, however of values that are small numbers. Base64 encodings of small numbers are readable. for example, the numerical sequence of decimal numbers, <code>0, 1, 2</code>, is recognizable as the sequence of Base64 characters, <code>A, B, C</code>. Thus, all else equal, readable stable value encodings also contribute to usability, at least in some cases.<a href="#section-2.3-1" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="code-characters-and-lead-bytes">
@@ -1593,8 +1605,8 @@ If we concatenate these two primitives as <code>u + v</code> in the text domain 
         <h3 id="name-code-characters-and-lead-by">
 <a href="#section-2.4" class="section-number selfRef">2.4. </a><a href="#name-code-characters-and-lead-by" class="section-name selfRef">Code Characters and Lead Bytes</a>
         </h3>
-<p id="section-2.4-1">There are two ways to provide the required alignment on 24-bit boundaries to satisfy the composability property. One is post-pad, with trailing pad characters <code>=</code>, the text domain encoding to ensure that the <em>T</em> domain primitive has a total size (length) that is an integer multiple of 4. This is what naive Base64 encoding does. The other way is to pre-pad leading bytes of zeros to the raw binary value before conversion to Base64 to ensure the total size of the raw binary value with pre-pad bytes is an integer multiple of 3 bytes. This ensures that the size in characters of the Base64 conversion of the pre-padded raw binary is an integer multiple of 4 characters.<a href="#section-2.4-1" class="pilcrow">¶</a></p>
-<p id="section-2.4-2">Given the second way, there is one of two options that depend on the specific code. In the first option, an appropriate number of the text characters that result from the conversion of a porting of the leading pre-pad zero bytes are replaced with the appropriate number of code characters. In the second option, the code characters are pre-pended to the conversion with leading zeros intact. In the second option, the length of the pre-pended type code <span class="bcp14">MUST</span> also, thereby, be an integer multiple of 4 characters. In either option, the total length of the <em>T</em> domain primitive with code is an integer multiple of 4 characters.<a href="#section-2.4-2" class="pilcrow">¶</a></p>
+<p id="section-2.4-1">There are two ways to provide the required alignment on 24-bit boundaries to satisfy the composability property. One is to post-pad, with trailing pad characters, <code>=</code>, the text domain encoding to ensure that the <em>T</em> domain primitive has a total size (length) that is an integer multiple of 4. This is what naive Base64 encoding does. The other way is to pre-pad leading bytes of zeros to the raw binary value before conversion to Base64 to ensure the total size of the raw binary value with pre-pad bytes is an integer multiple of 3 bytes. This ensures that the size in characters of the Base64 conversion of the pre-padded raw binary is an integer multiple of 4 characters.<a href="#section-2.4-1" class="pilcrow">¶</a></p>
+<p id="section-2.4-2">Given the second way, there is one of two options that depend on the specific code. In the first option, an appropriate number of text characters that result from the conversion of a porting of the leading pre-pad zero bytes are replaced with the appropriate number of code characters. In the second option, the code characters are pre-pended to the conversion with leading zeros intact. In the second option, the length of the pre-pended type code <span class="bcp14">MUST</span> also, thereby, be an integer multiple of 4 characters. In either option, the total length of the <em>T</em> domain primitive with code is an integer multiple of 4 characters.<a href="#section-2.4-2" class="pilcrow">¶</a></p>
 <p id="section-2.4-3">The first way may be more compact in some cases than the second. The second way may be easier to compute in some cases. The most significant advantage of the second way is that the value portion of is stable and more readable both in the text, <em>T</em>, domain and in the, <em>B</em>, binary domain because the value portion is not shifted by the Base64 conversion as it is with the first way.<a href="#section-2.4-3" class="pilcrow">¶</a></p>
 <p id="section-2.4-4">In order to avoid confusion with the use of the term <code>pad character</code>, when pre-padding with bytes that are not replaced later, we use the term <code>lead bytes</code>. The term pad may be confusing not merely because both ways use a type of padding but it is also true that the number of pad characters when padding post-conversion equals the number of lead bytes when padding pre-conversion.<a href="#section-2.4-4" class="pilcrow">¶</a></p>
 <p id="section-2.4-5">Suppose for example the raw binary value is 32 bytes in length. The next higher integer multiple of 3 is 33 bytes. Thus 1 additional leading pad byte is needed to make the size (length in byte) of raw binary an integer multiple of 3. The 1 lead byte makes that combination a total of 33 bytes in length. The resultant Base64 converted value will be 44 characters in length, which is an integer multiple of 4 characters. In contrast, recall that when we convert a 32-byte raw binary value to Base64 the converted value will have 1 trailing pad character. In both cases, the resultant length in Base64 is 44 characters.<a href="#section-2.4-5" class="pilcrow">¶</a></p>
@@ -1624,12 +1636,12 @@ If we concatenate these two primitives as <code>u + v</code> in the text domain 
         </h3>
 <p id="section-3.1-1">Recall from above, that the R domain representation is a pair<code>(text code, raw binary)</code>. The text code is stable and begins with one or more Base64 characters that provide the primitive type and may also include one or more additional characters that provide the length. The actual usable cryptographic material is provided by the <em>raw binary</em> element.<a href="#section-3.1-1" class="pilcrow">¶</a></p>
 <p id="section-3.1-2">The corresponding <em>T</em> domain representation of this pair is created by first prepending leading pad bytes of zeros to the <em>raw binary</em> element. This result is then converted to Base64. Depending on the code, either the frontmost characters that result from the Base64 conversion of leading pad bytes of zeros are replaced with the text code element of appropriate size in characters, or an appropriately sized text code element is prepended to the conversion without replacing any characters.<a href="#section-3.1-2" class="pilcrow">¶</a></p>
-<p id="section-3.1-3">Recall, that when the length of a given naive binary string is not an integer multiple of three bytes, standard Base64 conversion software appends one or two pad characters to the resultant Base64 conversion.<a href="#section-3.1-3" class="pilcrow">¶</a></p>
-<p id="section-3.1-4">With standard Base64 conversion that employs pad characters, the text domain representation that results from the individual conversion of a set of binary strings when concatenated in the text domain after conversion and stripping off pad characters is not necessarily equivalent to the text domain representation that results from converting en masse to text the concatenation of the same set of binary strings and then stripping off pad characters. In the latter case knowledge of the set of binary strings is lost because the resultant conversion may have bits from two binary bytes concatenated in one text character. Restated, the problem with standard Base64 is that it does not preserve byte boundaries after the en-masse conversion of concatenated binary strings. Consequently, standard (naive) Base64 does not provide two-way or true composability as defined above.<a href="#section-3.1-4" class="pilcrow">¶</a></p>
-<p id="section-3.1-5">To elaborate, the number of pad characters appended with standard Base64 encoding is a function of the length of the binary string. Let <em>N</em> be the length in bytes of the binary string. When <code>N mod 3 = 1</code> then there are 8 bits in the remainder that must be encoded into Base64. Recall from the examples above that a single byte (8 bits) requires two Base64 characters. The first encodes 6 bits and the second the remaining 2 bits for a total of 8 bits. The last character is selected such that its non-coding 4 bits are zero. Thus two additional pad characters are required to pad out the resulting conversion so that its length is an integer multiple of 4 Base64 characters. Furthermore when
-<code>N mod 3 = 1</code> then the addition of 2 more zeroed bytes to the length of the binary string such that <code>M = N + 2</code> would result in <code>M mod 3 = 0</code> or equivalently <code>N + 2 mod 3 = 0</code>.<a href="#section-3.1-5" class="pilcrow">¶</a></p>
-<p id="section-3.1-6">Similarly, when <code>N mod 3 = 2</code> then there are two bytes (16 bits) in the remainder that must be encoded into Base64. Recall from the examples above that two bytes (16 bits) requires three Base64 characters. The first two encode 6 bits each (for 12 bits) and the third encodes the remaining 4 bits for a total of 16. The last character is selected such that its non-coding 2 bits are zero. Thus one additional trailing pad character is required to pad out the resulting conversion so that its length is an integer multiple of 4 characters. Furthermore when
-<code>N mod 3 = 2</code> then the addition of 1 more byte of zeros added to the length of the binary string such that <code>M = N + 1</code> would result in <code>M mod 3 = 0</code> or equivalently <code>N + 2 mod 3 = 0</code>. Thus the number of leading pre-pad zeroed bytes needed to align the binary string on a 24-bit boundary is the same as the number of trailing pad characters needed to align the converted Base64 text string on a 24-bit boundary.<a href="#section-3.1-6" class="pilcrow">¶</a></p>
+<p id="section-3.1-3">Recall that when the length of a given naive binary string is not an integer multiple of three bytes, standard Base64 conversion software appends one or two pad characters to the resultant Base64 conversion.<a href="#section-3.1-3" class="pilcrow">¶</a></p>
+<p id="section-3.1-4">With standard Base64 conversion that employs pad characters, the text domain representation that results from the individual conversion of a set of binary strings when concatenated in the text domain after conversion and stripping off pad characters is not necessarily equivalent to the text domain representation that results from converting en masse to text the concatenation of the same set of binary strings and then stripping off pad characters. In the latter case, knowledge of the set of binary strings is lost because the resultant conversion may have bits from two binary bytes concatenated in one text character. Restated, the problem with standard Base64 is that it does not preserve byte boundaries after the en-masse conversion of concatenated binary strings. Consequently, standard (naive) Base64 does not provide two-way or true composability as defined above.<a href="#section-3.1-4" class="pilcrow">¶</a></p>
+<p id="section-3.1-5">To elaborate, the number of pad characters appended with standard Base64 encoding is a function of the length of the binary string. Let <em>N</em> be the length in bytes of the binary string. When <code>N mod 3 = 1</code>, then there are 8 bits in the remainder that must be encoded into Base64. Recall from the examples above that a single byte (8 bits) requires two Base64 characters. The first encodes 6 bits and the second the remaining 2 bits for a total of 8 bits. The last character is selected such that its non-coding 4 bits are zero. Thus two additional pad characters are required to pad out the resulting conversion so that its length is an integer multiple of 4 Base64 characters. Furthermore when
+<code>N mod 3 = 1</code>, then the addition of 2 more zeroed bytes to the length of the binary string such that <code>M = N + 2</code> would result in <code>M mod 3 = 0</code> or equivalently <code>N + 2 mod 3 = 0</code>.<a href="#section-3.1-5" class="pilcrow">¶</a></p>
+<p id="section-3.1-6">Similarly, when <code>N mod 3 = 2</code>, then there are two bytes (16 bits) in the remainder that must be encoded into Base64. Recall from the examples above that two bytes (16 bits) require three Base64 characters. The first two encode 6 bits each (for 12 bits) and the third encodes the remaining 4 bits for a total of 16. The last character is selected such that its non-coding 2 bits are zero. Thus one additional trailing pad character is required to pad out the resulting conversion so that its length is an integer multiple of 4 characters. Furthermore when
+<code>N mod 3 = 2</code>, then the addition of 1 more byte of zeros added to the length of the binary string such that <code>M = N + 1</code> would result in <code>M mod 3 = 0</code> or equivalently <code>N + 2 mod 3 = 0</code>. Thus the number of leading pre-pad zeroed bytes needed to align the binary string on a 24-bit boundary is the same as the number of trailing pad characters needed to align the converted Base64 text string on a 24-bit boundary.<a href="#section-3.1-6" class="pilcrow">¶</a></p>
 <p id="section-3.1-7">Finally, when <code>N mod 3 = 0</code> then the binary string is aligned on a 24-bit boundary and no trailing pad characters are required to ensure the length of the Base64 conversion is an integer multiple of 4 characters. Likewise, no leading pad bytes are required to ensure the length of the binary string is an integer multiple of 3 bytes.<a href="#section-3.1-7" class="pilcrow">¶</a></p>
 <p id="section-3.1-8">Thus, in all three cases, the number of trailing post-pad characters, if any, needed to align the converted Base64 text string on a 24-bit boundary is the same as the number of leading pre-pad bytes, if any, needed to align the binary string on a 24-bit boundary.<a href="#section-3.1-8" class="pilcrow">¶</a></p>
 <p id="section-3.1-9">The number of required trailing Base64 post-pad characters or equivalently the number of leading pre-pad zeroed bytes to ensure 24 bit alignment may be computed with the following formula:<a href="#section-3.1-9" class="pilcrow">¶</a></p>
@@ -1674,8 +1686,8 @@ If we concatenate these two primitives as <code>u + v</code> in the text domain 
 <a href="#section-3.2.1" class="section-number selfRef">3.2.1. </a><a href="#name-one-byte" class="section-name selfRef">One Byte</a>
           </h4>
 <p id="section-3.2.1-1">For the one byte raw binary string <code>a</code>, <code>ps</code> is two. The pre-padded conversion results in the following:<a href="#section-3.2.1-1" class="pilcrow">¶</a></p>
-<div id="section-3.2.1-2">
-<pre class="lang-text sourcecode">
+<div class="lang-text sourcecode" id="section-3.2.1-2">
+<pre>
 |           Z1          |           Z0          |           A0          |
 |z7:z6:z5:z4:z3:z2:z1:z0|z7:z6:z5:z4:z3:z2:z1:z0|a7:a6:a5:a4:a3:a2:a1:a0|
 |        T3       |        T2       |        T1       |        T0       |
@@ -1683,25 +1695,25 @@ If we concatenate these two primitives as <code>u + v</code> in the text domain 
 </div>
 <p id="section-3.2.1-3">where  <code>ZX</code> represents a zeroed pre-pad byte, <code>zX</code> represents a zeroed pre-pad bit, <code>AX</code> represents a byte from <code>a</code>, <code>aX</code> represents a bit from <code>a</code>, and <code>TX</code> represents a Base64 character that results from the Base64 conversion of the pre-padded <code>a</code>.<a href="#section-3.2.1-3" class="pilcrow">¶</a></p>
 <p id="section-3.2.1-4">Noteworthy is that the first two (i.e. <code>ps</code>) characters of the conversion, namely, <code>T3T2</code> does not include any bits of information from <code>a</code>. This also means that <code>T3T2</code> can be modified after conversion without impacting the appearance or value of the converted <code>a</code> that appears solely in <code>T1T0</code>, i.e. there is no overlap. Moreover, the resulting Base64 conversion of <code>a</code> is right aligned with respect to the trailing Base64 character. This means that one can "read" and understand the numerical values for <code>a</code> from such an unshifted Base64 conversion.  This also means that a text-based parser on a character-by-character basis can cleanly process <code>T3T2</code> separate from the Base64 encoding of <code>a</code> that appears in <code>T1T0</code>. Given this separation we could replace <code>T3T2</code> with  two character Base64 textual type code <code>C1C0</code> as follows:<a href="#section-3.2.1-4" class="pilcrow">¶</a></p>
-<div id="section-3.2.1-5">
-<pre class="lang-text sourcecode">
+<div class="lang-text sourcecode" id="section-3.2.1-5">
+<pre>
 |           Z1          |           Z0          |           A0          |
 |z7:z6:z5:z4:z3:z2:z1:z0|z7:z6:z5:z4:z3:z2:z1:z0|a7:a6:a5:a4:a3:a2:a1:a0|
 |        S1       |        S0       |        T1       |        T0       |
 |s5:s4:s3:s2:s1:s0|s5:s4|s3:s2:s1:s0|z3:z2:z1:z0|a7:a6:a5:a4:a3:a2:a1:a0|
 </pre><a href="#section-3.2.1-5" class="pilcrow">¶</a>
 </div>
-<p id="section-3.2.1-6">where  <code>ZX</code> represents a zeroed pre-pad byte, <code>zX</code> represents a zeroed pre-pad bit, <code>AX</code> represents a byte from <code>a</code>, <code>aX</code> represents a bit from <code>a</code>,  <code>TX</code> represents a Base64 character that results from the Base64 conversion of the pre-padded <code>a</code>, <code>SX</code> represents a Base64 code character replacing one of the <code>TX</code>, and <code>sX</code> is a code bit. The resultant four character Base64 encoded primitive would be <code>C1C0T1T0</code>.<a href="#section-3.2.1-6" class="pilcrow">¶</a></p>
-<p id="section-3.2.1-7">When <code>C1C0T1T0</code> is converted back to binary from Base64 the result would be as follows:<a href="#section-3.2.1-7" class="pilcrow">¶</a></p>
-<div id="section-3.2.1-8">
-<pre class="lang-text sourcecode">
+<p id="section-3.2.1-6">where  <code>ZX</code> represents a zeroed pre-pad byte, <code>zX</code> represents a zeroed pre-pad bit, <code>AX</code> represents a byte from <code>a</code>, <code>aX</code> represents a bit from <code>a</code>,  <code>TX</code> represents a Base64 character that results from the Base64 conversion of the pre-padded <code>a</code>, <code>SX</code> represents a Base64 code character replacing one of the <code>TX</code>, and <code>sX</code> is a code bit. The resultant four-character Base64 encoded primitive would be <code>C1C0T1T0</code>.<a href="#section-3.2.1-6" class="pilcrow">¶</a></p>
+<p id="section-3.2.1-7">When <code>C1C0T1T0</code> is converted back to binary from Base64, the result would be as follows:<a href="#section-3.2.1-7" class="pilcrow">¶</a></p>
+<div class="lang-text sourcecode" id="section-3.2.1-8">
+<pre>
 |        S1       |        S0       |        T1       |        T0       |
 |s5:s4:s3:s2:s1:s0|s5:s4|s3:s2:s1:s0|z3:z2:z1:z0|a7:a6:a5:a4:a3:a2:a1:a0|
 |           U1          |        U0             |           A0          |
 </pre><a href="#section-3.2.1-8" class="pilcrow">¶</a>
 </div>
-<p id="section-3.2.1-9">where  <code>CX</code> represents a Base64 code character replacing one of the <code>TX</code>, <code>cX</code> is a code bit, <code>UX</code> represents byte from converted code char which may include zeroed bits, <code>zX</code> represents a zeroed pre-pad bit, <code>AX</code> represents a byte from <code>a</code>, <code>aX</code> represents a bit from <code>a</code>, and <code>TX</code> represents a Base64 character that results from the Base64 conversion of the pre-padded <code>a</code>.<a href="#section-3.2.1-9" class="pilcrow">¶</a></p>
-<p id="section-3.2.1-10">Stripping off <code>U1U0</code> leaves <code>a</code> in its original state. Noteworthy is that the code characters (only) are effectively left shifted 4 bits after conversion. The code characters <code>S1S0</code> can be recovered as the first two characters obtained from simply converting <code>U1O0</code> only back to Base64.<a href="#section-3.2.1-10" class="pilcrow">¶</a></p>
+<p id="section-3.2.1-9">where  <code>CX</code> represents a Base64 code character replacing one of the <code>TX</code>, <code>cX</code> is a code bit, <code>UX</code> represents a byte from the converted code char, which may include zeroed bits, <code>zX</code> represents a zeroed pre-pad bit, <code>AX</code> represents a byte from <code>a</code>, <code>aX</code> represents a bit from <code>a</code>, and <code>TX</code> represents a Base64 character that results from the Base64 conversion of the pre-padded <code>a</code>.<a href="#section-3.2.1-9" class="pilcrow">¶</a></p>
+<p id="section-3.2.1-10">Stripping off <code>U1U0</code> leaves <code>a</code> in its original state. Noteworthy is that the code characters (only) are effectively left shifted 4 bits after conversion. The code characters <code>S1S0</code> can be recovered as the first two characters that are obtained from simply converting <code>U1O0</code> only back to Base64.<a href="#section-3.2.1-10" class="pilcrow">¶</a></p>
 </section>
 </div>
 </section>
@@ -1711,49 +1723,49 @@ If we concatenate these two primitives as <code>u + v</code> in the text domain 
         <h3 id="name-two-byte">
 <a href="#section-3.3" class="section-number selfRef">3.3. </a><a href="#name-two-byte" class="section-name selfRef">Two Byte</a>
         </h3>
-<p id="section-3.3-1">For the two byte raw binary string <code>b</code>, <code>ps</code> is one. The pre-padded conversion results in the following:<a href="#section-3.3-1" class="pilcrow">¶</a></p>
-<div id="section-3.3-2">
-<pre class="lang-text sourcecode">
+<p id="section-3.3-1">For the two-byte raw binary string <code>b</code>, <code>ps</code> is one. The pre-padded conversion results in the following:<a href="#section-3.3-1" class="pilcrow">¶</a></p>
+<div class="lang-text sourcecode" id="section-3.3-2">
+<pre>
 |           Z0          |           B1          |           B0          |
 |z7:z6:z5:z4:z3:z2:z1:z0|b7:b6:b5:b4:b3:b2:b1:b0|b7:b6:b5:b4:b3:b2:b1:b0|
 |        T3       |        T2       |        T1       |        T0       |
 </pre><a href="#section-3.3-2" class="pilcrow">¶</a>
 </div>
 <p id="section-3.3-3">where  <code>ZX</code> represents a zeroed pre-pad byte, <code>zX</code> represents a zeroed pre-pad bit, <code>BX</code> represents a byte from <code>b</code>, <code>bX</code> represents a bit from <code>b</code>, and <code>TX</code> represents a Base64 character that results from the Base64 conversion of the pre-padded <code>b</code>.<a href="#section-3.3-3" class="pilcrow">¶</a></p>
-<p id="section-3.3-4">Noteworthy is that the first one (i.e. <code>ps</code>) character of the conversion, namely, <code>T3</code>, does not include any bits of information from <code>b</code>. This also means that <code>T3</code> can be modified after conversion without impacting the appearance or value of the converted <code>b</code> that appears solely in <code>T2T1T0</code>, i.e. there is no overlap. Moreover, the resulting Base64 conversion of <code>b</code> is right aligned with respect to the trailing Base64 character. This means that one can "read" and understand the numerical values for <code>b</code> from such an unshifted Base64 conversion.  This also means that a text-based parser on a character-by-character basis can cleanly process <code>T3</code> separate from the Base64 encoding of <code>b</code> that appears in <code>T2T1T0</code>. Given this separation we could replace <code>T3</code> with one character Base64 textual type code <code>C0</code> as follows:<a href="#section-3.3-4" class="pilcrow">¶</a></p>
-<div id="section-3.3-5">
-<pre class="lang-text sourcecode">
+<p id="section-3.3-4">Noteworthy is that the first one (i.e., <code>ps</code>) character of the conversion, namely, <code>T3</code>, does not include any bits of information from <code>b</code>. This also means that <code>T3</code> can be modified after conversion without impacting the appearance or value of the converted <code>b</code> that appears solely in <code>T2T1T0</code>, i.e., there is no overlap. Moreover, the resulting Base64 conversion of <code>b</code> is right aligned with respect to the trailing Base64 character. This means that one can "read" and understand the numerical values for <code>b</code> from such an unshifted Base64 conversion.  This also means that a text-based parser on a character-by-character basis can cleanly process <code>T3</code> separate from the Base64 encoding of <code>b</code> that appears in <code>T2T1T0</code>. Given this separation, we could replace <code>T3</code> with one character Base64 textual type code <code>C0</code> as follows:<a href="#section-3.3-4" class="pilcrow">¶</a></p>
+<div class="lang-text sourcecode" id="section-3.3-5">
+<pre>
 |           Z1          |           B1          |           B0          |
 |z7:z6:z5:z4:z3:z2:z1:z0|b7:b6:b5:b4:b3:b2:b1:b0|b7:b6:b5:b4:b3:b2:b1:b0|
 |        S0       |        T2       |        T1       |        T0       |
 |s5:s4:s3:s2:s1:s0|z1:z0|b7:b6:b5:b4:b3:b2:b1:b0|b7:b6:b5:b4:b3:b2:b1:b0|
 </pre><a href="#section-3.3-5" class="pilcrow">¶</a>
 </div>
-<p id="section-3.3-6">where  <code>ZX</code> represents a zeroed pre-pad byte, <code>zX</code> represents a zeroed pre-pad bit, <code>BX</code> represents a byte from <code>b</code>, <code>bX</code> represents a bit from <code>b</code>,  <code>TX</code> represents a Base64 character that results from the Base64 conversion of the pre-padded <code>b</code>, <code>SX</code> represents a Base64 code character replacing one of the <code>TX</code>, and <code>sX</code> is a code bit,. The resultant four character Base64 encoded primitive would be <code>S0T2T1T0</code>.<a href="#section-3.3-6" class="pilcrow">¶</a></p>
-<p id="section-3.3-7">When <code>S0T2T1T0</code> is converted back to binary from Base64 the result would be as follows:<a href="#section-3.3-7" class="pilcrow">¶</a></p>
-<div id="section-3.3-8">
-<pre class="lang-text sourcecode">
+<p id="section-3.3-6">where  <code>ZX</code> represents a zeroed pre-pad byte, <code>zX</code> represents a zeroed pre-pad bit, <code>BX</code> represents a byte from <code>b</code>, <code>bX</code> represents a bit from <code>b</code>,  <code>TX</code> represents a Base64 character that results from the Base64 conversion of the pre-padded <code>b</code>, <code>SX</code> represents a Base64 code character replacing one of the <code>TX</code>, and <code>sX</code> is a code bit,. The resultant four-character Base64 encoded primitive would be <code>S0T2T1T0</code>.<a href="#section-3.3-6" class="pilcrow">¶</a></p>
+<p id="section-3.3-7">When <code>S0T2T1T0</code> is converted back to binary from Base64, the result would be as follows:<a href="#section-3.3-7" class="pilcrow">¶</a></p>
+<div class="lang-text sourcecode" id="section-3.3-8">
+<pre>
 |        S0       |        T2       |        T1       |        T0       |
 |s5:s4:s3:c2:cs:s0|z1:z0|b7:b6:b5:b4:b3:b2:b1:b0|b7:b6:b5:b4:b3:b2:b1:b0|
 |           U0          |           U1          |           A0          |
 </pre><a href="#section-3.3-8" class="pilcrow">¶</a>
 </div>
 <p id="section-3.3-9">where  <code>SX</code> represents a Base64 code character replacing one of the <code>TX</code>, <code>sX</code> is a code bit, <code>UX</code> represents byte from converted code char which may include zeroed bits, <code>zX</code> represents a zeroed pre-pad bit, <code>BX</code> represents a byte from <code>b</code>, <code>bX</code> represents a bit from <code>b</code>, and <code>TX</code> represents a Base64 character that results from the Base64 conversion of the pre-padded <code>b</code>.<a href="#section-3.3-9" class="pilcrow">¶</a></p>
-<p id="section-3.3-10">Stripping off <code>U0</code> leaves <code>b</code> in its original state. Noteworthy is that the code character (only) is effectively left shifted 4 bits after conversion. The code character <code>S0</code> can be recovered as the first character obtained from simply converting <code>U0</code> only to Base64 .<a href="#section-3.3-10" class="pilcrow">¶</a></p>
+<p id="section-3.3-10">Stripping off <code>U0</code> leaves <code>b</code> in its original state. Noteworthy is that the code character (only) is effectively left shifted 4 bits after conversion. The code character <code>S0</code> can be recovered as the first character obtained from simply converting <code>U0</code> only to Base64.<a href="#section-3.3-10" class="pilcrow">¶</a></p>
 <div id="three-byte">
 <section id="section-3.3.1">
           <h4 id="name-three-byte">
 <a href="#section-3.3.1" class="section-number selfRef">3.3.1. </a><a href="#name-three-byte" class="section-name selfRef">Three Byte</a>
           </h4>
-<p id="section-3.3.1-1">For the three byte raw binary string <code>c</code>, <code>ps</code> is zero. So prepadding is not needed.
+<p id="section-3.3.1-1">For the three-byte raw binary string <code>c</code>, <code>ps</code> is zero. So pre-padding is not needed.
 ~~~text
 |           C2          |           C1          |           C2          |
 |c7:c6:c5:c4:c3:c2:c1:c0|c7:c6:c5:c4:c3:c2:c1:c0|c7:c6:c5:c4:c3:c2:c1:c0|
 |        T3       |        T2       |        T1       |        T0       |
 ~~~
 where <code>cX</code> represents a bit from <code>c</code>, <code>CX</code> represents a byte from <code>c</code>,  and <code>TX</code> represents a non-pad character from the converted Base64 text representing one hextet of information from the converted binary string. There are no bit shifts because there are no pad bits nor pad characters needed, and the resulting Base64 conversion is right aligned with respect to the trailing Base64 character.<a href="#section-3.3.1-1" class="pilcrow">¶</a></p>
-<p id="section-3.3.1-2">Without pad characters, however, that there is no room to hold a type code. Consequently any text type code is just prepended to the conversion. The prepended type code <span class="bcp14">MUST</span> be an integer multiple of four Base64 characters. Let, <code>S3S2S1S0</code> be the type code then the full primitive with code and converted raw binary is given by the eight character Base64 string <code>S3S2S1S0T3T2T1T0</code>.<a href="#section-3.3.1-2" class="pilcrow">¶</a></p>
-<p id="section-3.3.1-3">When <code>S3S2S1S0T3T2T1T0</code> is converted back to binary, there is no overlapp or bit shifting because both the code and raw binary <code>c</code> are each seperately aligned on twenty-four bit boundaries.<a href="#section-3.3.1-3" class="pilcrow">¶</a></p>
+<p id="section-3.3.1-2">Without pad characters, however, there is no room to hold a type code. Consequently, any text type code is just prepended to the conversion. The prepended type code <span class="bcp14">MUST</span> be an integer multiple of four Base64 characters. Let <code>S3S2S1S0</code> be the type code, then the full primitive with code and converted raw binary is given by the eight-character Base64 string <code>S3S2S1S0T3T2T1T0</code>.<a href="#section-3.3.1-2" class="pilcrow">¶</a></p>
+<p id="section-3.3.1-3">When <code>S3S2S1S0T3T2T1T0</code> is converted back to binary, there is no overlap or bit shifting because both the code and raw binary <code>c</code> are each separately aligned on twenty-four-bit boundaries.<a href="#section-3.3.1-3" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="examples">
@@ -1761,7 +1773,7 @@ where <code>cX</code> represents a bit from <code>c</code>, <code>CX</code> repr
           <h4 id="name-examples">
 <a href="#section-3.3.2" class="section-number selfRef">3.3.2. </a><a href="#name-examples" class="section-name selfRef">Examples</a>
           </h4>
-<p id="section-3.3.2-1">Suppose for example that we wish to encode two byte raw binary numbers into CESR using the pre-pad approach described above. In order to achieve twenty-four bit alignment, the pre-pad size for two byte numbers is 1 byte. As described above this mean the minimally sized text code is 1 Base64 character. Suppose that the text code is <code>M</code> (Base64).  The following table provides examples of encoding the different two byte raw binary values in the three domains: raw, text, and binary. Recall that raw domain is expressed by a tuple of (code, raw) where the code is Base64 text and the raw is the raw binary value without code. For readability, raw binary values are represented in hexidecimal notation.<a href="#section-3.3.2-1" class="pilcrow">¶</a></p>
+<p id="section-3.3.2-1">Suppose, for example, that we wish to encode two-byte raw binary numbers into CESR using the pre-pad approach described above. In order to achieve twenty-four-bit alignment, the pre-pad size for two-byte numbers is 1 byte. As described above, this means the minimally sized text code is 1 Base64 character. Suppose that the text code is <code>M</code> (Base64).  The following table provides examples of encoding the different two-byte raw binary values in the three domains: raw, text, and binary. Recall that the raw-domain is expressed by a tuple of (code, raw) where the code is Base64 text and the raw is the raw binary value without code. For readability, raw binary values are represented in hexadecimal notation.<a href="#section-3.3.2-1" class="pilcrow">¶</a></p>
 <table class="center" id="table-2">
             <caption><a href="#table-2" class="selfRef">Table 2</a></caption>
 <thead>
@@ -1789,7 +1801,7 @@ where <code>cX</code> represents a bit from <code>c</code>, <code>CX</code> repr
               </tr>
             </tbody>
           </table>
-<p id="section-3.3.2-3">With this approach both the binary and text domain representations are as compact as possible for a fully qualified primitive that satisfies the composability property. The text domain representation has a stable readable code and a stable readable value. The binary domain is value right aligned. The text domain representation consists of 4 text printable characters from the Base64 set of characters and the binary domain representation consists of 3 bytes. Both are parsable in each domain along character/byte boundaries respectively. A parser reads the first character/byte. It then processes that value to get an index into a lookup table that it uses to find how many remaining characters/bytes to extract from the stream. This makes the primitive self-framing.<a href="#section-3.3.2-3" class="pilcrow">¶</a></p>
+<p id="section-3.3.2-3">With this approach, both the binary-domain and text-domain representations are as compact as possible for a fully qualified primitive that satisfies the composability property. The text domain representation has a stable readable code and a stable readable value. The binary domain is value right aligned. The text domain representation consists of 4 text printable characters from the Base64 set of characters, and the binary domain representation consists of 3 bytes. Both are parsable in each domain along character/byte boundaries respectively. A parser reads the first character/byte. It then processes that value to get an index into a lookup table that it uses to find how many remaining characters/bytes to extract from the stream. This makes the primitive self-framing.<a href="#section-3.3.2-3" class="pilcrow">¶</a></p>
 </section>
 </div>
 </section>
@@ -1799,8 +1811,8 @@ where <code>cX</code> represents a bit from <code>c</code>, <code>CX</code> repr
         <h3 id="name-count-group-or-framing-code">
 <a href="#section-3.4" class="section-number selfRef">3.4. </a><a href="#name-count-group-or-framing-code" class="section-name selfRef">Count, Group, or Framing Codes</a>
         </h3>
-<p id="section-3.4-1">As mentioned above one of the primary advantages of composable encoding is that special framing codes can be specified to support groups of primitives. Grouping enables pipelining. Other suitable terms for these special <em>framing codes</em> are <em>group codes</em> or <em>count codes</em> for short. These are suitable terms because these framing codes can be used to count characters, primitives in a group, or groups of primitives in a larger group when parsing and off-loading a stream of CESR primitives.<a href="#section-3.4-1" class="pilcrow">¶</a></p>
-<p id="section-3.4-2">A count code is it's own composable primitive and its length therefore <span class="bcp14">MUST</span> be an integer multiple of four characters in the text domain or equivalently an integer multiple of three bytes in the binary domain. To clarify, a count code is  primitive that does not include a raw binary value, only its text code. Because a count code's raw binary element value is empty and its length is an integer multiple of four characters (three bytes), its pad size is always 0.<a href="#section-3.4-2" class="pilcrow">¶</a></p>
+<p id="section-3.4-1">As mentioned above, one of the primary advantages of composable encoding is that special framing codes can be specified to support groups of primitives. Grouping enables pipelining. Other suitable terms for these special <em>framing codes</em> are <em>group codes</em> or <em>count codes</em> for short. These are suitable terms because these framing codes can be used to count characters, primitives in a group, or groups of primitives in a larger group when parsing and offloading a stream of CESR primitives.<a href="#section-3.4-1" class="pilcrow">¶</a></p>
+<p id="section-3.4-2">A count code is it's own composable primitive, and its length, therefore, <span class="bcp14">MUST</span> be an integer multiple of four characters in the text domain or equivalently an integer multiple of three bytes in the binary domain. To clarify, a count code is primitive that does not include a raw binary value, only its text code. Because a count code's raw binary element value is empty and its length is an integer multiple of four characters (three bytes), its pad size is always 0.<a href="#section-3.4-2" class="pilcrow">¶</a></p>
 <p id="section-3.4-3">To elaborate, we can use count codes as separators to better organize a stream of primitives or to interleave non-native (non-CESR) serializations. Count codes enable the grouping together of any combination of primitives, groups of primitives, or non-native serializations to optimize pipelining and offloading.<a href="#section-3.4-3" class="pilcrow">¶</a></p>
 </section>
 </div>
@@ -1817,7 +1829,7 @@ where <code>cX</code> represents a bit from <code>c</code>, <code>CX</code> repr
         <h3 id="name-cold-start-stream-parsing-p">
 <a href="#section-3.6" class="section-number selfRef">3.6. </a><a href="#name-cold-start-stream-parsing-p" class="section-name selfRef">Cold Start Stream Parsing Problem</a>
         </h3>
-<p id="section-3.6-1">After a cold start, a stream processor looks for framing information to know how to parse groups of elements in the stream. If that framing information is ambiguous then the parser may become confused and require yet another cold start. While processing a given stream a parser may become confused especially if a portion of the stream is malformed in some way. This usually requires flushing the stream and forcing a cold start to resynchronize the parser to subsequent stream elements. Better yet is a re-synchronization mechanism that does not require flushing the in-transit buffers but merely skipping to the next well-defined stream element boundary in order to execute a cold start. Good cold start re-synchronization is essential to robust performant stream processing.<a href="#section-3.6-1" class="pilcrow">¶</a></p>
+<p id="section-3.6-1">After a cold start, a stream processor looks for framing information to know how to parse groups of elements in the stream. If that framing information is ambiguous then the parser may become confused and require yet another cold start. While processing a given stream, a parser may become confused, especially if a portion of the stream is malformed in some way. This usually requires flushing the stream and forcing a cold start to resynchronize the parser to subsequent stream elements. Better yet is a re-synchronization mechanism that does not require flushing the in-transit buffers but merely skipping to the next well-defined stream element boundary in order to execute a cold start. Good cold start re-synchronization is essential to robust performant stream processing.<a href="#section-3.6-1" class="pilcrow">¶</a></p>
 <p id="section-3.6-2">For example, in TCP a cold start usually means closing and then reopening the TCP connection. This flushes the TCP buffers and sends a signal to the other end of the stream that may be interpreted as a restart or cold start. In UDP each packet is individually framed but a stream may be segmented into multiple packets so a cold start may require an explicit ack or nack to force a restart.<a href="#section-3.6-2" class="pilcrow">¶</a></p>
 <p id="section-3.6-3">Special CESR count codes support re-synchronization at each boundary between interleaved CESR and other serializations like JSON, CBOR, or MGPK<a href="#section-3.6-3" class="pilcrow">¶</a></p>
 <div id="performant-resynchronization-with-unique-start-bits">
@@ -1826,10 +1838,10 @@ where <code>cX</code> represents a bit from <code>c</code>, <code>CX</code> repr
 <a href="#section-3.6.1" class="section-number selfRef">3.6.1. </a><a href="#name-performant-resynchronizatio" class="section-name selfRef">Performant Resynchronization with Unique Start Bits</a>
           </h4>
 <p id="section-3.6.1-1">Given the popularity of three specific serializations, namely, JSON, CBOR, and MGPK, more fine-grained serialization boundary detection for interleaving CESR may be highly beneficial for both performance and robustness reasons. One way to provide this is by selecting the count code start bits such that there is always a unique (mutually distinct) set of start bits at each interleaved boundary between CESR, JSON, CBOR, and MGPK.<a href="#section-3.6.1-1" class="pilcrow">¶</a></p>
-<p id="section-3.6.1-2">Furthermore, it may also be highly beneficial to support in-stride switching between interleaved CESR text-domain streams and CESR binary domain streams. In other words, the start bits for count (framing) codes in both the <em>T</em> domain (Base64) and the <em>B</em> domain should be unique. This would provide the analogous equivalent of a UTF Byte Order Mark (BOM) <span>[<a href="#BOM" class="cite xref">BOM</a>]</span>. Recall that a BOM enables a parser of UTF encoded documents to determine if the UTF codes are big-endian or little-endian <span>[<a href="#BOM" class="cite xref">BOM</a>]</span>. In the CESR case, an analogous feature would enable a stream parser to know if a count code along with its associated counted or framed group of primitives is expressed in the <em>T</em> or <em>B</em> domain. Together these impose the constraint that the boundary start bits for interleaved text CESR, binary CESR, JSON, CBOR, and MGPK be mutually distinct.<a href="#section-3.6.1-2" class="pilcrow">¶</a></p>
-<p id="section-3.6.1-3">Amongst the codes for map objects in the JSON, CBOR, and MGPK only the first three bits are fixed and not dependent on mapping size. In JSON a serialized mapping object always starts with <code>{</code>. This is encoded as <code>0x7b</code>. the first three bits are <code>0b011</code>. In CBOR the first three bits of the major type of the serialized mapping object are <code>0b101</code>. In MGPK (MsgPack) there are three different mapping object codes. The <em>FixMap</em> code starts with <code>0b100</code>. Both the <em>Map16</em> code and <em>Map32</em> code start with <code>0b110</code>.<a href="#section-3.6.1-3" class="pilcrow">¶</a></p>
-<p id="section-3.6.1-4">So we have the set of four used starting tritets (3 bits) in numeric order of <code>0b011</code>, <code>0b100</code>, <code>0b101</code>, and <code>0b110</code>. This leaves four unused tritets, namely, <code>0b000</code>, <code>0b001</code>, <code>0b010</code>, and <code>0b111</code> that may be selected as the CESR count (framing) code start bits. In Base64 there are two codes that satisfy our constraints. The first is the dash character, <code>-</code>, encoded as <code>0x2d</code>. Its first three bits are <code>0b001</code>. The second is the underscore character,<code>_</code>, encoded as <code>0x5f</code>. Its first three bits are <code>0b010</code>. Both of these are distinct from the starting tritets of any of the JSON, CBOR, and MGPK encodings above. Moreover, the starting tritet of the corresponding binary encodings of <code>-</code> and <code>_</code> is <code>0b111</code> which is also distinct from all the others. To elaborate, Base64 uses <code>_</code> in position 62 or <code>0x3E</code> (hex) and uses <code>_</code> in position 63 or <code>0x3F</code> (hex) both of which have starting tritet of <code>0b111</code><a href="#section-3.6.1-4" class="pilcrow">¶</a></p>
-<p id="section-3.6.1-5">This gives us two different Base64 characters, <code>-</code> and <code>_</code> we can use for the first character of any framing (count) code in the <em>T</em> domain. This also means we can have two different classes of framing (count) codes. This also provides a BOM-like capability to determine if a framing code is expressed in the <em>T</em> or <em>B</em> domain. To clarify, if a stream starts with the tritet <code>0b111</code> then the stream is <em>B</em> domain CESR and a stream parser would thereby know how to convert the first sextet of the stream to determine which of the two framing codes is being used, <code>0x3E</code> or <code>ox3F</code>. If on the other hand, the framing code starts with either of the tritets <code>0b001</code> or <code>0b010</code> then the framing code is expressed in the <em>T</em> domain and a stream parser likewise would thereby know how to convert the first character (octet) of the framing code to determine which framing code is being used. Otherwise, if a stream starts with  <code>0b100</code> then is JSON, with <code>0b101</code> then its CBOR, and with either <code>0b011</code>, and <code>0b110</code> then its MGPK.<a href="#section-3.6.1-5" class="pilcrow">¶</a></p>
+<p id="section-3.6.1-2">Furthermore, it may also be highly beneficial to support in-stride switching between interleaved CESR text-domain streams and CESR binary domain streams. In other words, the start bits for count (framing) codes in both the <em>T</em> domain (Base64) and the <em>B</em> domain should be unique. This would provide the analogous equivalent of a UTF Byte Order Mark (BOM) <span>[<a href="#BOM" class="cite xref">BOM</a>]</span>. Recall that a BOM enables a parser of UTF-encoded documents to determine if the UTF codes are big-endian or little-endian <span>[<a href="#BOM" class="cite xref">BOM</a>]</span>. In the CESR case, an analogous feature would enable a stream parser to know if a count code, along with its associated counted or framed group of primitives, is expressed in the <em>T</em> or <em>B</em> domain. Together these impose the constraint that the boundary start bits for interleaved text CESR, binary CESR, JSON, CBOR, and MGPK be mutually distinct.<a href="#section-3.6.1-2" class="pilcrow">¶</a></p>
+<p id="section-3.6.1-3">Amongst the codes for map objects in the JSON, CBOR, and MGPK, only the first three bits are fixed and not dependent on mapping size. In JSON, a serialized mapping object always starts with <code>{</code>. This is encoded as <code>0x7b</code>. the first three bits are <code>0b011</code>. In CBOR, the first three bits of the major-type of its serialized mapping object are <code>0b101</code>. In MGPK (MsgPack), there are three different mapping object codes. The <em>FixMap</em> code starts with <code>0b100</code>. Both the <em>Map16</em> code and <em>Map32</em> code start with <code>0b110</code>.<a href="#section-3.6.1-3" class="pilcrow">¶</a></p>
+<p id="section-3.6.1-4">So we have the set of four used starting tritets (3 bits) in numeric order of <code>0b011</code>, <code>0b100</code>, <code>0b101</code>, and <code>0b110</code>. This leaves four unused tritets, namely, <code>0b000</code>, <code>0b001</code>, <code>0b010</code>, and <code>0b111</code>, that are potential candidates for the CESR count (framing) code start bits. In Base64, there are two codes that satisfy our constraints. The first is the dash character, <code>-</code>, encoded as <code>0x2d</code>. Its first three bits are <code>0b001</code>. The second is the underscore character,<code>_</code>, encoded as <code>0x5f</code>. Its first three bits are <code>0b010</code>. Both of these are distinct from the starting tritets of any of the JSON, CBOR, and MGPK encodings above. Moreover, the starting tritet of the corresponding binary encodings of <code>-</code> and <code>_</code> is <code>0b111</code>, which is also distinct from all the others. To elaborate, Base64 uses <code>-</code> in position 62 or <code>0x3E</code> (hex) and uses <code>_</code> in position 63 or <code>0x3F</code> (hex), both of which have starting tritet of <code>0b111</code><a href="#section-3.6.1-4" class="pilcrow">¶</a></p>
+<p id="section-3.6.1-5">This gives us two different Base64 characters, <code>-</code> and <code>_</code>, that can be used for the first character of any framing (count) code in the <em>T</em> domain. This also means we can have two different classes of framing (count) codes. Using framing codes in this way also provides a BOM-like capability that enables a parser to determine if the framing code itself is expressed in either the <em>T</em> or <em>B</em> domain. To clarify, if a stream frame (group) starts with the tritet <code>0b111</code>, then the stream frame is <em>B</em> domain CESR, and a stream parser would thereby know how to convert the first sextet of the stream frame to determine which of the two framing codes is being used, <code>0x3E</code> or <code>0x3F</code>. If, on the other hand, the framing code starts with either of the tritets <code>0b001</code> or <code>0b010</code>, then the framing code is expressed in the <em>T</em> domain, and a stream parser likewise would thereby know how to convert the first character (octet) of the framing code to determine which framing code is being used for that frame. Otherwise, if a stream starts with  <code>0b011</code>, then it's JSON, with either <code>0b100</code> or <code>0b110</code>, then it's MGPK, and with <code>0b101</code>, then it's CBOR.<a href="#section-3.6.1-5" class="pilcrow">¶</a></p>
 <p id="section-3.6.1-6">This is summarized in the following table:<a href="#section-3.6.1-6" class="pilcrow">¶</a></p>
 <table class="center" id="table-3">
             <caption><a href="#table-3" class="selfRef">Table 3</a></caption>
@@ -1843,7 +1855,7 @@ where <code>cX</code> represents a bit from <code>c</code>, <code>CX</code> repr
             <tbody>
               <tr>
                 <td class="text-center" rowspan="1" colspan="1">0b000</td>
-                <td class="text-center" rowspan="1" colspan="1"> </td>
+                <td class="text-center" rowspan="1" colspan="1">Unused</td>
                 <td class="text-center" rowspan="1" colspan="1"> </td>
               </tr>
               <tr>
@@ -1884,7 +1896,7 @@ where <code>cX</code> represents a bit from <code>c</code>, <code>CX</code> repr
               </tr>
               <tr>
                 <td class="text-center" rowspan="1" colspan="1">0b111</td>
-                <td class="text-center" rowspan="1" colspan="1">CESR <em>B</em> Domain</td>
+                <td class="text-center" rowspan="1" colspan="1">CESR <em>B</em> Domain Count Code or Op Code</td>
                 <td class="text-center" rowspan="1" colspan="1"> </td>
               </tr>
             </tbody>
@@ -1903,8 +1915,8 @@ where <code>cX</code> represents a bit from <code>c</code>, <code>CX</code> repr
 3) A JSON encoded mapping.
 4) A CBOR encoded Mapping.
 5) A MGPK encoded mapping.<a href="#section-3.6.2-3" class="pilcrow">¶</a></p>
-<p id="section-3.6.2-4">A parser merely needs to examine the first tritet (3 bits) of the first byte of the stream start to determine which one of the five it is. When the first tritet is a framing code then, the remainder of the framing code itself will include the additional information needed to parse the attached group. When the first tritet indicates its JSON, CBOR, or MGPK, then the mapping's first field must be a version string that provides the additional information needed to fully parse the associated encoded serialization.<a href="#section-3.6.2-4" class="pilcrow">¶</a></p>
-<p id="section-3.6.2-5">The stream <span class="bcp14">MUST</span> resume with a starting byte that starts with one of the 5 tritets, either another framing code expressed in the <em>T</em> or <em>B</em> domain or a new JSON, CBOR, or MGPK encoded mapping.<a href="#section-3.6.2-5" class="pilcrow">¶</a></p>
+<p id="section-3.6.2-4">A parser merely needs to examine the first tritet (3 bits) of the first byte of the stream start to determine which one of the five it is. When the first tritet is a framing code then the remainder of the framing code itself will include the additional information needed to parse the attached group (frame). When the first tritet indicates its JSON, CBOR, or MGPK, then the mapping's first field must be a version string that provides the additional information needed to fully parse the associated encoded field map serialization.<a href="#section-3.6.2-4" class="pilcrow">¶</a></p>
+<p id="section-3.6.2-5">The stream <span class="bcp14">MUST</span> resume with a frame starting byte that begins with one of the 5 tritets, either another framing code expressed in the <em>T</em> or <em>B</em> domain or a new JSON, CBOR, or MGPK encoded mapping.<a href="#section-3.6.2-5" class="pilcrow">¶</a></p>
 <p id="section-3.6.2-6">This provides an extremely compact and elegant stream parsing formula that generalizes not only support for CESR composability but also support for interleaved CESR with three of the most popular hash map serializations.<a href="#section-3.6.2-6" class="pilcrow">¶</a></p>
 </section>
 </div>
@@ -1915,19 +1927,19 @@ where <code>cX</code> represents a bit from <code>c</code>, <code>CX</code> repr
         <h3 id="name-compact-fixed-size-codes">
 <a href="#section-3.7" class="section-number selfRef">3.7. </a><a href="#name-compact-fixed-size-codes" class="section-name selfRef">Compact Fixed Size Codes</a>
         </h3>
-<p id="section-3.7-1">As mentioned above, CESR uses a multiple code table design that enables both size-optimized text codes for the most popular primitive types and extensible universal support for all other primitive types. Modern cryptographic suites support limited sets of raw binary primitives with fixed (not variable) sizes. The design aesthetic is based on the understanding that there is a minimally sufficient cryptographic strength and more cryptographic strength is just wasting computation and bandwidth. Cryptographic strength is measured in bits of entropy which also corresponds to the number of trials that must be attempted to succeed in a brute force attack. The accepted minimum for cryptographic strength is 128 bits of entropy or equivalently <code>2**128</code> (2 raised to the 128th power) brute force trials. The size in bytes of a given raw binary primitive for a given modern cryptographic suite is usually directly related to this minimum strength of 128 bits (16 bytes).
-For example, the raw binary primitives from the well-known <span>[<a href="#NaCL" class="cite xref">NaCL</a>]</span> ECC (Elliptic Curve Cryptography) library all satisfy this 128-bit strength goal. In particular, the digital signing public key raw binary primitives for EdDSA are 256 bits (32 bytes) in length because well-known algorithms can reduce the number of trials to brute force invert an ECC public key to get the private key by the square root of the number of scalar multiplications which is also related to the size of both the private key and public key coordinates (discrete logarithm problem <span>[<a href="#DLog" class="cite xref">DLog</a>]</span>). Thus  256 bit (32-byte) ECC keys are needed to achieve 128 bits of cryptographic strength. In general, the size of a given raw binary primitive is typically some multiple of 128 bits of cryptographic strength. This is also true for the associated EdDSA raw binary signatures which are 512 bits (64 bytes) in length.<a href="#section-3.7-1" class="pilcrow">¶</a></p>
-<p id="section-3.7-2">Similar scale factors exist for cryptographic digests. A standard default Blake3 digest is 256 bits (32 bytes) in length in order to get 128 bits of cryptographic strength. This is also true of SHA3-256. Indeed the sweet spots for modern cryptographic raw primitive lengths are 32 bytes for many digests as well as EdDSA public and private keys as well as ECDSA private keys. Likwise, 64 bytes is the sweetspot for EdDSA and ECDSA-secp256k1 signatures and 64-byte variants of the most popular digests. Therefore optimized text code tables for these two sweet spots (32 and 64 bytes) would be highly advantageous.<a href="#section-3.7-2" class="pilcrow">¶</a></p>
+<p id="section-3.7-1">As mentioned above, CESR uses a multiple-code table design that enables both size-optimized text codes for the most popular primitive types and extensible universal support for all other primitive types. Modern cryptographic suites support limited sets of raw binary primitives with fixed (not variable) sizes. The design aesthetic is based on the understanding that there is minimally sufficient cryptographic strength and more cryptographic strength is just wasting computation and bandwidth. Cryptographic strength is measured in bits of entropy which also corresponds to the number of trials that must be attempted to succeed in a brute-force attack. The accepted minimum for cryptographic strength is 128 bits of entropy or equivalently <code>2**128</code> (2 raised to the 128th power) brute force trials. The size in bytes of a given raw binary primitive for a given modern cryptographic suite is usually directly related to this minimum strength of 128 bits (16 bytes).
+For example, the raw binary primitives from the well-known <span>[<a href="#NaCL" class="cite xref">NaCL</a>]</span> ECC (Elliptic Curve Cryptography) library all satisfy this 128-bit strength goal. In particular, the digital signing public key raw binary primitives for EdDSA are 256 bits (32 bytes) in length because well-known algorithms can reduce the number of trials to brute force invert an ECC public key to get the private key by the square root of the number of scalar multiplications which is also related to the size of both the private key and public key coordinates (discrete logarithm problem <span>[<a href="#DLog" class="cite xref">DLog</a>]</span>). Therefore 256 bit (32-byte) ECC keys are needed to achieve 128 bits of cryptographic strength. In general, the size of a given raw binary primitive is typically some multiple of 128 bits of cryptographic strength. This is also true for the associated EdDSA raw binary signatures which are 512 bits (64 bytes) in length.<a href="#section-3.7-1" class="pilcrow">¶</a></p>
+<p id="section-3.7-2">Similar scale factors exist for cryptographic digests. A standard default Blake3 digest is 256 bits (32 bytes) in length in order to get 128 bits of cryptographic strength. This is also true of SHA3-256. Indeed the sweet spots for modern cryptographic raw primitive lengths are 32 bytes for many digests as well as EdDSA public and private keys as well as ECDSA private keys. Likewise, 64 bytes is the sweet spot for EdDSA and ECDSA-secp256k1 signatures and 64-byte variants of the most popular digests. Therefore optimized text code tables for these two sweet spots (32 and 64 bytes) would be highly advantageous.<a href="#section-3.7-2" class="pilcrow">¶</a></p>
 <p id="section-3.7-3">A 32-byte raw binary value has a pad size of 1 character.<a href="#section-3.7-3" class="pilcrow">¶</a></p>
-<div id="section-3.7-4">
-<pre class="lang-text sourcecode">
+<div class="lang-text sourcecode" id="section-3.7-4">
+<pre>
 (3 - (32 mod 3)) mod 3) = 1
 </pre><a href="#section-3.7-4" class="pilcrow">¶</a>
 </div>
 <p id="section-3.7-5">Therefore the minimal text code size is 1 character for 32-byte raw binary cryptographic material and all other raw binary material values whose pad size is 1 character.<a href="#section-3.7-5" class="pilcrow">¶</a></p>
 <p id="section-3.7-6">A 64-byte raw binary value has a pad size of 2 characters.<a href="#section-3.7-6" class="pilcrow">¶</a></p>
-<div id="section-3.7-7">
-<pre class="lang-text sourcecode">
+<div class="lang-text sourcecode" id="section-3.7-7">
+<pre>
 (3 - (64 mod 3)) mod 3) = 2
 </pre><a href="#section-3.7-7" class="pilcrow">¶</a>
 </div>
@@ -2008,7 +2020,7 @@ For example, the raw binary primitives from the well-known <span>[<a href="#NaCL
         <h3 id="name-small-variable-raw-size-tab">
 <a href="#section-3.11" class="section-number selfRef">3.11. </a><a href="#name-small-variable-raw-size-tab" class="section-name selfRef">Small Variable Raw Size Tables</a>
         </h3>
-<p id="section-3.11-1">Although many primitives have fixed raw binary sizes, especially those for modern cryptographic suites such as keys, signatures, and digests, there are other primitives that benefit from variable sizings such as either encrypted material or legacy cryptographic material types found in the GPG or OpenSSL libraries (like RSA). Furthermore, because CESR is meant to support not merely cryptographic material types but other basic types, such as generic text strings and numbers. These basic non-cryptographic types may also benefit from variable-size codes.<a href="#section-3.11-1" class="pilcrow">¶</a></p>
+<p id="section-3.11-1">Although many primitives have fixed raw binary sizes, especially those for modern cryptographic suites such as keys, signatures, and digests, there are other primitives that benefit from variable sizings such as either encrypted material or legacy cryptographic material types found in the GPG or OpenSSL libraries (like RSA). Furthermore, CESR is meant to support not merely cryptographic material types but other basic types, such as generic text strings and numbers. These basic non-cryptographic types may also benefit from variable-size codes.<a href="#section-3.11-1" class="pilcrow">¶</a></p>
 <p id="section-3.11-2">The three tables in this group are for small variable raw-size primitives. These three tables use 0, 1, or 2 lead bytes as appropriate given the pad size of 0, 1, or 2 for a given variable size raw binary value. The text code size for all three tables is 4 characters.
 The first character is the selector, the second character is the type, and the last two characters provide the size of the value as a Base64 encoded integer. The number of unique type codes in each table is, therefore, 64. A given type code is repeated in each table for the same type so that all that differs between codes of the same type in each table is the number of lead bytes needed to align a given variable length on a twenty-four-bit boundary. To clarify, what is different in each table is the number of lead bytes needed to achieve twenty-four-bit alignment for a given variable length. Thus, the selector not only encodes for which type table but also implicitly encodes the number of lead bytes. The variable size is measured in quadlets of 4 characters each in the <em>T</em> domain and equivalently in triplets of 3 bytes each in the <em>B</em> domain. Thus computing the number of characters when parsing or off-loading in the <em>T</em> domain means multiplying the variable size by 4. Computing the number of bytes when parsing or off-loading in the <em>B</em> domain means multiplying the variable size by 3. The two Base64 size characters provide value lengths in quadlets/triplets from 0 to 4095 (<code>64**2 -1</code>). This corresponds to value lengths of up to 16,380 characters (<code>4095 o 4</code>) or 12,285 bytes (<code>4095 o 3</code>).<a href="#section-3.11-2" class="pilcrow">¶</a></p>
 <div id="small-variable-raw-size-table-with-0-lead-bytes">
@@ -2100,9 +2112,9 @@ The first character is the selector, the second character is the type, and the l
         <h3 id="name-protocol-genus-and-version-">
 <a href="#section-3.14" class="section-number selfRef">3.14. </a><a href="#name-protocol-genus-and-version-" class="section-name selfRef">Protocol Genus and Version Table</a>
         </h3>
-<p id="section-3.14-1">The protocol genus and version table is special because its codes modifies the following count code group. A protocol genus and version code itself does not provide a count of following quadlets or triplets but modifies the protocol genus and version of all the following count codes until another protocol and genus count code is provided. Consequently a protocol genus and version code <span class="bcp14">MUST</span> only appear at the top level of any count group. In other words a protocol genus and version code <span class="bcp14">MUST NOT</span> be nested inside any other count code.<a href="#section-3.14-1" class="pilcrow">¶</a></p>
-<p id="section-3.14-2">The purpose of this table is two fold. Firstly it allows CESR to be used for different protocols and protocol stacks where each protocol may have its own dedicated set of code tables. The only table that all protocols must share is the protocol genus and version table (protocol table for short) in the set  count code tables. All other entries in all other tables may vary by protocol. Secondly, for a given protocol genus, a protocol genus and version code provides the version of that given protocol's table set. This allows versioning of the CESR code tables for a given protocol.<a href="#section-3.14-2" class="pilcrow">¶</a></p>
-<p id="section-3.14-3">The format for a protocol genus and version code is as follows: <code>--GGGVVV</code> where <code>GGG</code> represents the protocol genus and <code>VVV</code> is the version of that protocol genus. The genus uses three Base64 characters for a possible total of 262,144 different protocol genera. The version also uses three Base64 characters which can be used in a protocol genus specific manner. One suggested approach is to use one character for each of the three components of a semantic version of the form <code>major.minor.patch</code> <span>[<a href="#SEMVER" class="cite xref">SEMVER</a>]</span>. This provides 64 major versions, where each major version has up to 64 minor versions, and where each minor version in turn has up to 64 patches.<a href="#section-3.14-3" class="pilcrow">¶</a></p>
+<p id="section-3.14-1">The protocol genus/version table is special because its codes modify the following count code group. A protocol genus and version code itself does not provide a count of the following quadlets or triplets but modifies the protocol genus and version of all the following count codes until another protocol and genus count code is provided. Consequently, a protocol genus and version code <span class="bcp14">MUST</span> only appear at the top level of any count group. In other words, a protocol genus and version code <span class="bcp14">MUST NOT</span> be nested inside any other count code.<a href="#section-3.14-1" class="pilcrow">¶</a></p>
+<p id="section-3.14-2">The purpose of this table is twofold. Firstly it allows CESR to be used for different protocols and protocol stacks, where each protocol may have its own dedicated set of code tables. The only table that all protocols must share is the protocol genus and version table (protocol table for short) in the set count code tables. All other entries in all other tables may vary by protocol. Secondly, for a given protocol genus, a protocol genus and version code provides the version of that given protocol's table set. This allows versioning of the CESR code tables for a given protocol.<a href="#section-3.14-2" class="pilcrow">¶</a></p>
+<p id="section-3.14-3">The format for a protocol genus and version code is as follows: <code>--GGGVVV</code> where <code>GGG</code> represents the protocol genus and <code>VVV</code> is the version of that protocol genus. The genus uses three Base64 characters for a possible total of 262,144 different protocol genera. The version also uses three Base64 characters which can be used in a protocol genus-specific manner. One suggested approach is to use one character for each of the three components of a semantic version of the form <code>major.minor.patch</code> <span>[<a href="#SEMVER" class="cite xref">SEMVER</a>]</span>. This provides 64 major versions, where each major version has up to 64 minor versions, and where each minor version in turn, has up to 64 patches.<a href="#section-3.14-3" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="opcode-tables">
@@ -2415,7 +2427,7 @@ The first character is the selector, the second character is the type, and the l
                 <td class="text-center" rowspan="1" colspan="1">
                   <code>#</code>
 </td>
-                <td class="text-center" rowspan="1" colspan="1">Base64 digit as part of a base 64 integer. When part of primitive determines the number of following quadlets or triplets. When part of a count code determines the count of following primitives or groups of primitives</td>
+                <td class="text-center" rowspan="1" colspan="1">Base64 digit as part of a base 64 integer. When part of primitive determines the number of following quadlets or triplets. When part of a count code determines the count of the following primitives or groups of primitives</td>
               </tr>
               <tr>
                 <td class="text-center" rowspan="1" colspan="1">
@@ -2440,7 +2452,7 @@ The first character is the selector, the second character is the type, and the l
         <h3 id="name-parse-tables">
 <a href="#section-3.17" class="section-number selfRef">3.17. </a><a href="#name-parse-tables" class="section-name selfRef">Parse Tables</a>
         </h3>
-<p id="section-3.17-1">Text domain parsing can be simplified by using a parse size table. A text domain parser uses the first character selector code to look up the hard size (stable) portion of the text code. The parse then extracts hard size characters from the text stream. These characters form an index into the parse size table which includes a set of sizes for the remainder of the primitive. Using these sizes for a given code allows a parser to extract and convert a given primitive. In the binary domain, the same text parse table may be used but each size value represents a multiple of a sextet of bits instead of Base64 characters. Example entries from that table are provided below. Two of the rows may always be calculated given the other 4 rows so the table need only have 4 entries in each row. Thus all basic primitives may be parsed with one parse size table.<a href="#section-3.17-1" class="pilcrow">¶</a></p>
+<p id="section-3.17-1">Text domain parsing can be simplified by using a parse size table. A text domain parser uses the first character selector code to look up the hard-size (stable) portion of the text code. The parse then extracts hard-size characters from the text stream. These characters form an index for the parse size table, which includes a set of sizes for the remainder of the primitive. Using these sizes for a given code allows a parser to extract and convert a given primitive. In the binary domain, the same text parse table may be used, but each size value represents a multiple of a sextet of bits instead of Base64 characters. Example entries from that table are provided below. Two of the rows may always be calculated given the other 4 rows, so the table need only have 4 entries in each row. Thus all basic primitives may be parsed with one parse size table.<a href="#section-3.17-1" class="pilcrow">¶</a></p>
 <div id="selector-code-size-table">
 <section id="section-3.17.1">
           <h4 id="name-selector-code-size-table">
@@ -2617,32 +2629,32 @@ The first character is the selector, the second character is the type, and the l
                 <td class="text-center" rowspan="1" colspan="1">
                   <strong><em>hs</em></strong>
 </td>
-                <td class="text-center" rowspan="1" colspan="1">hard (fixed) part of code size in chars</td>
+                <td class="text-center" rowspan="1" colspan="1">hard size in chars (fixed) part of code size</td>
               </tr>
               <tr>
                 <td class="text-center" rowspan="1" colspan="1">
                   <strong><em>ss</em></strong>
 </td>
-                <td class="text-center" rowspan="1" colspan="1">soft (variable) part of code size in chars</td>
+                <td class="text-center" rowspan="1" colspan="1">soft size in chars, (variable) part of code size</td>
               </tr>
               <tr>
                 <td class="text-center" rowspan="1" colspan="1">
                   <strong><em>os</em></strong>
 </td>
-                <td class="text-center" rowspan="1" colspan="1">other size in chars when soft part provides two variable values</td>
+                <td class="text-center" rowspan="1" colspan="1">other size in chars, when soft part includes two variable values</td>
               </tr>
               <tr>
                 <td class="text-center" rowspan="1" colspan="1">
-                  <strong>ms</strong>
+                  <em>ms</em>
 </td>
-                <td class="text-center" rowspan="1" colspan="1">derived main size in chars when soft part provides two variable values where <em>ms = ss - os</em>
+                <td class="text-center" rowspan="1" colspan="1">main size in chars, (derived) when soft part provides two variable values where <em>ms = ss - os</em>
 </td>
               </tr>
               <tr>
                 <td class="text-center" rowspan="1" colspan="1">
                   <em>cs</em>
 </td>
-                <td class="text-center" rowspan="1" colspan="1">derived value size in chars where where <em>cs = hs + ss</em>
+                <td class="text-center" rowspan="1" colspan="1">code size in chars (derived value), where where <em>cs = hs + ss</em>
 </td>
               </tr>
               <tr>
@@ -2662,26 +2674,26 @@ The first character is the selector, the second character is the type, and the l
                 <td class="text-center" rowspan="1" colspan="1">
                   <strong><em>ls</em></strong>
 </td>
-                <td class="text-center" rowspan="1" colspan="1">lead size in bytes to prepad raw binary bytes</td>
+                <td class="text-center" rowspan="1" colspan="1">lead size in bytes to pre-pad raw binary bytes</td>
               </tr>
               <tr>
                 <td class="text-center" rowspan="1" colspan="1">
                   <strong><em>ps</em></strong>
 </td>
-                <td class="text-center" rowspan="1" colspan="1">Base64 encoded pad size in chars</td>
+                <td class="text-center" rowspan="1" colspan="1">pad size in chars Base64 encoded</td>
               </tr>
               <tr>
                 <td class="text-center" rowspan="1" colspan="1">
                   <em>rs</em>
 </td>
-                <td class="text-center" rowspan="1" colspan="1">derived raw size in bytes of binary valure where *rs is derived from <code>R(T)</code>
+                <td class="text-center" rowspan="1" colspan="1">raw size in bytes (derived) of binary value where *rs is derived from <code>R(T)</code>
 </td>
               </tr>
               <tr>
                 <td class="text-center" rowspan="1" colspan="1">
                   <em>bs</em>
 </td>
-                <td class="text-center" rowspan="1" colspan="1">derived binary size in bytes where where <em>bs = ls + rs</em>
+                <td class="text-center" rowspan="1" colspan="1">binary size in bytes (derived) where where <em>bs = ls + rs</em>
 </td>
               </tr>
             </tbody>
@@ -2702,7 +2714,7 @@ The first character is the selector, the second character is the type, and the l
 <a href="#section-3.18.1" class="section-number selfRef">3.18.1. </a><a href="#name-indexed-codes" class="section-name selfRef">Indexed Codes</a>
           </h4>
 <p id="section-3.18.1-1">Currently, there is only one context-specific coding scheme, that is, for indexed signatures. A common use case is thresholded multi-signature schemes. A threshold-satisficing subset of signatures belonging to an ordered set or list of public keys may be provided as part of a stream of primitives. One way to compactly associated each signature with its public key is to include in the text code for that signature the index into the ordered set of public keys.<a href="#section-3.18.1-1" class="pilcrow">¶</a></p>
-<p id="section-3.18.1-2">A popular raw binary size for a signature is 64 bytes which has a pad size of 2. This gives two code characters for a compact text code. The first character is the selector and type code. The second character is the Base64 encoded integer index.  By using a similar dual selector type code character scheme as above, where the selectors are the numbers <code>0-9</code> and <code>-</code> and <code>_</code>. Then there are 52 type codes given by the letters <code>A- Z</code> and <code>a-z</code>. The index has 64 values which support up to 64 members in the public key list. A selector can be used to select a large text code with more characters dedicated to larger indices. Some applications of CESR, like KERI, have the need for dual-indexed signatures (i.e. each signature has two indices) in order to support pre-rotation with partial or reserved participants in a rotation. With partial rotation, a given signature may contribute to the signing threshold for two different thresholds, each on two different lists of keys where the associated key may appear at a different location in each list. For 64-byte signatures, the Ed25519 and ECDSA secp256k1 schemes have entries in the table. For dual indexed codes, the next larger code size that aligns a 64-byte signature on a 24-bit boundary is 6 characters. The table provides entries for dual-indexed 64-byte signatures. The code includes one selector character, one type character, and two each of two character indices.<a href="#section-3.18.1-2" class="pilcrow">¶</a></p>
+<p id="section-3.18.1-2">A popular signature raw binary size is 64 bytes which has a pad size of 2. This gives two code characters for a compact text code. The first character is the selector and type code. The second character is the Base64 encoded integer index.  By using a similar dual selector type code character scheme as above, where the selectors are the numbers <code>0-9</code> and <code>-</code> and <code>_</code>. Then there are 52 type codes given by the letters <code>A- Z</code> and <code>a-z</code>. The index has 64 values which support up to 64 members in the public key list. A selector can be used to select a large text code with more characters dedicated to larger indices. Some applications of CESR, like KERI, have the need for dual-indexed signatures (i.e., each signature has two indices) in order to support pre-rotation with partial or reserved participants in a rotation. With partial rotation, a given signature may contribute to the signing threshold for two different thresholds, each on two different lists of keys where the associated key may appear at a different location in each list. For 64-byte signatures, the Ed25519 and ECDSA secp256k1 schemes have entries in the table. For dual-indexed codes, the next larger code size that aligns a 64-byte signature on a 24-bit boundary is 6 characters. The table provides entries for dual-indexed 64-byte signatures. The code includes one selector character, one type character, and two each of two character indices.<a href="#section-3.18.1-2" class="pilcrow">¶</a></p>
 <p id="section-3.18.1-3">A new signature scheme based on Ed448 with 114-byte signatures is also supported. These signatures have a pad size of zero so require a four-character text code. The first character is the selector <code>0</code>, the second character is the type with 64 values, and the last two characters each provide a one-character index as a Base64 encoded integer with 64 different values. A big version code consumes eight characters with one character for the selector, one for the type, and three characters for each of the dual indices.<a href="#section-3.18.1-3" class="pilcrow">¶</a></p>
 <div id="indexed-code-table">
 <section id="section-3.18.1.1">
@@ -2887,7 +2899,7 @@ The first character is the selector, the second character is the type, and the l
 2) A description of what is encoded or appended to the code.
 3) The length in characters of the code.
 4) the length in characters of the count portion of the code
-5) The length in characters of the fully qualified primitive including code and append material or number of elements in the group. This is empty when variable length.<a href="#section-4.2-2" class="pilcrow">¶</a></p>
+5) The length in characters of the fully qualified primitive, including code and its appended material or the number of elements in the group. This is empty when variable length.<a href="#section-4.2-2" class="pilcrow">¶</a></p>
 <table class="center" id="table-12">
           <caption><a href="#table-12" class="selfRef">Table 12</a></caption>
 <thead>
@@ -3646,8 +3658,8 @@ followed by a ControllerIdxSigs group that in turn, consists of a counter code <
 indexed signature primitives.
 The following example details how a complex nested group may appear.<a href="#section-4.3.1-1" class="pilcrow">¶</a></p>
 <p id="section-4.3.1-2">The example has only one group that includes nested groups. The example is annotated with comments, spaces, and line feeds for clarity.<a href="#section-4.3.1-2" class="pilcrow">¶</a></p>
-<div id="section-4.3.1-3">
-<pre class="lang-text sourcecode">
+<div class="lang-text sourcecode" id="section-4.3.1-3">
+<pre>
 -FAB     # Trans Indexed Sig Groups counter code 1 following group
 E_T2_p83_gRSuAYvGhqV3S0JzYEF2dIa-OCPLbIhBO7Y    # trans prefix of signer for sigs
 -EAB0AAAAAAAAAAAAAAAAAAAAAAB    # sequence number of est event of signer's public keys for sigs

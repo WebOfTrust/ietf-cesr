@@ -4,8 +4,8 @@
 
 TODO Working Group                                              S. Smith
 Internet-Draft                                             ProSapien LLC
-Intended status: Informational                          29 November 2022
-Expires: 2 June 2023
+Intended status: Informational                             29 March 2023
+Expires: 30 September 2023
 
 
             Composable Event Streaming Representation (CESR)
@@ -54,11 +54,11 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on 2 June 2023.
+   This Internet-Draft will expire on 30 September 2023.
 
 Copyright Notice
 
-   Copyright (c) 2022 IETF Trust and the persons identified as the
+   Copyright (c) 2023 IETF Trust and the persons identified as the
    document authors.  All rights reserved.
 
    This document is subject to BCP 78 and the IETF Trust's Legal
@@ -264,13 +264,13 @@ Table of Contents
 
 1.2.1.  Transformations Between Domains
 
-   Although, the composability property mentioned in the previous
-   section only applies to conversions back and forth between the _T_,
-   and _B_, domains, conversions between the _R_, and _T_ domains as
-   well as conversions between the _R_ and _B_ domains are also defined
-   and supported by the protocol as described in detail in this section.
-   As a result, there is a total of six transformations, one in each
-   direction between the three domains.
+   Although the composability property mentioned in the previous section
+   only applies to conversions back and forth between the _T_, and _B_,
+   domains, conversions between the _R_, and _T_ domains, as well as
+   conversions between the _R_ and _B_ domains are also defined and
+   supported by the protocol as described in detail in this section.  As
+   a result, there is a total of six transformations, one in each
+   direction, between the three domains.
 
    Let T(B) denote the abstract transformation function from the _B_
    domain to the _T_ domain.  This is the dual of B(T) below.
@@ -299,7 +299,7 @@ Table of Contents
 
    R->T(R)->T->B(T)->B->R(B)->R
 
-   Likewise starting in the _R_ domain we can traverse a circuit that
+   Likewise, starting in the _R_ domain we can traverse a circuit that
    crosses into the _B_ and _T_ domains and then crosses back into the
    _R_ domain as follows:
 
@@ -327,8 +327,8 @@ Table of Contents
    concatenated set of primitives, cat(t[k]) from the _T_ domain to the
    _B_ domain.
 
-   The concatentation composability property between _T_ and _B_ is
-   expressed as follows:
+   The _concatenation composability property_ or _composability_ for
+   short, between _T_ and _B_ is expressed as follows:
 
    Given a set of primitives b[k] and t[k] and transformations T(B) and
    B(T) such that t[k] = T(b[k]) and b[k] = B(t[k]) for all k, then T(B)
@@ -352,20 +352,20 @@ Table of Contents
 
    T(b[0] + b[1]) = T(b[0]) + T(b[1]) = t[0] + t[1].
 
-   The composability property defined above allows us to create
+   The _composability_ property defined above allows us to create
    arbitrary compositions of primitives via concatenation in either the
    _T_ or _B_ domain and then convert the composition en masse to the
    other domain and then de-concatenate the result without loss.  The
    self-framing property of the primitives enables de-concatenation.
 
-   The composability property is an essential building block for
+   The _composability_ property is an essential building block for
    streaming in either domain.  The use of framing primitives that count
    or group other primitives enables multiplexing and demultiplexing of
    arbitrary groups of primitives for pipelining and/or on or offloading
    of streams.  The text domain representation of a stream enables
-   better usability (readability) and the binary domain representation
+   better usability (readability), and the binary domain representation
    of a stream enables better compactness.  In addition, pipelined
-   hierarchical composition codes, allow efficient conversion or off-
+   hierarchical composition codes allow efficient conversion or off-
    loading for concurrent processing of composed (concatenated) groups
    of primitives in a stream without having to individually parse each
    primitive before off-loading.
@@ -374,29 +374,29 @@ Table of Contents
 
    Text, _T_, domain representations in CESR use only the characters
    from the URL and filename safe variant of the IETF RFC-4648 Base64
-   standard [RFC4648].  Unless otherwise indicated all references to
+   standard [RFC4648].  Unless otherwise indicated, all references to
    Base64 [RFC4648] in this document imply the URL and filename safe
    variant.  The URL and filename safe variant of Base64 uses in order
    the 64 characters A to Z, a to z, 0 to 9, -, and _ to encode 6 bits
-   of information.  In addition, Base64 uses the = character for padding
-   but CESR does not use the = character for any purpose because all
-   CESR-encoded primitives are composable.
+   of information.  In addition, Base64 uses the = character for
+   padding, but CESR does not use the = character for any purpose
+   because all CESR-encoded primitives are composable.
 
-   Notable is the fact that, Base64 [RFC4648] by itself does not satisfy
+   Notable is the fact that Base64 [RFC4648] by itself does not satisfy
    the composability property and must employ pad characters to ensure
-   one-way convertability between binary and text.
+   one-way convertibility between binary and text.
 
    In CESR, however, both _T_ and _B_ domain representations include a
    prepended framing code prefix that is structured in such a way as to
    ensure composability.
 
-   Suppose for example we wish to use Base64 characters in the text
+   Suppose, for example, we wish to use Base64 characters in the text
    domain and binary bytes in the binary domain.  For the sake of
-   example, we will call these respectively, naive text and naive binary
-   encodings and domains.  Recall that a byte encodes 8 bits of
+   example, we will call these, respectively, naive text and naive
+   binary encodings and domains.  Recall that a byte encodes 8 bits of
    information and a Base64 character encodes 6 bits of information.
-   Furthermore suppose that we have three primitives denoted a, b, and c
-   in the naive binary domain with lengths of 1, 2, and 3 bytes
+   Furthermore, suppose that we have three primitives denoted a, b, and
+   c in the naive binary domain with lengths of 1, 2, and 3 bytes,
    respectively.
 
    In the following diagrams, we denote each byte in a naive binary
@@ -404,7 +404,7 @@ Table of Contents
    example, a1 is bit one from a, a0 is bit zero, and A0 for byte zero,
    A1 for byte 1, etc.
 
-   The byte and bit-level diagrams for a is shown below where we use A
+   The byte and bit-level diagrams for a are shown below, where we use A
    to denote its bytes:
 
    |           A0          |
@@ -415,7 +415,7 @@ Table of Contents
    |           B1          |           B0          |
    |b7:b6:b5:b4:b3:b2:b1:b0|b7:b6:b5:b4:b3:b2:b1:b0|
 
-   And finally for c below:
+   And finally, for c below:
 
    |           C2          |           C1          |           C0          |
    |c7:c6:c5:c4:c3:c2:c1:c0|c7:c6:c5:c4:c3:c2:c1:c0|c7:c6:c5:c4:c3:c2:c1:c0|
@@ -425,11 +425,11 @@ Table of Contents
    When doing a naive Base64 conversion of a naive binary primitive, one
    Base64 character represents only six bits from a given byte.  In the
    following diagrams, each character of a Base64 conversion is denoted
-   using zero-based indices, most significant character first.
+   using zero-based indices, with the most significant character first.
 
    Therefore encoding a in Base64 requires at least two Base64
    characters because the zeroth character only captures the six bits
-   from the first byte and another character is needed to capture the
+   from the first byte, and another character is needed to capture the
    other two bits.  The convention in Base64 uses a Base64 character
    where the non-coding bits are zeros.  This is diagrammed as follows:
 
@@ -460,10 +460,10 @@ Table of Contents
    representing one hextet of information from the converted binary
    string.  We see that Base64 conversion effectively left shifts a by
    four bits plus two pad characters.  In other words, the Base64
-   conversion of a is no longer right aligned with respect to the
+   conversion of a is no longer right-aligned with respect to the
    trailing Base64 character.
 
-   Likewise b requires at least three Base64 characters to capture all
+   Likewise, b requires at least three Base64 characters to capture all
    of its sixteen bits of information as follows:
 
    |           B1          |           B0          |
@@ -473,7 +473,7 @@ Table of Contents
    where bX represents a bit from b, BX represents a byte from b, zX
    represents a zeroed pad bit, and TX represents a non-pad character
    from the converted Base64 text representing one hextet of information
-   from the converted binary string.  Alignment on a 4 character
+   from the converted binary string.  Alignment on a four-character
    (24-bit) boundary requires one pad character this becomes:
 
    |           B1          |           B0          |
@@ -487,7 +487,7 @@ Table of Contents
    string.  We see that Base64 conversion effectively left shifts a by
    four bits plus two pad characters.  We see that Base64 conversion
    effectively left shifts b by four bits plus one pad character.  In
-   other words, the Base64 conversion of b is no longer right aligned
+   other words, the Base64 conversion of b is no longer right-aligned
    with respect to the trailing Base64 character.
 
    Finally, c requires exactly four Base64 characters to capture all of
@@ -522,7 +522,7 @@ Table of Contents
    constraint.
 
    Suppose instead we start in the text domain with primitives u and v
-   of lengths 1 and 3 characters respectively.  If we concatenate these
+   of lengths 1 and 3 characters, respectively.  If we concatenate these
    two primitives as u + v in the text domain and then convert them as a
    whole to naive binary.  We have the following:
 
@@ -609,8 +609,8 @@ Table of Contents
    from stable value coding.  Any representation of a value that is a
    long random string of characters is essentially unreadable or
    recognizable versus some other representation.  Bit shifts of the
-   value, as long as they are static do not change the readability.
-   This is not true however of values that are small numbers.  Base64
+   value, as long as they are static, do not change the readability.
+   This is not true, however of values that are small numbers.  Base64
    encodings of small numbers are readable. for example, the numerical
    sequence of decimal numbers, 0, 1, 2, is recognizable as the sequence
    of Base64 characters, A, B, C.  Thus, all else equal, readable stable
@@ -619,19 +619,20 @@ Table of Contents
 2.4.  Code Characters and Lead Bytes
 
    There are two ways to provide the required alignment on 24-bit
-   boundaries to satisfy the composability property.  One is post-pad,
-   with trailing pad characters =, the text domain encoding to ensure
-   that the _T_ domain primitive has a total size (length) that is an
-   integer multiple of 4.  This is what naive Base64 encoding does.  The
-   other way is to pre-pad leading bytes of zeros to the raw binary
-   value before conversion to Base64 to ensure the total size of the raw
-   binary value with pre-pad bytes is an integer multiple of 3 bytes.
-   This ensures that the size in characters of the Base64 conversion of
-   the pre-padded raw binary is an integer multiple of 4 characters.
+   boundaries to satisfy the composability property.  One is to post-
+   pad, with trailing pad characters, =, the text domain encoding to
+   ensure that the _T_ domain primitive has a total size (length) that
+   is an integer multiple of 4.  This is what naive Base64 encoding
+   does.  The other way is to pre-pad leading bytes of zeros to the raw
+   binary value before conversion to Base64 to ensure the total size of
+   the raw binary value with pre-pad bytes is an integer multiple of 3
+   bytes.  This ensures that the size in characters of the Base64
+   conversion of the pre-padded raw binary is an integer multiple of 4
+   characters.
 
    Given the second way, there is one of two options that depend on the
-   specific code.  In the first option, an appropriate number of the
-   text characters that result from the conversion of a porting of the
+   specific code.  In the first option, an appropriate number of text
+   characters that result from the conversion of a porting of the
    leading pre-pad zero bytes are replaced with the appropriate number
    of code characters.  In the second option, the code characters are
    pre-pended to the conversion with leading zeros intact.  In the
@@ -717,7 +718,7 @@ Table of Contents
    sized text code element is prepended to the conversion without
    replacing any characters.
 
-   Recall, that when the length of a given naive binary string is not an
+   Recall that when the length of a given naive binary string is not an
    integer multiple of three bytes, standard Base64 conversion software
    appends one or two pad characters to the resultant Base64 conversion.
 
@@ -728,7 +729,7 @@ Table of Contents
    equivalent to the text domain representation that results from
    converting en masse to text the concatenation of the same set of
    binary strings and then stripping off pad characters.  In the latter
-   case knowledge of the set of binary strings is lost because the
+   case, knowledge of the set of binary strings is lost because the
    resultant conversion may have bits from two binary bytes concatenated
    in one text character.  Restated, the problem with standard Base64 is
    that it does not preserve byte boundaries after the en-masse
@@ -739,32 +740,32 @@ Table of Contents
    To elaborate, the number of pad characters appended with standard
    Base64 encoding is a function of the length of the binary string.
    Let _N_ be the length in bytes of the binary string.  When N mod 3 =
-   1 then there are 8 bits in the remainder that must be encoded into
+   1, then there are 8 bits in the remainder that must be encoded into
    Base64.  Recall from the examples above that a single byte (8 bits)
    requires two Base64 characters.  The first encodes 6 bits and the
    second the remaining 2 bits for a total of 8 bits.  The last
    character is selected such that its non-coding 4 bits are zero.  Thus
    two additional pad characters are required to pad out the resulting
    conversion so that its length is an integer multiple of 4 Base64
-   characters.  Furthermore when N mod 3 = 1 then the addition of 2 more
-   zeroed bytes to the length of the binary string such that M = N + 2
-   would result in M mod 3 = 0 or equivalently N + 2 mod 3 = 0.
+   characters.  Furthermore when N mod 3 = 1, then the addition of 2
+   more zeroed bytes to the length of the binary string such that M = N
+   + 2 would result in M mod 3 = 0 or equivalently N + 2 mod 3 = 0.
 
-   Similarly, when N mod 3 = 2 then there are two bytes (16 bits) in the
-   remainder that must be encoded into Base64.  Recall from the examples
-   above that two bytes (16 bits) requires three Base64 characters.  The
-   first two encode 6 bits each (for 12 bits) and the third encodes the
-   remaining 4 bits for a total of 16.  The last character is selected
-   such that its non-coding 2 bits are zero.  Thus one additional
-   trailing pad character is required to pad out the resulting
-   conversion so that its length is an integer multiple of 4 characters.
-   Furthermore when N mod 3 = 2 then the addition of 1 more byte of
-   zeros added to the length of the binary string such that M = N + 1
-   would result in M mod 3 = 0 or equivalently N + 2 mod 3 = 0.  Thus
-   the number of leading pre-pad zeroed bytes needed to align the binary
-   string on a 24-bit boundary is the same as the number of trailing pad
-   characters needed to align the converted Base64 text string on a
-   24-bit boundary.
+   Similarly, when N mod 3 = 2, then there are two bytes (16 bits) in
+   the remainder that must be encoded into Base64.  Recall from the
+   examples above that two bytes (16 bits) require three Base64
+   characters.  The first two encode 6 bits each (for 12 bits) and the
+   third encodes the remaining 4 bits for a total of 16.  The last
+   character is selected such that its non-coding 2 bits are zero.  Thus
+   one additional trailing pad character is required to pad out the
+   resulting conversion so that its length is an integer multiple of 4
+   characters.  Furthermore when N mod 3 = 2, then the addition of 1
+   more byte of zeros added to the length of the binary string such that
+   M = N + 1 would result in M mod 3 = 0 or equivalently N + 2 mod 3 =
+   0.  Thus the number of leading pre-pad zeroed bytes needed to align
+   the binary string on a 24-bit boundary is the same as the number of
+   trailing pad characters needed to align the converted Base64 text
+   string on a 24-bit boundary.
 
    Finally, when N mod 3 = 0 then the binary string is aligned on a
    24-bit boundary and no trailing pad characters are required to ensure
@@ -867,10 +868,10 @@ Table of Contents
    pre-pad bit, AX represents a byte from a, aX represents a bit from a,
    TX represents a Base64 character that results from the Base64
    conversion of the pre-padded a, SX represents a Base64 code character
-   replacing one of the TX, and sX is a code bit.  The resultant four
+   replacing one of the TX, and sX is a code bit.  The resultant four-
    character Base64 encoded primitive would be C1C0T1T0.
 
-   When C1C0T1T0 is converted back to binary from Base64 the result
+   When C1C0T1T0 is converted back to binary from Base64, the result
    would be as follows:
 
    |        S1       |        S0       |        T1       |        T0       |
@@ -878,8 +879,8 @@ Table of Contents
    |           U1          |        U0             |           A0          |
 
    where CX represents a Base64 code character replacing one of the TX,
-   cX is a code bit, UX represents byte from converted code char which
-   may include zeroed bits, zX represents a zeroed pre-pad bit, AX
+   cX is a code bit, UX represents a byte from the converted code char,
+   which may include zeroed bits, zX represents a zeroed pre-pad bit, AX
    represents a byte from a, aX represents a bit from a, and TX
    represents a Base64 character that results from the Base64 conversion
    of the pre-padded a.
@@ -887,12 +888,12 @@ Table of Contents
    Stripping off U1U0 leaves a in its original state.  Noteworthy is
    that the code characters (only) are effectively left shifted 4 bits
    after conversion.  The code characters S1S0 can be recovered as the
-   first two characters obtained from simply converting U1O0 only back
-   to Base64.
+   first two characters that are obtained from simply converting U1O0
+   only back to Base64.
 
 3.3.  Two Byte
 
-   For the two byte raw binary string b, ps is one.  The pre-padded
+   For the two-byte raw binary string b, ps is one.  The pre-padded
    conversion results in the following:
 
    |           Z0          |           B1          |           B0          |
@@ -904,17 +905,17 @@ Table of Contents
    and TX represents a Base64 character that results from the Base64
    conversion of the pre-padded b.
 
-   Noteworthy is that the first one (i.e. ps) character of the
+   Noteworthy is that the first one (i.e., ps) character of the
    conversion, namely, T3, does not include any bits of information from
    b.  This also means that T3 can be modified after conversion without
    impacting the appearance or value of the converted b that appears
-   solely in T2T1T0, i.e. there is no overlap.  Moreover, the resulting
+   solely in T2T1T0, i.e., there is no overlap.  Moreover, the resulting
    Base64 conversion of b is right aligned with respect to the trailing
    Base64 character.  This means that one can "read" and understand the
    numerical values for b from such an unshifted Base64 conversion.
    This also means that a text-based parser on a character-by-character
    basis can cleanly process T3 separate from the Base64 encoding of b
-   that appears in T2T1T0.  Given this separation we could replace T3
+   that appears in T2T1T0.  Given this separation, we could replace T3
    with one character Base64 textual type code C0 as follows:
 
    |           Z1          |           B1          |           B0          |
@@ -926,10 +927,10 @@ Table of Contents
    pre-pad bit, BX represents a byte from b, bX represents a bit from b,
    TX represents a Base64 character that results from the Base64
    conversion of the pre-padded b, SX represents a Base64 code character
-   replacing one of the TX, and sX is a code bit,. The resultant four
+   replacing one of the TX, and sX is a code bit,. The resultant four-
    character Base64 encoded primitive would be S0T2T1T0.
 
-   When S0T2T1T0 is converted back to binary from Base64 the result
+   When S0T2T1T0 is converted back to binary from Base64, the result
    would be as follows:
 
    |        S0       |        T2       |        T1       |        T0       |
@@ -946,44 +947,44 @@ Table of Contents
    Stripping off U0 leaves b in its original state.  Noteworthy is that
    the code character (only) is effectively left shifted 4 bits after
    conversion.  The code character S0 can be recovered as the first
-   character obtained from simply converting U0 only to Base64 .
+   character obtained from simply converting U0 only to Base64.
 
 3.3.1.  Three Byte
 
-   For the three byte raw binary string c, ps is zero.  So prepadding is
-   not needed. ~~~text | C2 | C1 | C2 | |c7:c6:c5:c4:c3:c2:c1:c0|c7:c6:c
-   5:c4:c3:c2:c1:c0|c7:c6:c5:c4:c3:c2:c1:c0| | T3 | T2 | T1 | T0 | ~~~
-   where cX represents a bit from c, CX represents a byte from c, and TX
-   represents a non-pad character from the converted Base64 text
+   For the three-byte raw binary string c, ps is zero.  So pre-padding
+   is not needed. ~~~text | C2 | C1 | C2 | |c7:c6:c5:c4:c3:c2:c1:c0|c7:c
+   6:c5:c4:c3:c2:c1:c0|c7:c6:c5:c4:c3:c2:c1:c0| | T3 | T2 | T1 | T0 |
+   ~~~ where cX represents a bit from c, CX represents a byte from c,
+   and TX represents a non-pad character from the converted Base64 text
    representing one hextet of information from the converted binary
    string.  There are no bit shifts because there are no pad bits nor
    pad characters needed, and the resulting Base64 conversion is right
    aligned with respect to the trailing Base64 character.
 
-   Without pad characters, however, that there is no room to hold a type
-   code.  Consequently any text type code is just prepended to the
+   Without pad characters, however, there is no room to hold a type
+   code.  Consequently, any text type code is just prepended to the
    conversion.  The prepended type code MUST be an integer multiple of
-   four Base64 characters.  Let, S3S2S1S0 be the type code then the full
-   primitive with code and converted raw binary is given by the eight
+   four Base64 characters.  Let S3S2S1S0 be the type code, then the full
+   primitive with code and converted raw binary is given by the eight-
    character Base64 string S3S2S1S0T3T2T1T0.
 
    When S3S2S1S0T3T2T1T0 is converted back to binary, there is no
-   overlapp or bit shifting because both the code and raw binary c are
-   each seperately aligned on twenty-four bit boundaries.
+   overlap or bit shifting because both the code and raw binary c are
+   each separately aligned on twenty-four-bit boundaries.
 
 3.3.2.  Examples
 
-   Suppose for example that we wish to encode two byte raw binary
+   Suppose, for example, that we wish to encode two-byte raw binary
    numbers into CESR using the pre-pad approach described above.  In
-   order to achieve twenty-four bit alignment, the pre-pad size for two
-   byte numbers is 1 byte.  As described above this mean the minimally
+   order to achieve twenty-four-bit alignment, the pre-pad size for two-
+   byte numbers is 1 byte.  As described above, this means the minimally
    sized text code is 1 Base64 character.  Suppose that the text code is
    M (Base64).  The following table provides examples of encoding the
-   different two byte raw binary values in the three domains: raw, text,
-   and binary.  Recall that raw domain is expressed by a tuple of (code,
-   raw) where the code is Base64 text and the raw is the raw binary
-   value without code.  For readability, raw binary values are
-   represented in hexidecimal notation.
+   different two-byte raw binary values in the three domains: raw, text,
+   and binary.  Recall that the raw-domain is expressed by a tuple of
+   (code, raw) where the code is Base64 text and the raw is the raw
+   binary value without code.  For readability, raw binary values are
+   represented in hexadecimal notation.
 
                    +===============+========+==========+
                    |           Raw |   Text |   Binary |
@@ -997,32 +998,32 @@ Table of Contents
 
                                   Table 2
 
-   With this approach both the binary and text domain representations
-   are as compact as possible for a fully qualified primitive that
-   satisfies the composability property.  The text domain representation
-   has a stable readable code and a stable readable value.  The binary
-   domain is value right aligned.  The text domain representation
-   consists of 4 text printable characters from the Base64 set of
-   characters and the binary domain representation consists of 3 bytes.
-   Both are parsable in each domain along character/byte boundaries
-   respectively.  A parser reads the first character/byte.  It then
-   processes that value to get an index into a lookup table that it uses
-   to find how many remaining characters/bytes to extract from the
-   stream.  This makes the primitive self-framing.
+   With this approach, both the binary-domain and text-domain
+   representations are as compact as possible for a fully qualified
+   primitive that satisfies the composability property.  The text domain
+   representation has a stable readable code and a stable readable
+   value.  The binary domain is value right aligned.  The text domain
+   representation consists of 4 text printable characters from the
+   Base64 set of characters, and the binary domain representation
+   consists of 3 bytes.  Both are parsable in each domain along
+   character/byte boundaries respectively.  A parser reads the first
+   character/byte.  It then processes that value to get an index into a
+   lookup table that it uses to find how many remaining characters/bytes
+   to extract from the stream.  This makes the primitive self-framing.
 
 3.4.  Count, Group, or Framing Codes
 
-   As mentioned above one of the primary advantages of composable
+   As mentioned above, one of the primary advantages of composable
    encoding is that special framing codes can be specified to support
    groups of primitives.  Grouping enables pipelining.  Other suitable
    terms for these special _framing codes_ are _group codes_ or _count
    codes_ for short.  These are suitable terms because these framing
    codes can be used to count characters, primitives in a group, or
-   groups of primitives in a larger group when parsing and off-loading a
+   groups of primitives in a larger group when parsing and offloading a
    stream of CESR primitives.
 
-   A count code is it's own composable primitive and its length
-   therefore MUST be an integer multiple of four characters in the text
+   A count code is it's own composable primitive, and its length,
+   therefore, MUST be an integer multiple of four characters in the text
    domain or equivalently an integer multiple of three bytes in the
    binary domain.  To clarify, a count code is primitive that does not
    include a raw binary value, only its text code.  Because a count
@@ -1057,15 +1058,15 @@ Table of Contents
    After a cold start, a stream processor looks for framing information
    to know how to parse groups of elements in the stream.  If that
    framing information is ambiguous then the parser may become confused
-   and require yet another cold start.  While processing a given stream
-   a parser may become confused especially if a portion of the stream is
-   malformed in some way.  This usually requires flushing the stream and
-   forcing a cold start to resynchronize the parser to subsequent stream
-   elements.  Better yet is a re-synchronization mechanism that does not
-   require flushing the in-transit buffers but merely skipping to the
-   next well-defined stream element boundary in order to execute a cold
-   start.  Good cold start re-synchronization is essential to robust
-   performant stream processing.
+   and require yet another cold start.  While processing a given stream,
+   a parser may become confused, especially if a portion of the stream
+   is malformed in some way.  This usually requires flushing the stream
+   and forcing a cold start to resynchronize the parser to subsequent
+   stream elements.  Better yet is a re-synchronization mechanism that
+   does not require flushing the in-transit buffers but merely skipping
+   to the next well-defined stream element boundary in order to execute
+   a cold start.  Good cold start re-synchronization is essential to
+   robust performant stream processing.
 
    For example, in TCP a cold start usually means closing and then
    reopening the TCP connection.  This flushes the TCP buffers and sends
@@ -1094,59 +1095,62 @@ Table of Contents
    (framing) codes in both the _T_ domain (Base64) and the _B_ domain
    should be unique.  This would provide the analogous equivalent of a
    UTF Byte Order Mark (BOM) [BOM].  Recall that a BOM enables a parser
-   of UTF encoded documents to determine if the UTF codes are big-endian
+   of UTF-encoded documents to determine if the UTF codes are big-endian
    or little-endian [BOM].  In the CESR case, an analogous feature would
-   enable a stream parser to know if a count code along with its
-   associated counted or framed group of primitives is expressed in the
+   enable a stream parser to know if a count code, along with its
+   associated counted or framed group of primitives, is expressed in the
    _T_ or _B_ domain.  Together these impose the constraint that the
    boundary start bits for interleaved text CESR, binary CESR, JSON,
    CBOR, and MGPK be mutually distinct.
 
-   Amongst the codes for map objects in the JSON, CBOR, and MGPK only
+   Amongst the codes for map objects in the JSON, CBOR, and MGPK, only
    the first three bits are fixed and not dependent on mapping size.  In
-   JSON a serialized mapping object always starts with {. This is
-   encoded as 0x7b. the first three bits are 0b011.  In CBOR the first
-   three bits of the major type of the serialized mapping object are
-   0b101.  In MGPK (MsgPack) there are three different mapping object
+   JSON, a serialized mapping object always starts with {. This is
+   encoded as 0x7b. the first three bits are 0b011.  In CBOR, the first
+   three bits of the major-type of its serialized mapping object are
+   0b101.  In MGPK (MsgPack), there are three different mapping object
    codes.  The _FixMap_ code starts with 0b100.  Both the _Map16_ code
    and _Map32_ code start with 0b110.
 
    So we have the set of four used starting tritets (3 bits) in numeric
    order of 0b011, 0b100, 0b101, and 0b110.  This leaves four unused
-   tritets, namely, 0b000, 0b001, 0b010, and 0b111 that may be selected
-   as the CESR count (framing) code start bits.  In Base64 there are two
-   codes that satisfy our constraints.  The first is the dash character,
-   -, encoded as 0x2d.  Its first three bits are 0b001.  The second is
-   the underscore character,_, encoded as 0x5f.  Its first three bits
-   are 0b010.  Both of these are distinct from the starting tritets of
-   any of the JSON, CBOR, and MGPK encodings above.  Moreover, the
-   starting tritet of the corresponding binary encodings of - and _ is
-   0b111 which is also distinct from all the others.  To elaborate,
-   Base64 uses _ in position 62 or 0x3E (hex) and uses _ in position 63
-   or 0x3F (hex) both of which have starting tritet of 0b111
+   tritets, namely, 0b000, 0b001, 0b010, and 0b111, that are potential
+   candidates for the CESR count (framing) code start bits.  In Base64,
+   there are two codes that satisfy our constraints.  The first is the
+   dash character, -, encoded as 0x2d.  Its first three bits are 0b001.
+   The second is the underscore character,_, encoded as 0x5f.  Its first
+   three bits are 0b010.  Both of these are distinct from the starting
+   tritets of any of the JSON, CBOR, and MGPK encodings above.
+   Moreover, the starting tritet of the corresponding binary encodings
+   of - and _ is 0b111, which is also distinct from all the others.  To
+   elaborate, Base64 uses - in position 62 or 0x3E (hex) and uses _ in
+   position 63 or 0x3F (hex), both of which have starting tritet of
+   0b111
 
-   This gives us two different Base64 characters, - and _ we can use for
-   the first character of any framing (count) code in the _T_ domain.
-   This also means we can have two different classes of framing (count)
-   codes.  This also provides a BOM-like capability to determine if a
-   framing code is expressed in the _T_ or _B_ domain.  To clarify, if a
-   stream starts with the tritet 0b111 then the stream is _B_ domain
-   CESR and a stream parser would thereby know how to convert the first
-   sextet of the stream to determine which of the two framing codes is
-   being used, 0x3E or ox3F.  If on the other hand, the framing code
-   starts with either of the tritets 0b001 or 0b010 then the framing
-   code is expressed in the _T_ domain and a stream parser likewise
-   would thereby know how to convert the first character (octet) of the
-   framing code to determine which framing code is being used.
-   Otherwise, if a stream starts with 0b100 then is JSON, with 0b101
-   then its CBOR, and with either 0b011, and 0b110 then its MGPK.
+   This gives us two different Base64 characters, - and _, that can be
+   used for the first character of any framing (count) code in the _T_
+   domain.  This also means we can have two different classes of framing
+   (count) codes.  Using framing codes in this way also provides a BOM-
+   like capability that enables a parser to determine if the framing
+   code itself is expressed in either the _T_ or _B_ domain.  To
+   clarify, if a stream frame (group) starts with the tritet 0b111, then
+   the stream frame is _B_ domain CESR, and a stream parser would
+   thereby know how to convert the first sextet of the stream frame to
+   determine which of the two framing codes is being used, 0x3E or 0x3F.
+   If, on the other hand, the framing code starts with either of the
+   tritets 0b001 or 0b010, then the framing code is expressed in the _T_
+   domain, and a stream parser likewise would thereby know how to
+   convert the first character (octet) of the framing code to determine
+   which framing code is being used for that frame.  Otherwise, if a
+   stream starts with 0b011, then it's JSON, with either 0b100 or 0b110,
+   then it's MGPK, and with 0b101, then it's CBOR.
 
    This is summarized in the following table:
 
    +=================+====================================+===========+
    | Starting Tritet |           Serialization            | Character |
    +=================+====================================+===========+
-   |      0b000      |                                    |           |
+   |      0b000      |               Unused               |           |
    +-----------------+------------------------------------+-----------+
    |      0b001      | CESR _T_ Domain Count (Group) Code |     -     |
    +-----------------+------------------------------------+-----------+
@@ -1160,7 +1164,8 @@ Table of Contents
    +-----------------+------------------------------------+-----------+
    |      0b110      |                MGPK                |           |
    +-----------------+------------------------------------+-----------+
-   |      0b111      |          CESR _B_ Domain           |           |
+   |      0b111      |  CESR _B_ Domain Count Code or Op  |           |
+   |                 |                Code                |           |
    +-----------------+------------------------------------+-----------+
 
                                  Table 3
@@ -1178,16 +1183,16 @@ Table of Contents
 
    A parser merely needs to examine the first tritet (3 bits) of the
    first byte of the stream start to determine which one of the five it
-   is.  When the first tritet is a framing code then, the remainder of
+   is.  When the first tritet is a framing code then the remainder of
    the framing code itself will include the additional information
-   needed to parse the attached group.  When the first tritet indicates
-   its JSON, CBOR, or MGPK, then the mapping's first field must be a
-   version string that provides the additional information needed to
-   fully parse the associated encoded serialization.
+   needed to parse the attached group (frame).  When the first tritet
+   indicates its JSON, CBOR, or MGPK, then the mapping's first field
+   must be a version string that provides the additional information
+   needed to fully parse the associated encoded field map serialization.
 
-   The stream MUST resume with a starting byte that starts with one of
-   the 5 tritets, either another framing code expressed in the _T_ or
-   _B_ domain or a new JSON, CBOR, or MGPK encoded mapping.
+   The stream MUST resume with a frame starting byte that begins with
+   one of the 5 tritets, either another framing code expressed in the
+   _T_ or _B_ domain or a new JSON, CBOR, or MGPK encoded mapping.
 
    This provides an extremely compact and elegant stream parsing formula
    that generalizes not only support for CESR composability but also
@@ -1196,16 +1201,16 @@ Table of Contents
 
 3.7.  Compact Fixed Size Codes
 
-   As mentioned above, CESR uses a multiple code table design that
+   As mentioned above, CESR uses a multiple-code table design that
    enables both size-optimized text codes for the most popular primitive
    types and extensible universal support for all other primitive types.
    Modern cryptographic suites support limited sets of raw binary
    primitives with fixed (not variable) sizes.  The design aesthetic is
-   based on the understanding that there is a minimally sufficient
+   based on the understanding that there is minimally sufficient
    cryptographic strength and more cryptographic strength is just
    wasting computation and bandwidth.  Cryptographic strength is
    measured in bits of entropy which also corresponds to the number of
-   trials that must be attempted to succeed in a brute force attack.
+   trials that must be attempted to succeed in a brute-force attack.
    The accepted minimum for cryptographic strength is 128 bits of
    entropy or equivalently 2**128 (2 raised to the 128th power) brute
    force trials.  The size in bytes of a given raw binary primitive for
@@ -1219,19 +1224,19 @@ Table of Contents
    key to get the private key by the square root of the number of scalar
    multiplications which is also related to the size of both the private
    key and public key coordinates (discrete logarithm problem [DLog]).
-   Thus 256 bit (32-byte) ECC keys are needed to achieve 128 bits of
-   cryptographic strength.  In general, the size of a given raw binary
-   primitive is typically some multiple of 128 bits of cryptographic
-   strength.  This is also true for the associated EdDSA raw binary
-   signatures which are 512 bits (64 bytes) in length.
+   Therefore 256 bit (32-byte) ECC keys are needed to achieve 128 bits
+   of cryptographic strength.  In general, the size of a given raw
+   binary primitive is typically some multiple of 128 bits of
+   cryptographic strength.  This is also true for the associated EdDSA
+   raw binary signatures which are 512 bits (64 bytes) in length.
 
    Similar scale factors exist for cryptographic digests.  A standard
    default Blake3 digest is 256 bits (32 bytes) in length in order to
    get 128 bits of cryptographic strength.  This is also true of
    SHA3-256.  Indeed the sweet spots for modern cryptographic raw
    primitive lengths are 32 bytes for many digests as well as EdDSA
-   public and private keys as well as ECDSA private keys.  Likwise, 64
-   bytes is the sweetspot for EdDSA and ECDSA-secp256k1 signatures and
+   public and private keys as well as ECDSA private keys.  Likewise, 64
+   bytes is the sweet spot for EdDSA and ECDSA-secp256k1 signatures and
    64-byte variants of the most popular digests.  Therefore optimized
    text code tables for these two sweet spots (32 and 64 bytes) would be
    highly advantageous.
@@ -1371,10 +1376,10 @@ Table of Contents
    digests, there are other primitives that benefit from variable
    sizings such as either encrypted material or legacy cryptographic
    material types found in the GPG or OpenSSL libraries (like RSA).
-   Furthermore, because CESR is meant to support not merely
-   cryptographic material types but other basic types, such as generic
-   text strings and numbers.  These basic non-cryptographic types may
-   also benefit from variable-size codes.
+   Furthermore, CESR is meant to support not merely cryptographic
+   material types but other basic types, such as generic text strings
+   and numbers.  These basic non-cryptographic types may also benefit
+   from variable-size codes.
 
    The three tables in this group are for small variable raw-size
    primitives.  These three tables use 0, 1, or 2 lead bytes as
@@ -1562,18 +1567,17 @@ Table of Contents
 
 3.14.  Protocol Genus and Version Table
 
-   The protocol genus and version table is special because its codes
-   modifies the following count code group.  A protocol genus and
-   version code itself does not provide a count of following quadlets or
-   triplets but modifies the protocol genus and version of all the
-   following count codes until another protocol and genus count code is
-   provided.  Consequently a protocol genus and version code MUST only
-   appear at the top level of any count group.  In other words a
-   protocol genus and version code MUST NOT be nested inside any other
-   count code.
+   The protocol genus/version table is special because its codes modify
+   the following count code group.  A protocol genus and version code
+   itself does not provide a count of the following quadlets or triplets
+   but modifies the protocol genus and version of all the following
+   count codes until another protocol and genus count code is provided.
+   Consequently, a protocol genus and version code MUST only appear at
+   the top level of any count group.  In other words, a protocol genus
+   and version code MUST NOT be nested inside any other count code.
 
-   The purpose of this table is two fold.  Firstly it allows CESR to be
-   used for different protocols and protocol stacks where each protocol
+   The purpose of this table is twofold.  Firstly it allows CESR to be
+   used for different protocols and protocol stacks, where each protocol
    may have its own dedicated set of code tables.  The only table that
    all protocols must share is the protocol genus and version table
    (protocol table for short) in the set count code tables.  All other
@@ -1587,11 +1591,11 @@ Table of Contents
    version of that protocol genus.  The genus uses three Base64
    characters for a possible total of 262,144 different protocol genera.
    The version also uses three Base64 characters which can be used in a
-   protocol genus specific manner.  One suggested approach is to use one
+   protocol genus-specific manner.  One suggested approach is to use one
    character for each of the three components of a semantic version of
    the form major.minor.patch [SEMVER].  This provides 64 major
    versions, where each major version has up to 64 minor versions, and
-   where each minor version in turn has up to 64 patches.
+   where each minor version in turn, has up to 64 patches.
 
 3.15.  OpCode Tables
 
@@ -1654,50 +1658,50 @@ Table of Contents
    The following table defines the meaning of the symbols used in the
    encoding scheme table
 
-   +========+==========================================================+
-   | Symbol |                       Description                        |
-   +========+==========================================================+
-   +--------+----------------------------------------------------------+
-   |   *    |        selector-code character also provides the         |
-   |        |                           type                           |
-   +--------+----------------------------------------------------------+
-   |   $    |        type-code character from subset of Base64         |
-   |        |                    [A-Z,a-z,0-9,-,_]                     |
-   +--------+----------------------------------------------------------+
-   |   %    |           lead byte where pre-converted binary           |
-   |        |         includes the number of lead bytes shown          |
-   +--------+----------------------------------------------------------+
-   |   #    |        Base64 digit as part of a base 64 integer.        |
-   |        |       When part of primitive determines the number       |
-   |        |         of following quadlets or triplets.  When         |
-   |        |       part of a count code determines the count of       |
-   |        |       following primitives or groups of primitives       |
-   +--------+----------------------------------------------------------+
-   |   &    |        Base64 value characters that represent the        |
-   |        |         converted raw binary value.  The actual          |
-   |        |        number of characters is determined by the         |
-   |        |        prepended text code.  Shown is the minimum        |
-   |        |               number of value characters.                |
-   +--------+----------------------------------------------------------+
-   |  TBD   |          to be determined, reserved for future           |
-   +--------+----------------------------------------------------------+
+        +========+===============================================+
+        | Symbol |                  Description                  |
+        +========+===============================================+
+        +--------+-----------------------------------------------+
+        |   *    |   selector-code character also provides the   |
+        |        |                      type                     |
+        +--------+-----------------------------------------------+
+        |   $    |   type-code character from subset of Base64   |
+        |        |               [A-Z,a-z,0-9,-,_]               |
+        +--------+-----------------------------------------------+
+        |   %    | lead byte where pre-converted binary includes |
+        |        |         the number of lead bytes shown        |
+        +--------+-----------------------------------------------+
+        |   #    |   Base64 digit as part of a base 64 integer.  |
+        |        |  When part of primitive determines the number |
+        |        | of following quadlets or triplets.  When part |
+        |        |  of a count code determines the count of the  |
+        |        |  following primitives or groups of primitives |
+        +--------+-----------------------------------------------+
+        |   &    |   Base64 value characters that represent the  |
+        |        |    converted raw binary value.  The actual    |
+        |        |   number of characters is determined by the   |
+        |        |   prepended text code.  Shown is the minimum  |
+        |        |          number of value characters.          |
+        +--------+-----------------------------------------------+
+        |  TBD   |     to be determined, reserved for future     |
+        +--------+-----------------------------------------------+
 
-                                  Table 5
+                                 Table 5
 
 3.17.  Parse Tables
 
    Text domain parsing can be simplified by using a parse size table.  A
    text domain parser uses the first character selector code to look up
-   the hard size (stable) portion of the text code.  The parse then
-   extracts hard size characters from the text stream.  These characters
-   form an index into the parse size table which includes a set of sizes
+   the hard-size (stable) portion of the text code.  The parse then
+   extracts hard-size characters from the text stream.  These characters
+   form an index for the parse size table, which includes a set of sizes
    for the remainder of the primitive.  Using these sizes for a given
    code allows a parser to extract and convert a given primitive.  In
-   the binary domain, the same text parse table may be used but each
+   the binary domain, the same text parse table may be used, but each
    size value represents a multiple of a sextet of bits instead of
    Base64 characters.  Example entries from that table are provided
    below.  Two of the rows may always be calculated given the other 4
-   rows so the table need only have 4 entries in each row.  Thus all
+   rows, so the table need only have 4 entries in each row.  Thus all
    basic primitives may be parsed with one parse size table.
 
 3.17.1.  Selector Code Size Table
@@ -1758,32 +1762,32 @@ Table of Contents
       +========+===================================================+
       | Label  |                    Description                    |
       +========+===================================================+
-      | *_hs_* |      hard (fixed) part of code size in chars      |
+      | *_hs_* |    hard size in chars (fixed) part of code size   |
       +--------+---------------------------------------------------+
-      | *_ss_* |     soft (variable) part of code size in chars    |
+      | *_ss_* |  soft size in chars, (variable) part of code size |
       +--------+---------------------------------------------------+
-      | *_os_* |  other size in chars when soft part provides two  |
+      | *_os_* |  other size in chars, when soft part includes two |
       |        |                  variable values                  |
       +--------+---------------------------------------------------+
-      |  *ms*  |     derived main size in chars when soft part     |
+      |  _ms_  |    main size in chars, (derived) when soft part   |
       |        | provides two variable values where _ms = ss - os_ |
       +--------+---------------------------------------------------+
-      |  _cs_  |  derived value size in chars where where _cs = hs |
-      |        |                       + ss_                       |
+      |  _cs_  |  code size in chars (derived value), where where  |
+      |        |                   _cs = hs + ss_                  |
       +--------+---------------------------------------------------+
       | *_vs_* |                value size in chars                |
       +--------+---------------------------------------------------+
       | *_fs_* |    full size in chars where _fs = hs + ss + vs_   |
       +--------+---------------------------------------------------+
-      | *_ls_* |   lead size in bytes to prepad raw binary bytes   |
+      | *_ls_* |   lead size in bytes to pre-pad raw binary bytes  |
       +--------+---------------------------------------------------+
-      | *_ps_* |          Base64 encoded pad size in chars         |
+      | *_ps_* |          pad size in chars Base64 encoded         |
       +--------+---------------------------------------------------+
-      |  _rs_  |  derived raw size in bytes of binary valure where |
+      |  _rs_  | raw size in bytes (derived) of binary value where |
       |        |              *rs is derived from R(T)             |
       +--------+---------------------------------------------------+
-      |  _bs_  | derived binary size in bytes where where _bs = ls |
-      |        |                       + rs_                       |
+      |  _bs_  |  binary size in bytes (derived) where where _bs = |
+      |        |                      ls + rs_                     |
       +--------+---------------------------------------------------+
 
                                  Table 9
@@ -1809,26 +1813,26 @@ Table of Contents
    signature with its public key is to include in the text code for that
    signature the index into the ordered set of public keys.
 
-   A popular raw binary size for a signature is 64 bytes which has a pad
-   size of 2.  This gives two code characters for a compact text code.
-   The first character is the selector and type code.  The second
-   character is the Base64 encoded integer index.  By using a similar
-   dual selector type code character scheme as above, where the
-   selectors are the numbers 0-9 and - and _. Then there are 52 type
-   codes given by the letters A- Z and a-z.  The index has 64 values
-   which support up to 64 members in the public key list.  A selector
-   can be used to select a large text code with more characters
-   dedicated to larger indices.  Some applications of CESR, like KERI,
-   have the need for dual-indexed signatures (i.e. each signature has
-   two indices) in order to support pre-rotation with partial or
-   reserved participants in a rotation.  With partial rotation, a given
-   signature may contribute to the signing threshold for two different
-   thresholds, each on two different lists of keys where the associated
-   key may appear at a different location in each list.  For 64-byte
-   signatures, the Ed25519 and ECDSA secp256k1 schemes have entries in
-   the table.  For dual indexed codes, the next larger code size that
-   aligns a 64-byte signature on a 24-bit boundary is 6 characters.  The
-   table provides entries for dual-indexed 64-byte signatures.  The code
+   A popular signature raw binary size is 64 bytes which has a pad size
+   of 2.  This gives two code characters for a compact text code.  The
+   first character is the selector and type code.  The second character
+   is the Base64 encoded integer index.  By using a similar dual
+   selector type code character scheme as above, where the selectors are
+   the numbers 0-9 and - and _. Then there are 52 type codes given by
+   the letters A- Z and a-z.  The index has 64 values which support up
+   to 64 members in the public key list.  A selector can be used to
+   select a large text code with more characters dedicated to larger
+   indices.  Some applications of CESR, like KERI, have the need for
+   dual-indexed signatures (i.e., each signature has two indices) in
+   order to support pre-rotation with partial or reserved participants
+   in a rotation.  With partial rotation, a given signature may
+   contribute to the signing threshold for two different thresholds,
+   each on two different lists of keys where the associated key may
+   appear at a different location in each list.  For 64-byte signatures,
+   the Ed25519 and ECDSA secp256k1 schemes have entries in the table.
+   For dual-indexed codes, the next larger code size that aligns a
+   64-byte signature on a 24-bit boundary is 6 characters.  The table
+   provides entries for dual-indexed 64-byte signatures.  The code
    includes one selector character, one type character, and two each of
    two character indices.
 
@@ -1925,9 +1929,9 @@ Table of Contents
    1) The Base64 stable (hard) text code itself. 2) A description of
    what is encoded or appended to the code. 3) The length in characters
    of the code. 4) the length in characters of the count portion of the
-   code 5) The length in characters of the fully qualified primitive
-   including code and append material or number of elements in the
-   group.  This is empty when variable length.
+   code 5) The length in characters of the fully qualified primitive,
+   including code and its appended material or the number of elements in
+   the group.  This is empty when variable length.
 
    +==========+=============================+========+========+========+
    |   Code   | Description                 |  Code  | Count  | Total  |
