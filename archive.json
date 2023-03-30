@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2022-02-01T00:49:35.660824+00:00",
+  "timestamp": "2023-03-30T00:36:14.182493+00:00",
   "repo": "WebOfTrust/ietf-cesr",
   "labels": [
     {
@@ -49,7 +49,371 @@
       "color": "ffffff"
     }
   ],
-  "issues": [],
+  "issues": [
+    {
+      "number": 28,
+      "id": "I_kwDOGNIvo85NQuMZ",
+      "title": "Update IETF-CESR Draft spec",
+      "url": "https://github.com/WebOfTrust/ietf-cesr/issues/28",
+      "state": "OPEN",
+      "author": "SmithSamuelM",
+      "authorAssociation": "CONTRIBUTOR",
+      "assignees": [
+        "SmithSamuelM"
+      ],
+      "labels": [
+        "documentation"
+      ],
+      "body": "",
+      "createdAt": "2022-07-06T18:43:50Z",
+      "updatedAt": "2022-07-06T18:45:49Z",
+      "closedAt": null,
+      "comments": [
+        {
+          "author": "SmithSamuelM",
+          "authorAssociation": "CONTRIBUTOR",
+          "body": "Add codes for variable-length encryption assymmetric and symmetric\nAdd codes for CESR native key events\nAdd codes for generic key-value map\n",
+          "createdAt": "2022-07-06T18:45:43Z",
+          "updatedAt": "2022-07-06T18:45:43Z"
+        }
+      ]
+    },
+    {
+      "number": 29,
+      "id": "I_kwDOGNIvo85NQvrJ",
+      "title": "Revise Rotation rules for Reserve and Custodial Keys",
+      "url": "https://github.com/WebOfTrust/ietf-cesr/issues/29",
+      "state": "OPEN",
+      "author": "SmithSamuelM",
+      "authorAssociation": "CONTRIBUTOR",
+      "assignees": [
+        "SmithSamuelM"
+      ],
+      "labels": [
+        "documentation"
+      ],
+      "body": "",
+      "createdAt": "2022-07-06T18:49:49Z",
+      "updatedAt": "2022-07-06T18:50:25Z",
+      "closedAt": null,
+      "comments": [
+        {
+          "author": "SmithSamuelM",
+          "authorAssociation": "CONTRIBUTOR",
+          "body": "See spec",
+          "createdAt": "2022-07-06T18:50:25Z",
+          "updatedAt": "2022-07-06T18:50:25Z"
+        }
+      ]
+    },
+    {
+      "number": 30,
+      "id": "I_kwDOGNIvo85NQz7o",
+      "title": "Add Codes to CESR Spec for UDP",
+      "url": "https://github.com/WebOfTrust/ietf-cesr/issues/30",
+      "state": "OPEN",
+      "author": "SmithSamuelM",
+      "authorAssociation": "CONTRIBUTOR",
+      "assignees": [
+        "SmithSamuelM"
+      ],
+      "labels": [
+        "enhancement"
+      ],
+      "body": "",
+      "createdAt": "2022-07-06T19:06:16Z",
+      "updatedAt": "2022-07-08T16:46:19Z",
+      "closedAt": null,
+      "comments": []
+    },
+    {
+      "number": 34,
+      "id": "I_kwDOGNIvo85S_VL7",
+      "title": "Questions about the new draft",
+      "url": "https://github.com/WebOfTrust/ietf-cesr/issues/34",
+      "state": "OPEN",
+      "author": "henkvancann",
+      "authorAssociation": "NONE",
+      "assignees": [],
+      "labels": [],
+      "body": "In commit [fbc5bff](https://github.com/WebOfTrust/ietf-cesr/commit/fbc5bfffffd4f7fd72fe57931b8f84e9ac996122)\r\n\r\nUnder \"[conversions](https://github.com/WebOfTrust/ietf-cesr/blob/main/draft-ssmith-cesr.md#conversions)\" last sentence:\r\n\r\n\"Likewise, this means that the length of any primitive in the T domain MUST be an integer multiple of 4 Base64 characters with a minimum length of four Base64 characters.\"\r\n\r\nIs this correct? It doesn't make sense to me.",
+      "createdAt": "2022-09-30T12:00:59Z",
+      "updatedAt": "2022-10-11T12:51:42Z",
+      "closedAt": null,
+      "comments": [
+        {
+          "author": "SmithSamuelM",
+          "authorAssociation": "CONTRIBUTOR",
+          "body": "Yes this is accurate\nInteger multiple with a minimum multiple of 1\n\nL = N *4  N >=1 N integer\n\n> On 30 Sep 2022, at 06:01 , Henk van Cann ***@***.***> wrote:\n> \n> \n> In commit fbc5bff <https://github.com/WebOfTrust/ietf-cesr/commit/fbc5bfffffd4f7fd72fe57931b8f84e9ac996122>\n> Under \"conversions <https://github.com/WebOfTrust/ietf-cesr/blob/main/draft-ssmith-cesr.md#conversions>\" last sentence:\n> \n> \"Likewise, this means that the length of any primitive in the T domain MUST be an integer multiple of 4 Base64 characters with a minimum length of four Base64 characters.\"\n> \n> Is this correct? It doesn't make sense to me.\n> \n> \u2014\n> Reply to this email directly, view it on GitHub <https://github.com/WebOfTrust/ietf-cesr/issues/34>, or unsubscribe <https://github.com/notifications/unsubscribe-auth/AAETEPPB2Q3E7E7TLAUJBZ3WA3JAPANCNFSM6AAAAAAQZWWGD4>.\n> You are receiving this because you are subscribed to this thread.\n> \n\n",
+          "createdAt": "2022-09-30T12:44:12Z",
+          "updatedAt": "2022-09-30T12:44:12Z"
+        },
+        {
+          "author": "henkvancann",
+          "authorAssociation": "NONE",
+          "body": "Got it now",
+          "createdAt": "2022-09-30T12:52:56Z",
+          "updatedAt": "2022-09-30T12:52:56Z"
+        },
+        {
+          "author": "henkvancann",
+          "authorAssociation": "NONE",
+          "body": "Another question: how would you define 'naive conversion'\r\n\r\nThis is my take: https://github.com/trustoverip/acdc/wiki/naive-conversion",
+          "createdAt": "2022-09-30T13:15:12Z",
+          "updatedAt": "2022-09-30T13:15:12Z"
+        },
+        {
+          "author": "SmithSamuelM",
+          "authorAssociation": "CONTRIBUTOR",
+          "body": "sorry 24 bit aligned\n\n> On 30 Sep 2022, at 15:34 , Personal Sam Smith ***@***.***> wrote:\n> \n> Non CESR Base64 conversion. How people are used to using the Base64 encode and decode.  Without pre-padding etc all the stuff CESR does to ensure aligns on 24 bit boundaries so CESR never uses the '=' pad character. But naive Base64 will pad if the length is not 14 bit aligned.\n> \n> \n>> On 30 Sep 2022, at 07:15 , Henk van Cann ***@***.*** ***@***.***>> wrote:\n>> \n>> \n>> Another question: how would you define 'naive conversion'\n>> \n>> This is my take: https://github.com/trustoverip/acdc/wiki/naive-conversion <https://github.com/trustoverip/acdc/wiki/naive-conversion>\n>> \u2014\n>> Reply to this email directly, view it on GitHub <https://github.com/WebOfTrust/ietf-cesr/issues/34#issuecomment-1263561395>, or unsubscribe <https://github.com/notifications/unsubscribe-auth/AAETEPLHLITCNSUY2IQN3JLWA3RWVANCNFSM6AAAAAAQZWWGD4>.\n>> You are receiving this because you commented.\n>> \n> \n\n",
+          "createdAt": "2022-09-30T21:36:20Z",
+          "updatedAt": "2022-09-30T21:36:20Z"
+        },
+        {
+          "author": "henkvancann",
+          "authorAssociation": "NONE",
+          "body": "Thx, amended https://github.com/trustoverip/acdc/wiki/naive-conversion\r\n\r\nNext question.\r\nLast sentence in this [paragraph](https://github.com/WebOfTrust/ietf-cesr/blob/main/draft-ssmith-cesr.md#stream-parsing-rules):\r\n\"This provides an extremely compact and elegant stream parsing formula that generalizes not only support for CESR composability but also support for interleaved CESR with three of the most popular hash map serializations.\"\r\nQuestion: does it also support both at the same time? composability OF interleaved CESR of one the popular hash map serializations? \r\nIf I use CESR to stream CBOR does that make this specific CBOR round-robin composable?\r\n\r\n",
+          "createdAt": "2022-10-02T14:03:41Z",
+          "updatedAt": "2022-10-02T14:03:41Z"
+        },
+        {
+          "author": "SmithSamuelM",
+          "authorAssociation": "CONTRIBUTOR",
+          "body": "All four message serializations (JSON, CBOR, MGPK, CESR) may be interleaved in one stream.  Message Bodies may be one of the four serializations. Attachments to Message Bodies are always CESR. The CESR pipelining codes enable the stream parser to detect what serialization is being for a given portion of the stream. For CESR encoded attachments and message bodies, the pipelining codes also allow interleaving Text CESR and Binary CESR with JSON, CBOR, MSGPK. So in reality there are 5 serializations supported. Text CESR, Binary CESR, JSON (text), CBOR (binary), MGPK (binary)",
+          "createdAt": "2022-10-02T14:09:59Z",
+          "updatedAt": "2022-10-02T14:09:59Z"
+        },
+        {
+          "author": "SmithSamuelM",
+          "authorAssociation": "CONTRIBUTOR",
+          "body": "The term composable is used with a very specific definition in CESR its called concatenation composability. So I don\u2019t now from your question which definition of composable your are using with regards CBOR. CBOR can be interleaved but is not concatenation composable the way CESR is.",
+          "createdAt": "2022-10-02T14:12:36Z",
+          "updatedAt": "2022-10-02T14:12:36Z"
+        },
+        {
+          "author": "henkvancann",
+          "authorAssociation": "NONE",
+          "body": "Yes, I meant concatenation composability (CESR's). But now I got my question answered: Interleaved CESR doesn't magically grant concatenation composability to the guest hash map serialization.",
+          "createdAt": "2022-10-02T14:17:27Z",
+          "updatedAt": "2022-10-02T14:17:27Z"
+        },
+        {
+          "author": "SmithSamuelM",
+          "authorAssociation": "CONTRIBUTOR",
+          "body": "Yes.  CBOR is binary only, it has no text domain representation so there is no possibility for it to be concatenation composable in both the text and binary domains. Likewise, JSON is text only and has no binary domain representation so there is also no possibility for it to be concatenation composable in both the text and binary domains. In a weak sense, some standards use JSON as the text domain, and CBOR as the binary domain to give a weak form of dual representation of full hash maps. CESR is a more elegant solution since its dual representation is at the individual primitive level not merely at the full hash map level.  No more CBOR-JSON wars.",
+          "createdAt": "2022-10-02T14:29:35Z",
+          "updatedAt": "2022-10-02T14:29:35Z"
+        },
+        {
+          "author": "henkvancann",
+          "authorAssociation": "NONE",
+          "body": "If only they started seeing the beauty of it ;). Thx again, Sam, I am going through the white paper and I add some explanatory stuff to the glossary, concept.md (WOT-terms repo) and good old Q&A.",
+          "createdAt": "2022-10-02T14:34:34Z",
+          "updatedAt": "2022-10-02T14:34:34Z"
+        },
+        {
+          "author": "SmithSamuelM",
+          "authorAssociation": "CONTRIBUTOR",
+          "body": "In the end, the beauty will only be recognized after the fact of adoption. Once we have production libraries in the open, where people don\u2019t have to really understand it to use it, then will  people see how elegant it is.  We need enough early adopters to at least prime the pump of adoption but we are not going to get the standards people or the big enterprises to adopt it at first. It will be after the little guys who don\u2019t understand it but use it because its free and open and has features that look interesting, even if they don\u2019t understand how it works under the hood, who will start the adoption growth.",
+          "createdAt": "2022-10-02T15:03:36Z",
+          "updatedAt": "2022-10-02T15:03:36Z"
+        },
+        {
+          "author": "SmithSamuelM",
+          "authorAssociation": "CONTRIBUTOR",
+          "body": "Non CESR Base64 conversion. How people are used to using the Base64 encode and decode.  Without pre-padding etc all the stuff CESR does to ensure aligns on 24 bit boundaries so CESR never uses the '=' pad character. But naive Base64 will pad if the length is not 14 bit aligned.\n\n\n> On 30 Sep 2022, at 07:15 , Henk van Cann ***@***.***> wrote:\n> \n> \n> Another question: how would you define 'naive conversion'\n> \n> This is my take: https://github.com/trustoverip/acdc/wiki/naive-conversion <https://github.com/trustoverip/acdc/wiki/naive-conversion>\n> \u2014\n> Reply to this email directly, view it on GitHub <https://github.com/WebOfTrust/ietf-cesr/issues/34#issuecomment-1263561395>, or unsubscribe <https://github.com/notifications/unsubscribe-auth/AAETEPLHLITCNSUY2IQN3JLWA3RWVANCNFSM6AAAAAAQZWWGD4>.\n> You are receiving this because you commented.\n> \n\n",
+          "createdAt": "2022-10-11T08:18:39Z",
+          "updatedAt": "2022-10-11T08:18:39Z"
+        },
+        {
+          "author": "henkvancann",
+          "authorAssociation": "NONE",
+          "body": "Thx, copied to the glossary\r\n> Non CESR Base64 conversion. How people are used to using the Base64 encode and decode. Without pre-padding etc all the stuff CESR does to ensure aligns on 24 bit boundaries so CESR never uses the '=' pad character. But naive Base64 will pad if the length is not 14 bit aligned.\r\n> [\u2026](#)\r\n\r\n",
+          "createdAt": "2022-10-11T10:33:19Z",
+          "updatedAt": "2022-10-11T10:33:19Z"
+        },
+        {
+          "author": "SmithSamuelM",
+          "authorAssociation": "CONTRIBUTOR",
+          "body": "24 bit aligned\n\nSent from my iPad\n\n> On Oct 11, 2022, at 05:33, Henk van Cann ***@***.***> wrote:\n> \n> \ufeff\n> Thx, copied to the glossary\n> \n> Non CESR Base64 conversion. How people are used to using the Base64 encode and decode. Without pre-padding etc all the stuff CESR does to ensure aligns on 24 bit boundaries so CESR never uses the '=' pad character. But naive Base64 will pad if the length is not 14 bit aligned.\n> \u2026\n> \n> \u2014\n> Reply to this email directly, view it on GitHub, or unsubscribe.\n> You are receiving this because you commented.\n",
+          "createdAt": "2022-10-11T12:40:30Z",
+          "updatedAt": "2022-10-11T12:40:30Z"
+        },
+        {
+          "author": "henkvancann",
+          "authorAssociation": "NONE",
+          "body": "\r\nYes, had this correct in place already in the Glossary item itself.\r\n\r\n> 24 bit aligned\r\n> [\u2026](#)\r\n\r\n",
+          "createdAt": "2022-10-11T12:51:42Z",
+          "updatedAt": "2022-10-11T12:51:42Z"
+        }
+      ]
+    },
+    {
+      "number": 35,
+      "id": "I_kwDOGNIvo85V3pvT",
+      "title": "Explanation of counter codes",
+      "url": "https://github.com/WebOfTrust/ietf-cesr/issues/35",
+      "state": "OPEN",
+      "author": "blelump",
+      "authorAssociation": "NONE",
+      "assignees": [],
+      "labels": [],
+      "body": "Hey,\r\n\r\nstudying the table from section 4 carefully, I found the codes that would require some more explanation. I mean these ones:\r\n```\r\n-U## | Count of qualified Base64 groups or primitives in message data | 4 | 2 | 4\r\n-V## | Count of total attached grouped material qualified Base64 4 char quadlets | 4 | 2 | 4\r\n-W## | Count of total message data grouped material qualified Base64 4 char quadlets | 4 | 2 | 4\r\n-X## | Count of total group message data plus attachments qualified Base64 4 char quadlets | 4 | 2 | 4\r\n-Y## | Count of qualified Base64 groups or primitives in group. (context dependent) | 4 | 2 | 4\r\n-Z## | Count of grouped material qualified Base64 4 char quadlets (context dependent) | 4 | 2 | 4\r\n```\r\nand probably some more given in lowercase:\r\n```\r\n-c## | Count of config traits (each trait is 4 char quadlet (configuration trait list) (c)\r\n```\r\n\r\n1. Would `-U##` count the amount of ie. `-F##` groups? Is it a more generic version of `-A##`, `-B##`?\r\n2. Could `-V##` be basically used at the beginning of the example given at the end of section 4 for framing?\r\n3. How is `-W##` different to `-V##`?\r\n4. How is `-X##` different from the previous two?\r\n5. How is `-Y##` different to `-U##`?\r\n6. How is `-Z##` different to `-V##`?\r\n7. What are config traits given in `-c##`?",
+      "createdAt": "2022-11-08T17:54:49Z",
+      "updatedAt": "2022-11-21T22:44:52Z",
+      "closedAt": null,
+      "comments": [
+        {
+          "author": "blelump",
+          "authorAssociation": "NONE",
+          "body": "@SmithSamuelM bump",
+          "createdAt": "2022-11-21T22:44:52Z",
+          "updatedAt": "2022-11-21T22:44:52Z"
+        }
+      ]
+    },
+    {
+      "number": 36,
+      "id": "I_kwDOGNIvo85W8f46",
+      "title": "The `version` string from stream",
+      "url": "https://github.com/WebOfTrust/ietf-cesr/issues/36",
+      "state": "OPEN",
+      "author": "blelump",
+      "authorAssociation": "NONE",
+      "assignees": [],
+      "labels": [],
+      "body": "Hey,\r\n\r\nin section 3.6.2, there is a `version` attribute mentioned, in particular:\r\n```\r\nWhen the first tritet indicates its JSON, CBOR, or MGPK, then the mapping's first field \r\nmust be a version string that provides the additional information needed to fully parse the associated encoded serialization.\r\n```\r\nThe `version` string contains the representation and the length of the message, among other things. Is this attribute used anyhow during stream parsing, ie. for getting the explicit length of the message? What else did you have in mind by `additional information`?",
+      "createdAt": "2022-11-21T22:44:11Z",
+      "updatedAt": "2022-11-22T00:02:31Z",
+      "closedAt": null,
+      "comments": [
+        {
+          "author": "SmithSamuelM",
+          "authorAssociation": "CONTRIBUTOR",
+          "body": "It is used by the parser to get the length of the message. JSON raises an error if characters past the last } are provided to loads.  In general the length means we can use the version string to ensure clean parsing behavior. The protocol version, the serialization type, and the serialization length are the three main properties of the version string. The string is constructured in such a way that a Regex parser can always find it as the first field of any of the supported serializations. The terminator character `_` means that the version string is extensible to future proof it so that future versions could be formatted differently if need be.",
+          "createdAt": "2022-11-22T00:01:44Z",
+          "updatedAt": "2022-11-22T00:02:31Z"
+        }
+      ]
+    },
+    {
+      "number": 42,
+      "id": "I_kwDOGNIvo85Z5pER",
+      "title": "Pipelining ambiguity",
+      "url": "https://github.com/WebOfTrust/ietf-cesr/issues/42",
+      "state": "OPEN",
+      "author": "blelump",
+      "authorAssociation": "NONE",
+      "assignees": [],
+      "labels": [],
+      "body": "Hey Sam,\r\n\r\nThe spec mentions the protocol enables pipelining but needs to define the rules to achieve it. The `keripy` codebase clarifies it via https://github.com/WebOfTrust/keripy/blob/8db76589fc115553011241b7568522f7fec75fe8/src/keri/core/eventing.py#L1494 , but the clarification comes from the reference implementation.\r\n\r\nIn other words, that protocol has to provide the counter (as, i.e., KERI protocol does via `-V##`) to achieve pipelining with groups that the length cannot be easily calculated.\r\n\r\nAside topic: perhaps `-V##` is universal across protocols?",
+      "createdAt": "2022-12-22T17:27:42Z",
+      "updatedAt": "2022-12-22T20:50:49Z",
+      "closedAt": null,
+      "comments": [
+        {
+          "author": "SmithSamuelM",
+          "authorAssociation": "CONTRIBUTOR",
+          "body": "The current version 0.0.0 of the CESR protocol is largely experimental with regards to the pipelining codes. Did a lot of speculative design and ended up only using one pipelining code so far that is -V## for attachments. The next verison of CESR will have a full suite of pipelining codes as well as generic list and a  new list of (label, value) tuples (ordered map or dict). The latter will enable composable CESR native expressions for JSON/CBOR/MGPK maps or dicts.  \r\n\r\nSorry this has been slow coming. Also plan to reorder the existing codes so that the generic codes and pipelining codes appear first in the list.   This will make it easier for code tables to standarize on the same set of pipelining codes and only differ in the protocol specific structure codes. CESR will then also be able support generic maps/dicts as well as  the equivalent of CBOR-like tags functionality for custom stuctures but with composabile text-binary of everything.\r\n\r\nThe new version code with minimize the pain of this reorder (hopefully only have to do it once)",
+          "createdAt": "2022-12-22T20:48:33Z",
+          "updatedAt": "2022-12-22T20:50:49Z"
+        }
+      ]
+    },
+    {
+      "number": 43,
+      "id": "I_kwDOGNIvo85aFFJZ",
+      "title": "Mismatch between starting tritet text and summary table",
+      "url": "https://github.com/WebOfTrust/ietf-cesr/issues/43",
+      "state": "CLOSED",
+      "author": "scouten-adobe",
+      "authorAssociation": "NONE",
+      "assignees": [],
+      "labels": [],
+      "body": "The text in the following paragraph \u2026\r\n\r\nhttps://github.com/WebOfTrust/ietf-cesr/blob/50b55f29257bc610209100a650cb03857563f159/draft-ssmith-cesr.md?plain=1#L520\r\n\r\n> Otherwise, if a stream starts with 0b100 then is JSON, with 0b101 then its CBOR, and with either 0b011, and 0b110 then its MGPK.[\u00b6](file:///Users/scouten/Projects/ietf-cesr/draft-ssmith-cesr.html#section-3.6.1-5)\r\n\r\n\u2026 appears to disagree with the summary table immediately following \u2026\r\n\r\nhttps://github.com/WebOfTrust/ietf-cesr/blob/50b55f29257bc610209100a650cb03857563f159/draft-ssmith-cesr.md?plain=1#L525-L534\r\n\r\n\u2026 which shows JSON as starting with the tritet 0b011.\r\n\r\nPlease consider reconciling these or adding an explanation for the discrepancy.",
+      "createdAt": "2022-12-26T22:17:54Z",
+      "updatedAt": "2023-03-29T18:37:44Z",
+      "closedAt": "2023-03-29T18:37:44Z",
+      "comments": [
+        {
+          "author": "scouten-adobe",
+          "authorAssociation": "NONE",
+          "body": "Also, proofreading nit: The \"is\" and \"its\" in the sentence I quoted above from line 520 should be \"it's\" (as a contraction for \"it is\").",
+          "createdAt": "2022-12-26T22:19:05Z",
+          "updatedAt": "2022-12-26T22:20:51Z"
+        },
+        {
+          "author": "SmithSamuelM",
+          "authorAssociation": "CONTRIBUTOR",
+          "body": "Fixed with #46\r\n",
+          "createdAt": "2023-03-29T18:37:31Z",
+          "updatedAt": "2023-03-29T18:37:31Z"
+        }
+      ]
+    },
+    {
+      "number": 44,
+      "id": "I_kwDOGNIvo85aFGaq",
+      "title": "Possible copy/paste error in Base64",
+      "url": "https://github.com/WebOfTrust/ietf-cesr/issues/44",
+      "state": "CLOSED",
+      "author": "scouten-adobe",
+      "authorAssociation": "NONE",
+      "assignees": [],
+      "labels": [],
+      "body": "The last sentence of [line 518](https://github.com/WebOfTrust/ietf-cesr/blob/50b55f29257bc610209100a650cb03857563f159/draft-ssmith-cesr.md?plain=1#L518) says \u2026\r\n\r\n> To elaborate, Base64 uses _ in position 62 or 0x3E (hex) and uses _ in position 63 or 0x3F (hex) both of which have starting tritet of 0b111\r\n\r\nI think it should say hyphen in position 62 and underscore in position 63, based on my reading of [RFC 4648 section 5](https://datatracker.ietf.org/doc/html/rfc4648#section-5).\r\n",
+      "createdAt": "2022-12-26T22:31:10Z",
+      "updatedAt": "2023-03-29T18:38:28Z",
+      "closedAt": "2023-03-29T18:38:28Z",
+      "comments": [
+        {
+          "author": "SmithSamuelM",
+          "authorAssociation": "CONTRIBUTOR",
+          "body": "fixed with #46",
+          "createdAt": "2023-03-29T18:38:28Z",
+          "updatedAt": "2023-03-29T18:38:28Z"
+        }
+      ]
+    },
+    {
+      "number": 45,
+      "id": "I_kwDOGNIvo85f-6B1",
+      "title": "Extracting `s` from ACDC into CESR-based protocol",
+      "url": "https://github.com/WebOfTrust/ietf-cesr/issues/45",
+      "state": "OPEN",
+      "author": "blelump",
+      "authorAssociation": "NONE",
+      "assignees": [],
+      "labels": [],
+      "body": "Hey Sam,\r\n\r\nThe digitalization of various industries is a direct consequence of vast data generation. Controllers responsible for reading the sensor data push it further to the cloud for further processing. Before the actual push, the Controller might digitally sign the data-to-be-pushed to add authenticity. Here we can employ CESR and attach the signature to the measurement effectively. When there are many measurements, it becomes more challenging because we can sign a bulk instead of signing each measurement.\r\nFurthermore, measurements have schemas that define what is in the actual body of the measurement. In the credentials space, i.e., ACDC, you'd use `s` to provide the schema, but in the case of measurement, ACDC-like schema is debatable. To make it compact, I imagine something like this:\r\n```\r\n{measurement1}{measurement2}...{measurementN}CESRattachments.\r\n```\r\nwhere `CESRattachments` are about the whole bulk rather than each measurement. Furthermore, we can also distill the schema for all these measurements. Schema is like the digital signature: metadata. We could then define another protocol using CESR to add the capability to add the schema as a CESR attachment. Using `Protocol Genus Version Codes, ` we can switch between protocols in one CESR stream.\r\n\r\nThere are issues with this approach:\r\n- `{measurement1}{measurement2}...{measurementN}CESRattachments` stream format is not supported. Bulks can occur, for example, in unstable environments where internet access is, i.e., temporary. When the controller is offline, it aggregates all the measurements and will eventually push it further as soon as it becomes online again.\r\n- a dedicated protocol to attach schemas via CESR attachment is fine but lacking authenticity. Assuming even a single measurement:\r\n  ```\r\n  {measurement1}CESRattachments\r\n  ```\r\n  where `CESRattachments` are `--AAA<KERI protocol attachments>---AAB<schema protocol attachments>`. The latter lacks authenticity because digital signature(s) are against whatever is in `measurement1`. Thus, the attachments in the schema protocol can be forged.\r\n\r\n",
+      "createdAt": "2023-03-05T19:18:02Z",
+      "updatedAt": "2023-03-07T00:10:04Z",
+      "closedAt": null,
+      "comments": [
+        {
+          "author": "SmithSamuelM",
+          "authorAssociation": "CONTRIBUTOR",
+          "body": "Is there a question? or just wondering how one might use CESR to effeciently sign measurements?",
+          "createdAt": "2023-03-06T03:49:03Z",
+          "updatedAt": "2023-03-06T03:49:03Z"
+        },
+        {
+          "author": "blelump",
+          "authorAssociation": "NONE",
+          "body": "Let me be more explicit:\r\n- do you see potential in proposing another CESR-based protocol solely about the semantics of the message you're attaching it to? I am considering supporting all the cases where the underlying data structures require different streaming approaches to make it effective (by making it compact). A single measurement would then look like the following:\r\n  ```\r\n  {measurement1}\r\n  ---AAA<KERI protocol attachments>\r\n  ---AAB<semantics protocol attachments>\r\n  ```\r\n  With such a construct, I benefit from the CESR because I do not modify the message (`measurement1`) but attach metadata to it. I get authenticity with the `AAA` protocol, and with `AAB` protocol, I get the message schema. The underlying flaw of this proposal is that `AAA` and `AAB` are distinct, and I cannot include in the signature from `AAA` the content of `AAB`. By simply attaching metadata via CESR protocols, such layering enables the separation of data, schema, and signature. What do you think about this?\r\n- how do you perceive effective streaming of measurements that are a) authentic, b) schema rich, and c) a collection rather than a single entity? Right now, CESR supports the following representation:\r\n  ```\r\n  {measurement1}CESRattachments{measurement2}CESRattachments...{measurementN}CESRattachments\r\n  ```\r\n  but what if we'd extend it to the following format:\r\n  ```\r\n  [{measurement1}{measurement2}...{measurementN}]CESRattachments\r\n  ```\r\n  where `[` and `]` encompasses the collection.",
+          "createdAt": "2023-03-06T10:09:41Z",
+          "updatedAt": "2023-03-06T10:09:41Z"
+        },
+        {
+          "author": "SmithSamuelM",
+          "authorAssociation": "CONTRIBUTOR",
+          "body": "> but what if we'd extend it to the following format:\r\n[{measurement1}{measurement2}...{measurementN}]CESRattachments\r\n\r\nthat works.\r\n\r\n Or another alternative is as follows\r\n\r\nHash [{measurement1}{measurement2}...{measurementN}]\r\nHash[Verbose attachments}\r\n<Hash><Hash of verbose attachments>CESRAttachments (transmitted)\r\n\r\nthen the measurements can be cached or transmitted out of band to the transmission of the Hash\r\nor alternatively the attachments can be cashed and transmitted out of band to the hash. \r\nThis is expecially useful when the attachments include schema which tend to be verbose but do not change often. So one can performantly cashe schema and only transmit it once and then transmit the hash of the schema with the measurement.\r\n\r\nThis is how ACDCs do it.  A compact ACDC is nothing but hashes and the attachments are nothing but a reference to a signature of the hashes. this way verbose schema which do not change across multiple ACDCs of the same type (recall that in ACDC type is schema) then never need to actually transmit schema just pre-provision schema as type and reference the measurement as belonging to a type given by the hash of the schema.  \r\n\r\nSo yes, using the same artchitecture of ACDCs but without revocation support one can have more compact messaging of measurements.  Because ACDCs are schema based they can have optional fields (unlike KERI events which have fixed fields at the type level). So one can simplify an ACDC to be \r\n\r\nversion\r\npacket id (SAID)\r\nIssuer AID\r\ntype as schema SAID\r\nattributes as SAID\r\nAttachments (signatures or reference to anchoring seal}\r\n\r\nCurrently ACDCs assume that they are anchored in KEL of issuer but for ephemeral (non-revocable) measurements one can relax that requirements and then only an attached signature is required.\r\n\r\nFpr example a ViRA ACDC payload  is just a list of hashes.",
+          "createdAt": "2023-03-07T00:07:46Z",
+          "updatedAt": "2023-03-07T00:10:04Z"
+        }
+      ]
+    }
+  ],
   "pulls": [
     {
       "number": 1,
@@ -650,26 +1014,501 @@
       "id": "PR_kwDOGNIvo84vRqCQ",
       "title": "0.2.0",
       "url": "https://github.com/WebOfTrust/ietf-cesr/pull/22",
-      "state": "OPEN",
+      "state": "MERGED",
       "author": "SmithSamuelM",
       "authorAssociation": "CONTRIBUTOR",
       "assignees": [],
       "labels": [],
       "body": "fixed typos",
       "createdAt": "2021-12-01T22:14:52Z",
-      "updatedAt": "2021-12-07T15:45:13Z",
+      "updatedAt": "2022-05-25T02:27:07Z",
       "baseRepository": "WebOfTrust/ietf-cesr",
       "baseRefName": "main",
       "baseRefOid": "7e3584461affc2b16983228f506bcbcfcd6e4924",
       "headRepository": "SmithSamuelM/ietf-cesr",
       "headRefName": "main",
-      "headRefOid": "104d83434ca63e257ef5d8eb699726fc0f206724",
-      "closedAt": null,
+      "headRefOid": "dfe877e6e38deca845f7e1b8d078ba9ae66faa54",
+      "closedAt": "2022-05-25T02:27:07Z",
+      "mergedAt": "2022-05-25T02:27:06Z",
+      "mergedBy": "SmithSamuelM",
+      "mergeCommit": {
+        "oid": "064791d555403644e310f7e3566298a92c835f95"
+      },
+      "comments": [],
+      "reviews": []
+    },
+    {
+      "number": 23,
+      "id": "PR_kwDOGNIvo844aDCH",
+      "title": "added forced paragraphs",
+      "url": "https://github.com/WebOfTrust/ietf-cesr/pull/23",
+      "state": "MERGED",
+      "author": "SmithSamuelM",
+      "authorAssociation": "CONTRIBUTOR",
+      "assignees": [],
+      "labels": [],
+      "body": "",
+      "createdAt": "2022-05-25T02:34:37Z",
+      "updatedAt": "2022-05-25T02:59:14Z",
+      "baseRepository": "WebOfTrust/ietf-cesr",
+      "baseRefName": "main",
+      "baseRefOid": "064791d555403644e310f7e3566298a92c835f95",
+      "headRepository": "SmithSamuelM/ietf-cesr",
+      "headRefName": "main",
+      "headRefOid": "090f165c63fdc2920f35d2c7e4bfafab8edcd2ef",
+      "closedAt": "2022-05-25T02:59:14Z",
+      "mergedAt": "2022-05-25T02:59:14Z",
+      "mergedBy": "SmithSamuelM",
+      "mergeCommit": {
+        "oid": "891881b0b43da787fe8d08071efe613e4ee8a83e"
+      },
+      "comments": [],
+      "reviews": []
+    },
+    {
+      "number": 24,
+      "id": "PR_kwDOGNIvo844aI3X",
+      "title": "added more returns. Looks like template is forcing no trailing whites\u2026",
+      "url": "https://github.com/WebOfTrust/ietf-cesr/pull/24",
+      "state": "MERGED",
+      "author": "SmithSamuelM",
+      "authorAssociation": "CONTRIBUTOR",
+      "assignees": [],
+      "labels": [],
+      "body": "\u2026pace on every line\r\n\r\nso use bbedit to strip trailing whitespace.",
+      "createdAt": "2022-05-25T03:03:07Z",
+      "updatedAt": "2022-05-25T03:03:46Z",
+      "baseRepository": "WebOfTrust/ietf-cesr",
+      "baseRefName": "main",
+      "baseRefOid": "891881b0b43da787fe8d08071efe613e4ee8a83e",
+      "headRepository": "SmithSamuelM/ietf-cesr",
+      "headRefName": "main",
+      "headRefOid": "1d655b6cedc29cc8466640ebbfbf7a66d18432b7",
+      "closedAt": "2022-05-25T03:03:45Z",
+      "mergedAt": "2022-05-25T03:03:45Z",
+      "mergedBy": "SmithSamuelM",
+      "mergeCommit": {
+        "oid": "bfc7184a7dc61512abf89f407118136161dd318e"
+      },
+      "comments": [],
+      "reviews": []
+    },
+    {
+      "number": 25,
+      "id": "PR_kwDOGNIvo844aJR7",
+      "title": "added colon",
+      "url": "https://github.com/WebOfTrust/ietf-cesr/pull/25",
+      "state": "MERGED",
+      "author": "SmithSamuelM",
+      "authorAssociation": "CONTRIBUTOR",
+      "assignees": [],
+      "labels": [],
+      "body": "",
+      "createdAt": "2022-05-25T03:05:52Z",
+      "updatedAt": "2022-05-25T03:06:40Z",
+      "baseRepository": "WebOfTrust/ietf-cesr",
+      "baseRefName": "main",
+      "baseRefOid": "bfc7184a7dc61512abf89f407118136161dd318e",
+      "headRepository": "SmithSamuelM/ietf-cesr",
+      "headRefName": "main",
+      "headRefOid": "e2bf8fa4d1a2f883e3d12cd0ec01fb512ef8fdef",
+      "closedAt": "2022-05-25T03:06:40Z",
+      "mergedAt": "2022-05-25T03:06:40Z",
+      "mergedBy": "SmithSamuelM",
+      "mergeCommit": {
+        "oid": "32ce562367957c6c708d1d2fd3501c38680af573"
+      },
+      "comments": [],
+      "reviews": []
+    },
+    {
+      "number": 26,
+      "id": "PR_kwDOGNIvo844de2f",
+      "title": "updated code table definitions of symbols using tables",
+      "url": "https://github.com/WebOfTrust/ietf-cesr/pull/26",
+      "state": "MERGED",
+      "author": "SmithSamuelM",
+      "authorAssociation": "CONTRIBUTOR",
+      "assignees": [],
+      "labels": [],
+      "body": "",
+      "createdAt": "2022-05-25T16:57:17Z",
+      "updatedAt": "2022-05-25T17:13:20Z",
+      "baseRepository": "WebOfTrust/ietf-cesr",
+      "baseRefName": "main",
+      "baseRefOid": "32ce562367957c6c708d1d2fd3501c38680af573",
+      "headRepository": "SmithSamuelM/ietf-cesr",
+      "headRefName": "main",
+      "headRefOid": "4bfd3cd1c8e1bf692e6f172f9679d91b8d5b8777",
+      "closedAt": "2022-05-25T17:13:20Z",
+      "mergedAt": "2022-05-25T17:13:20Z",
+      "mergedBy": "SmithSamuelM",
+      "mergeCommit": {
+        "oid": "13397b554ce13d279999767e73d42d079bf78212"
+      },
+      "comments": [],
+      "reviews": []
+    },
+    {
+      "number": 27,
+      "id": "PR_kwDOGNIvo844dkn6",
+      "title": "fixed awkward sentence",
+      "url": "https://github.com/WebOfTrust/ietf-cesr/pull/27",
+      "state": "MERGED",
+      "author": "SmithSamuelM",
+      "authorAssociation": "CONTRIBUTOR",
+      "assignees": [],
+      "labels": [],
+      "body": "",
+      "createdAt": "2022-05-25T17:25:28Z",
+      "updatedAt": "2022-05-25T17:28:52Z",
+      "baseRepository": "WebOfTrust/ietf-cesr",
+      "baseRefName": "main",
+      "baseRefOid": "13397b554ce13d279999767e73d42d079bf78212",
+      "headRepository": "SmithSamuelM/ietf-cesr",
+      "headRefName": "main",
+      "headRefOid": "c9c9ed4b361ba3c48f166b48e66eda21a9677e89",
+      "closedAt": "2022-05-25T17:28:52Z",
+      "mergedAt": "2022-05-25T17:28:52Z",
+      "mergedBy": "SmithSamuelM",
+      "mergeCommit": {
+        "oid": "e28efeed2af3a10cc9eb10fdf2e69cad3f61485f"
+      },
+      "comments": [],
+      "reviews": []
+    },
+    {
+      "number": 31,
+      "id": "PR_kwDOGNIvo848d2eW",
+      "title": "fix minor typos that I found while reading the draft",
+      "url": "https://github.com/WebOfTrust/ietf-cesr/pull/31",
+      "state": "CLOSED",
+      "author": "dhh1128",
+      "authorAssociation": "NONE",
+      "assignees": [],
+      "labels": [],
+      "body": "Signed-off-by: Daniel Hardman <daniel.hardman@gmail.com>",
+      "createdAt": "2022-08-01T23:31:58Z",
+      "updatedAt": "2023-03-29T16:12:59Z",
+      "baseRepository": "WebOfTrust/ietf-cesr",
+      "baseRefName": "main",
+      "baseRefOid": "e28efeed2af3a10cc9eb10fdf2e69cad3f61485f",
+      "headRepository": "dhh1128/ietf-cesr",
+      "headRefName": "minor-polish",
+      "headRefOid": "ff15183be104d4d545cab3448ed12d2d2b901d1c",
+      "closedAt": "2023-03-29T16:12:07Z",
       "mergedAt": null,
       "mergedBy": null,
       "mergeCommit": null,
+      "comments": [
+        {
+          "author": "SmithSamuelM",
+          "authorAssociation": "CONTRIBUTOR",
+          "body": "As I read through the changes I found ther typos etc so ended up doing a more comprehensive pull request",
+          "createdAt": "2023-03-29T16:12:07Z",
+          "updatedAt": "2023-03-29T16:12:07Z"
+        }
+      ],
+      "reviews": []
+    },
+    {
+      "number": 32,
+      "id": "PR_kwDOGNIvo849z2Jp",
+      "title": "Updated to new encoding using pre-pad zeroed bytes so that value element",
+      "url": "https://github.com/WebOfTrust/ietf-cesr/pull/32",
+      "state": "MERGED",
+      "author": "SmithSamuelM",
+      "authorAssociation": "CONTRIBUTOR",
+      "assignees": [],
+      "labels": [],
+      "body": "is more readable.\r\n\r\nSigned-off-by: Samuel M Smith <sam@samuelsmith.org>",
+      "createdAt": "2022-08-25T16:31:29Z",
+      "updatedAt": "2022-08-25T16:35:24Z",
+      "baseRepository": "WebOfTrust/ietf-cesr",
+      "baseRefName": "main",
+      "baseRefOid": "e28efeed2af3a10cc9eb10fdf2e69cad3f61485f",
+      "headRepository": "SmithSamuelM/ietf-cesr",
+      "headRefName": "main",
+      "headRefOid": "fbc5bfffffd4f7fd72fe57931b8f84e9ac996122",
+      "closedAt": "2022-08-25T16:35:24Z",
+      "mergedAt": "2022-08-25T16:35:24Z",
+      "mergedBy": "SmithSamuelM",
+      "mergeCommit": {
+        "oid": "06ba78446933fbd1d0b0c194b294390d0cf61aa9"
+      },
       "comments": [],
       "reviews": []
+    },
+    {
+      "number": 33,
+      "id": "PR_kwDOGNIvo84-npJ9",
+      "title": "Fix missing commas",
+      "url": "https://github.com/WebOfTrust/ietf-cesr/pull/33",
+      "state": "CLOSED",
+      "author": "dhh1128",
+      "authorAssociation": "NONE",
+      "assignees": [],
+      "labels": [],
+      "body": "Signed-off-by: Daniel Hardman <daniel.hardman@gmail.com>",
+      "createdAt": "2022-09-08T16:59:58Z",
+      "updatedAt": "2023-03-29T16:13:37Z",
+      "baseRepository": "WebOfTrust/ietf-cesr",
+      "baseRefName": "main",
+      "baseRefOid": "06ba78446933fbd1d0b0c194b294390d0cf61aa9",
+      "headRepository": "dhh1128/ietf-cesr",
+      "headRefName": "commafix",
+      "headRefOid": "922041d00b90e8231d8db36f2831e8ec59a518ae",
+      "closedAt": "2023-03-29T16:13:36Z",
+      "mergedAt": null,
+      "mergedBy": null,
+      "mergeCommit": null,
+      "comments": [
+        {
+          "author": "dhh1128",
+          "authorAssociation": "NONE",
+          "body": "(This PR is intentionally trivial. I was using it to do a training, showing some team members how to do a PR. Feel free to close without accepting if you don't think the PR is useful; it's mostly already served its purpose.)",
+          "createdAt": "2022-09-08T17:05:02Z",
+          "updatedAt": "2022-09-08T17:05:02Z"
+        },
+        {
+          "author": "SmithSamuelM",
+          "authorAssociation": "CONTRIBUTOR",
+          "body": "As I read through the typos found many other so ended up doing more comprehensive pull request",
+          "createdAt": "2023-03-29T16:13:36Z",
+          "updatedAt": "2023-03-29T16:13:36Z"
+        }
+      ],
+      "reviews": []
+    },
+    {
+      "number": 37,
+      "id": "PR_kwDOGNIvo85DjA5z",
+      "title": "Minor typo fix-up.",
+      "url": "https://github.com/WebOfTrust/ietf-cesr/pull/37",
+      "state": "CLOSED",
+      "author": "DmitryKuzmenko",
+      "authorAssociation": "CONTRIBUTOR",
+      "assignees": [],
+      "labels": [],
+      "body": "Fixed a couple of minor typos and style issues during reading the CESR draft.\r\n\r\nSigned-off-by: Dmitry Kuzmenko <dmitry.kuzmenko@dsr-corporation.com>",
+      "createdAt": "2022-11-23T10:26:42Z",
+      "updatedAt": "2023-03-29T16:16:18Z",
+      "baseRepository": "WebOfTrust/ietf-cesr",
+      "baseRefName": "main",
+      "baseRefOid": "50b55f29257bc610209100a650cb03857563f159",
+      "headRepository": "DmitryKuzmenko/ietf-cesr",
+      "headRefName": "patch-2",
+      "headRefOid": "10f05a63adcf73038720c1e9182a1f418560aeec",
+      "closedAt": "2023-03-29T16:16:18Z",
+      "mergedAt": null,
+      "mergedBy": null,
+      "mergeCommit": null,
+      "comments": [
+        {
+          "author": "SmithSamuelM",
+          "authorAssociation": "CONTRIBUTOR",
+          "body": "After reviewing I discovered other typos so did a more comprehensive pull request\r\n",
+          "createdAt": "2023-03-29T16:16:18Z",
+          "updatedAt": "2023-03-29T16:16:18Z"
+        }
+      ],
+      "reviews": []
+    },
+    {
+      "number": 38,
+      "id": "PR_kwDOGNIvo85DjBaE",
+      "title": "Minor typo fix-up.",
+      "url": "https://github.com/WebOfTrust/ietf-cesr/pull/38",
+      "state": "MERGED",
+      "author": "DmitryKuzmenko",
+      "authorAssociation": "CONTRIBUTOR",
+      "assignees": [],
+      "labels": [],
+      "body": "Added missing closing bracket.\r\n\r\nSigned-off-by: Dmitry Kuzmenko <dmitry.kuzmenko@dsr-corporation.com>",
+      "createdAt": "2022-11-23T10:28:02Z",
+      "updatedAt": "2022-12-01T08:54:07Z",
+      "baseRepository": "WebOfTrust/ietf-cesr",
+      "baseRefName": "main",
+      "baseRefOid": "06ba78446933fbd1d0b0c194b294390d0cf61aa9",
+      "headRepository": "DmitryKuzmenko/ietf-cesr",
+      "headRefName": "patch-1",
+      "headRefOid": "65cbe14e6f4de7622f347d90654f82e14f36830a",
+      "closedAt": "2022-11-23T16:27:53Z",
+      "mergedAt": "2022-11-23T16:27:53Z",
+      "mergedBy": "SmithSamuelM",
+      "mergeCommit": {
+        "oid": "aa9aec7ddf1b1032dfed2ab9bcadefda6b2f46c1"
+      },
+      "comments": [],
+      "reviews": [
+        {
+          "id": "PRR_kwDOGNIvo85HC1Hz",
+          "commit": {
+            "abbreviatedOid": "65cbe14"
+          },
+          "author": "SmithSamuelM",
+          "authorAssociation": "CONTRIBUTOR",
+          "state": "APPROVED",
+          "body": "",
+          "createdAt": "2022-11-23T16:09:48Z",
+          "updatedAt": "2022-11-23T16:09:48Z",
+          "comments": []
+        }
+      ]
+    },
+    {
+      "number": 39,
+      "id": "PR_kwDOGNIvo85D1vX0",
+      "title": "Updated code tables to latest as implemented in keripy",
+      "url": "https://github.com/WebOfTrust/ietf-cesr/pull/39",
+      "state": "MERGED",
+      "author": "SmithSamuelM",
+      "authorAssociation": "CONTRIBUTOR",
+      "assignees": [],
+      "labels": [],
+      "body": "Removed speculative codes",
+      "createdAt": "2022-11-28T21:53:27Z",
+      "updatedAt": "2022-11-28T22:01:05Z",
+      "baseRepository": "WebOfTrust/ietf-cesr",
+      "baseRefName": "main",
+      "baseRefOid": "aa9aec7ddf1b1032dfed2ab9bcadefda6b2f46c1",
+      "headRepository": "SmithSamuelM/ietf-cesr",
+      "headRefName": "main",
+      "headRefOid": "dffc72289fdbd9d26ac1dcb991ef7552abff61cd",
+      "closedAt": "2022-11-28T22:01:04Z",
+      "mergedAt": "2022-11-28T22:01:04Z",
+      "mergedBy": "SmithSamuelM",
+      "mergeCommit": {
+        "oid": "d3e4bf814b54518b0820244c71054182d6c8515f"
+      },
+      "comments": [],
+      "reviews": []
+    },
+    {
+      "number": 40,
+      "id": "PR_kwDOGNIvo85D2YtA",
+      "title": "Updated to include Protocol Genus and Version codes and description",
+      "url": "https://github.com/WebOfTrust/ietf-cesr/pull/40",
+      "state": "MERGED",
+      "author": "SmithSamuelM",
+      "authorAssociation": "CONTRIBUTOR",
+      "assignees": [],
+      "labels": [],
+      "body": "",
+      "createdAt": "2022-11-29T02:01:51Z",
+      "updatedAt": "2022-11-29T02:02:29Z",
+      "baseRepository": "WebOfTrust/ietf-cesr",
+      "baseRefName": "main",
+      "baseRefOid": "d3e4bf814b54518b0820244c71054182d6c8515f",
+      "headRepository": "SmithSamuelM/ietf-cesr",
+      "headRefName": "main",
+      "headRefOid": "9cbbe454d490602c311283bd69adab1a8c2505c3",
+      "closedAt": "2022-11-29T02:02:29Z",
+      "mergedAt": "2022-11-29T02:02:29Z",
+      "mergedBy": "SmithSamuelM",
+      "mergeCommit": {
+        "oid": "a56c485dbb08d059775d2689a04e260a56fdddf0"
+      },
+      "comments": [],
+      "reviews": []
+    },
+    {
+      "number": 41,
+      "id": "PR_kwDOGNIvo85D6WpV",
+      "title": "Fix tables",
+      "url": "https://github.com/WebOfTrust/ietf-cesr/pull/41",
+      "state": "MERGED",
+      "author": "SmithSamuelM",
+      "authorAssociation": "CONTRIBUTOR",
+      "assignees": [],
+      "labels": [],
+      "body": "",
+      "createdAt": "2022-11-29T18:24:46Z",
+      "updatedAt": "2022-11-29T18:25:39Z",
+      "baseRepository": "WebOfTrust/ietf-cesr",
+      "baseRefName": "main",
+      "baseRefOid": "a56c485dbb08d059775d2689a04e260a56fdddf0",
+      "headRepository": "SmithSamuelM/ietf-cesr",
+      "headRefName": "main",
+      "headRefOid": "87ad6887e27beefd57451c09c5c4295fcc81e063",
+      "closedAt": "2022-11-29T18:25:39Z",
+      "mergedAt": "2022-11-29T18:25:39Z",
+      "mergedBy": "SmithSamuelM",
+      "mergeCommit": {
+        "oid": "50b55f29257bc610209100a650cb03857563f159"
+      },
+      "comments": [],
+      "reviews": []
+    },
+    {
+      "number": 46,
+      "id": "PR_kwDOGNIvo85NLuXZ",
+      "title": "fixed typos punctuations, fixed typo in description of starting tritets",
+      "url": "https://github.com/WebOfTrust/ietf-cesr/pull/46",
+      "state": "MERGED",
+      "author": "SmithSamuelM",
+      "authorAssociation": "CONTRIBUTOR",
+      "assignees": [],
+      "labels": [],
+      "body": "",
+      "createdAt": "2023-03-29T16:07:59Z",
+      "updatedAt": "2023-03-29T16:17:42Z",
+      "baseRepository": "WebOfTrust/ietf-cesr",
+      "baseRefName": "main",
+      "baseRefOid": "50b55f29257bc610209100a650cb03857563f159",
+      "headRepository": "SmithSamuelM/ietf-cesr",
+      "headRefName": "main",
+      "headRefOid": "5adb1180182b459331c3969568faa19a53524685",
+      "closedAt": "2023-03-29T16:17:42Z",
+      "mergedAt": "2023-03-29T16:17:42Z",
+      "mergedBy": "SmithSamuelM",
+      "mergeCommit": {
+        "oid": "24e7cc91a1497e3826edf5220b0479ed4238ef67"
+      },
+      "comments": [],
+      "reviews": []
+    },
+    {
+      "number": 47,
+      "id": "PR_kwDOGNIvo85NL0JX",
+      "title": "Testing workfrow commit runs",
+      "url": "https://github.com/WebOfTrust/ietf-cesr/pull/47",
+      "state": "MERGED",
+      "author": "SmithSamuelM",
+      "authorAssociation": "CONTRIBUTOR",
+      "assignees": [],
+      "labels": [],
+      "body": "",
+      "createdAt": "2023-03-29T16:27:26Z",
+      "updatedAt": "2023-03-29T17:44:23Z",
+      "baseRepository": "WebOfTrust/ietf-cesr",
+      "baseRefName": "main",
+      "baseRefOid": "24e7cc91a1497e3826edf5220b0479ed4238ef67",
+      "headRepository": "SmithSamuelM/ietf-cesr",
+      "headRefName": "main",
+      "headRefOid": "310914686b769af5ce662faad5eb34b32420702b",
+      "closedAt": "2023-03-29T17:44:23Z",
+      "mergedAt": "2023-03-29T17:44:23Z",
+      "mergedBy": "SmithSamuelM",
+      "mergeCommit": {
+        "oid": "cdf3a0465afaabe9df36783d9dd0ec3de8886790"
+      },
+      "comments": [],
+      "reviews": [
+        {
+          "id": "PRR_kwDOGNIvo85RRgLY",
+          "commit": {
+            "abbreviatedOid": "3109146"
+          },
+          "author": "SmithSamuelM",
+          "authorAssociation": "CONTRIBUTOR",
+          "state": "COMMENTED",
+          "body": "good",
+          "createdAt": "2023-03-29T16:39:19Z",
+          "updatedAt": "2023-03-29T16:39:19Z",
+          "comments": []
+        }
+      ]
     }
   ]
 }
